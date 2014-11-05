@@ -1,5 +1,10 @@
 if (Meteor.isClient) {
   // client-specific code
+  Template.listings.helpers({
+    listings: function() {
+        return Posts.find();
+      }
+  });
 }
 
 if (Meteor.isServer) {

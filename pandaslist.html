@@ -5,19 +5,41 @@
 <body>
 {{> loginButtons}}
 
+{{> tempForm}}
+
 {{ #if currentUser }}
 {{> listings }}
 {{ else }}
 {{> loginRequired}}
 {{ /if }}
+
 </body>
 
 <template name="listings">
 	<br><br>
-	You are logged in as {{currentUser.profile.name}}, here are the listings: TBD
+	You are logged in as {{currentUser.profile.name}}, here are the listings:
+
+	<table>
+	<th>Category</th>
+	<th>Title</th>
+	<th>Description</th>
+	{{#each listings}}
+		{{> post}}
+	{{/each}}
+</table>
 </template>
 
 <template name="loginRequired">
 	<br><br>
 	You must log in to use this site.
+</template>
+
+
+
+<template name="post">
+	<tr>
+		<td>{{category}}</td>
+    	<td>{{title}}</td>
+    	<td>{{description}}</td>
+    </tr>	
 </template>

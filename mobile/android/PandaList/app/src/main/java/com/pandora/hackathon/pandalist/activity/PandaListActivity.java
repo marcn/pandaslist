@@ -5,9 +5,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
+import android.widget.TextView;
+import com.keysolutions.ddpclient.android.DDPBroadcastReceiver;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.ddp.MyDDPState;
+import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
 
 
 public class PandaListActivity extends BaseActivity
@@ -22,6 +24,9 @@ public class PandaListActivity extends BaseActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private DDPBroadcastReceiver mReceiver;
+
+    private TextView myTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,10 @@ public class PandaListActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        MyDDPState.initInstance(getApplicationContext());
+
+        myTextView = (TextView) findViewById(R.id.textView);
     }
 
     public void onSectionAttached(int number) {
@@ -83,5 +92,18 @@ public class PandaListActivity extends BaseActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mReceiver = new DDPBroadcastReceiver(MyDDPState.getInstance(), this) {
+            @Override
+            protected void onSubscriptionUpdate(String changeType, String subscriptionName, String docId) {
+
+                myTextView.setText("Received something!");
+            }
+        };
     }
 }

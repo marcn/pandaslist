@@ -2,6 +2,7 @@ package com.pandora.hackathon.pandalist.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.activity.PostingActivity;
 
 
 /**
@@ -60,7 +62,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View mainView =  inflater.inflate(R.layout.fragment_listings_main, container, false);
         mFab = (FloatingActionButton)mainView.findViewById(R.id.fab);
-
+        mFab.setOnClickListener(this);
 
         return mainView;
     }
@@ -95,6 +97,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
         if (id == R.id.fab) {
             //open new Activity with Fragment createPost
+            Intent intent = new Intent(getActivity(), PostingActivity.class);
+
+            getActivity().startActivity(intent);
         }
     }
 

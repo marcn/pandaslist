@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="postTypes">
+        <item>Normal Listing</item>
+        <item>Bid Listing</item>
+        <item>Contest Listing</item>
+    </array>
+
+    <array name="postCategories">
+        <item>For Sale</item>
+        <item>Wanted</item>
+        <item>Housing</item>
+        <item>Gigs</item>
+    </array>
+
+
+    <array name="subCategories">
+        <item>Cars</item>
+        <item>Sofas</item>
+        <item>Cats</item>
+        <item>Tables</item>
+    </array>
+</resources>

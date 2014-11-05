@@ -71,7 +71,7 @@ public class BaseActivity  extends ActionBarActivity implements ListingsFragment
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.main_fragment, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
 

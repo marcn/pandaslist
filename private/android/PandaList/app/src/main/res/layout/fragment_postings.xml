@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        card_view:cardCornerRadius="4dp">
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            >
+
+        <Spinner
+            android:id="@+id/post_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/postTypes"
+            android:prompt="@string/type" />
+
+        <Spinner
+            android:layout_marginTop="10dip"
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/postCategories"
+            android:prompt="@string/category"
+            android:layout_below="@+id/post_type"
+            />
+
+        <Spinner
+            android:layout_marginTop="10dip"
+            android:id="@+id/subcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/subCategories"
+            android:prompt="@string/sub_category"
+            android:layout_below="@+id/category"
+            />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

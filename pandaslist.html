@@ -4,12 +4,6 @@
 
 <body>
 {{> loginButtons}}
-
-{{ #if currentUser }}
-{{> listings }}
-{{ else }}
-{{> loginRequired}}
-{{ /if }}
 </body>
 
 <template name="listings">
@@ -17,7 +11,11 @@
 	You are logged in as {{currentUser.profile.name}}, here are the listings: TBD
 </template>
 
-<template name="loginRequired">
+<template name="login">
 	<br><br>
 	You must log in to use this site.
+</template>
+
+<template name="home">
+	This is the home template
 </template>

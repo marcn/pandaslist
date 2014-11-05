@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.keysolutions.ddpclient.android;
+package com.pandora.hackathon.pandalist.ddp;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;

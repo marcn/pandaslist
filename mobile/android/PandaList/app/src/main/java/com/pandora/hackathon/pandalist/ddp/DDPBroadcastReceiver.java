@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.keysolutions.ddpclient.android;
+package com.pandora.hackathon.pandalist.ddp;
 
 import android.app.Activity;
 import android.app.AlertDialog;

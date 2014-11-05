@@ -2,8 +2,6 @@ package com.pandora.hackathon.pandalist.ddp;
 
 import android.content.Context;
 
-import com.keysolutions.ddpclient.android.DDPStateSingleton;
-
 /**
  * Created by psingh on 11/5/14.
  */

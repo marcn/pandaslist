@@ -30,6 +30,7 @@ cfs:tempstore@0.0.2
 cfs:upload-http@0.0.2
 cfs:worker@0.0.0
 check@1.0.2
+coffeescript@1.0.4
 ctl-helper@1.0.4
 ctl@1.0.2
 ddp@1.0.11
@@ -55,6 +56,8 @@ iron:url@1.0.0
 jquery@1.0.1
 json@1.0.1
 launch-screen@1.0.0
+lepozepo:s3@4.1.1
+lepozepo:streams@0.2.0
 less@1.0.11
 livedata@1.0.11
 localstorage@1.0.1

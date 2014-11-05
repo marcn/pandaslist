@@ -1,0 +1,23 @@
+<head>
+  <title>PandasList</title>
+</head>
+
+<body>
+{{> loginButtons}}
+
+{{ #if currentUser }}
+{{> listings }}
+{{ else }}
+{{> loginRequired}}
+{{ /if }}
+</body>
+
+<template name="listings">
+	<br><br>
+	You are logged in as {{currentUser.profile.name}}, here are the listings: TBD
+</template>
+
+<template name="loginRequired">
+	<br><br>
+	You must log in to use this site.
+</template>

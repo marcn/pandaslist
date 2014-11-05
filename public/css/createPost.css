@@ -1,0 +1,17 @@
+#createPost {
+  background-color: rgba(0,0,0,0.1);
+}
+
+#createPost h2 {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: normal;
+  margin-bottom: 3rem;
+}
+
+#createPost h3 {
+  display: inline-block;
+  width: 20rem;
+  text-align: right;
+  font-size: 1.5rem;
+}

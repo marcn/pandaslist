@@ -10,4 +10,6 @@ accounts-google
 accounts-ui
 service-configuration
 iron:router
+cfs:standard-packages
+cfs:filesystem
 

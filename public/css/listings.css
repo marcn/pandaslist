@@ -1,0 +1,57 @@
+#listings {
+}
+
+  #listings li {
+    display: block;
+    overflow: hidden;
+    vertical-align: top;
+    height: 10rem;
+    margin-bottom: 2rem;
+    background-color: #fff;
+    font-size: 0;
+  }
+
+    #listings li .imgFrame {
+      display: inline-block;
+      /*height: 100%;*/
+      width: 150px;
+      background-color: #666;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #listings li img {
+      max-width: 150px;
+      max-height: 200px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    #listings li .info {
+      display: inline-block;
+      width: 53rem;
+      padding: 1rem 1.5rem;
+      vertical-align: top;
+      overflow: hidden;
+    }
+
+    #listings li .info h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: normal;
+      display: block;
+      border-bottom: 1px solid #999;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    #listings li .info .price:before {
+      content: 'Price: ';
+    }
+
+    #listings li .info .location:before {
+      content: 'Location: ';
+    }
+

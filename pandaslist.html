@@ -3,19 +3,19 @@
 </head>
 
 <body>
-<div style="float:right">{{> loginButtons}}</div>
+{{> tempForm}}
+
+{{ #if currentUser }}
+{{> loginRequired}}
+{{ /if }}
+
+	<div style="float:right">{{> loginButtons}}</div>
 </body>
 
-<template name="listings">
-	<br><br>
-	You are logged in as {{currentUser.profile.name}}, here are the listings: TBD
-</template>
-
-<template name="login">
+<template name="loginRequired">
 	<br><br>
 	You must log in to use this site.
 </template>
 
-<template name="home">
-	This is the home template
-</template>
+
+

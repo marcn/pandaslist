@@ -1,0 +1,20 @@
+<template name="listings">
+	You are logged in as {{currentUser.profile.name}}, here are the listings: 
+
+	<table>
+	<th>Category</th>
+	<th>Title</th>
+	<th>Description</th>
+		{{#each listing}}
+			{{> row}}
+		{{/each}}
+	</table>
+</template>
+
+<template name="row">
+	<tr>
+		<td>{{category}}</td>
+    	<td>{{title}}</td>
+    	<td>{{description}}</td>
+    </tr>	
+</template>

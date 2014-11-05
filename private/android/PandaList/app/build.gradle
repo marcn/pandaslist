@@ -25,5 +25,5 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.0.6'
     compile "com.google.android.gms:play-services:4.3.+"
     compile "com.android.support:appcompat-v7:21.0.+"
-
+    compile group: 'com.keysolutions', name: 'android-ddp-client', version: '0.5.7.+'
 }

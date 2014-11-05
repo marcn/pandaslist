@@ -14,16 +14,15 @@
 * limitations under the License.
 */
 
-package com.keysolutions.ddpclient.android;
+package com.pandora.hackathon.pandalist.ddp;
 
-import com.keysolutions.ddpclient.android.DDPStateSingleton.DDPSTATE;
 
 /**
  * Interface methods for event broadcasts
  * @author kenyee
  */
 public interface DDPStateBroadcasts {
-    void broadcastConnectionState(DDPSTATE ddpstate);
+    void broadcastConnectionState(DDPStateSingleton.DDPSTATE ddpstate);
     void broadcastDDPError(String errorMsg);
     void broadcastSubscriptionChanged(String subscriptionName,
             String changetype, String docId);

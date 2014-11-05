@@ -7,6 +7,10 @@ Router.route('/create', function () {
 	this.render('create');
 });
 
+Router.route('/settings', function () {
+	this.render('settings');
+});
+
 Router.route('/detail:_id', function () {
 	// TBD
 	//var item = Items.findOne({_id: this.params._id});

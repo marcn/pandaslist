@@ -1,10 +1,13 @@
 if (Meteor.isClient) {
 	Template.listings.helpers({
 		listing: function() {
+			var filter = {};
 			if(this.category)
-				return Posts.find({category: this.category});
-			else
-				return Posts.find();
-			}
+				filter.category = this.category;
+			if(this.subCategory && this.subCategory !== "All")
+				filter.subCategory = this.subCategory;
+
+			return Posts.find(filter);
+		}
 	});
 }	

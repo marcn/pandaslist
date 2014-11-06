@@ -1,0 +1,36 @@
+<com.pandora.hackathon.pandalist.ui.ObservableScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:iosched="http://schemas.android.com/apk/res-auto"
+    xmlns:plus="http://schemas.android.com/apk/lib/com.google.android.gms.plus"
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:fillViewport="true"
+    android:background="#fff">
+
+    <FrameLayout
+        android:id="@+id/scroll_view_child"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
+
+        <!-- Background photo -->
+        <FrameLayout android:id="@+id/session_photo_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/session_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
+
+        <include layout="@layout/activity_post_details" />
+
+        <!-- FAB -->
+
+    </FrameLayout>
+
+</com.pandora.hackathon.pandalist.ui.ObservableScrollView>

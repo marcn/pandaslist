@@ -24,6 +24,7 @@
             android:contentDescription="@string/cd_post_image" />
 
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Sample Title Goes Here"
@@ -58,7 +59,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here."/>
+            android:text="Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here."/>
 
         <Button
             android:layout_marginTop="5dp"
@@ -68,5 +69,4 @@
             android:text="Purchase" />
 
     </LinearLayout>
-
 </ScrollView>

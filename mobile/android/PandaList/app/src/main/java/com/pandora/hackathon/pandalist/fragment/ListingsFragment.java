@@ -25,6 +25,7 @@ import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.activity.NewPostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
@@ -171,7 +172,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     public void onItemClick(int position) {
         PostItemData itemDataClick = new PostItemData();//myRecyclerAdapter.getItemId(position);
 
-        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+        Intent intent = new Intent(getActivity(), NewPostDetailActivity.class);
 
         Bundle b = new Bundle();
         b.putSerializable(PandasConstants.INTENT_DATA_POST_ITEM, itemDataClick);

@@ -558,4 +558,8 @@ public class DDPStateSingleton extends MeteorAuthCommands
         }
         return email;
     }
+
+    public void call(String method) {
+        mDDP.call(method, new Object[]{});
+    }
 }

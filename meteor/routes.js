@@ -41,10 +41,26 @@ Router.route('/detail/:_id', function () {
 }, {name: "post.show"});
 
 Router.onBeforeAction(function() {
- 	if (! Meteor.userId()) {
- 		this.layout('emptyLayout');
+	if(Meteor.isClient && !Meteor.userId()) {
+	 	this.layout('emptyLayout');
 		this.render('login');
- 	} else {
+	 } else {
 		this.next();
 	}
 });
+
+Router.map(function() {
+   this.route('methodExample', {
+       path: '/api/call',
+       where: 'server',
+       action: function() {
+           // GET, POST, PUT, DELETE
+           var requestMethod = this.request.method;
+           // Data from a POST request
+           var requestData = this.request.body;
+           // Could be, e.g. application/xml, etc.
+           this.response.writeHead(200, {'Content-Type': 'text/html'});
+           this.response.end('<html><body>Your request was a ' + requestMethod + '</body></html>');
+       }
+   });
+});   

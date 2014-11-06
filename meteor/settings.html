@@ -1,4 +1,22 @@
 
 <template name="settings">
 	User settings screen
+
+	{{>subscriptions}}
+</template>
+
+<template name="subscriptions">
+	<form>
+		<input type="submit" value="Save"/>	
+		{{#each categories}}
+	      <h2>{{name}}</h2>
+
+	      {{#each subCategories}}
+	      	<div>
+	      		<label for="sub-{{subCategory}}">{{subCategory}}</label>
+	      		<input id="sub-{{subCategory}}" value="{{category}}.{{subCategory}}" name="sub-{{subCategory}}" {{isChecked}} type="checkbox" />
+	      	</div>
+	      {{/each}}
+	    {{/each}}
+	</form>	    
 </template>

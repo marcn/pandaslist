@@ -16,14 +16,6 @@
 
 package com.pandora.hackathon.pandalist.ddp;
 
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.ConcurrentHashMap;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +29,14 @@ import com.keysolutions.ddpclient.DDPClient.CONNSTATE;
 import com.keysolutions.ddpclient.DDPClient.DdpMessageField;
 import com.keysolutions.ddpclient.DDPClient.DdpMessageType;
 import com.keysolutions.ddpclient.DDPListener;
+
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Base/common handling of DDP state with default handling of collection data as maps
@@ -70,18 +70,19 @@ public class DDPStateSingleton extends MeteorAuthCommands
     
     /** instance of this class because it's a singleton */
     protected static DDPStateSingleton mInstance;
-    
+
     /**
      * connection info for your Meteor server
      * Override to point to your server
      */
-    protected static final String sMeteorServer = "pandaslist.meteor.com/";
+    protected static final String sMeteorServer = "10.0.3.2";
     /**
      * connection info for your Meteor server
      * Override to point to your server's port
      */
-    protected static final Integer sMeteorPort = 80;
-    
+    protected static final Integer sMeteorPort = 3000;
+
+
     /** reference to lower level DDP websocket client */
     protected DDPClient mDDP;
 

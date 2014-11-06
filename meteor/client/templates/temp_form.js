@@ -12,17 +12,19 @@ Template.tempForm.events({
 	},
 
 	'change .file_bag': function(event, template) {
-		event.preventDefault();
-		var files = event.target.files;
-        S3.upload(files,"/images",function(e,r){
-            console.log(r);
-        });
+		FS.Utility.eachFile(event, function(file) {
+			Images.insert(file, function (err, fileObj) {
+			//Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+			console.log(err);
+			console.log(fileObj);
+			});
+		});
 	}
 
 });
 
 Template.tempForm.helpers({
     "files": function(){
-        return S3.collection.find();
+        return Images.find();
     }
 });

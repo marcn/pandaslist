@@ -1,10 +1,5 @@
 <template name="listings">
 
-  <link rel="stylesheet" type="text/css" href="/css/listings.css">
-
-	You are logged in as {{currentUser.profile.name}}, here are the listings:
-
-
   <ul id="listings">
     {{#each listing}}
       {{> row}}
@@ -23,7 +18,7 @@
 
   <li>
     <div class="imgFrame">
-      <img src="img/fpo.png">
+      <img src="/img/fpo.png">
     </div>
     <div class="info">
       <h3>{{title}}</h3>

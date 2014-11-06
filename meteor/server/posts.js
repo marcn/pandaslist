@@ -4,13 +4,15 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Apt for rent",
             "description": "Mission Street Apt for rent",
-            "category": "Housing"
+            "category": "Housing",
+            "subCategory": "apartments/housing"
         });
 
         Posts.insert({
             "title": "Apt for rent",
             "description": "Mission Street Apt for rent",
-            "category": "Housing"
+            "category": "Housing",
+            "subCategory": "apartments/housing"
         });
 
         Posts.insert({
@@ -46,7 +48,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Cal vs BYU tickets",
             "description": "I bought tickets to the wrong game. My mistake is your gain!\n\n\n2 tickets to BYU @ Cal on November 29th.\nSection TT\nRow 4\nSeats 3 and 4\n\nSelling for $80 for the pair on CL.\n$65 for the pair to Pandora employees\n\nPaypal accepted.\n",
-            "category": "For Sale"
+            "category": "For Sale",
+            "subCategory": "tickets"
         });
 
         Posts.insert({
@@ -58,7 +61,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Josephine - home cooked meals - East Bay",
             "description": "I've been using this local service to meet neighbors and score delicious food at a reasonable price. If you're in the E Bay you might like it too… \n\n\nHere' a message from the nice folks at Josephine:\n\nHello Pandora people!\n\nMy name is Charley and I work for a company called Josephine - a marketplace for home cooked meals. For the uninitiated, we're a local company that features cooks in Oakland/Berkeley making their favorite homestyle meals for you and your family to pick up. You can browse meals and RSVP online with your cell phone number and then pick up the food to-go during a designated pick-up window at the cook's home. \n\nThe idea is to eventually have a robust marketplace of offerings in different locations and different price points, but for now we're mostly in North Oakland/Berkeley and our meals are between $7-10. The portions are hearty and the food is made with love by some seriously awesome chefs, mothers, urban homesteaders, and community advocates. Chris Horgan has been to a few of our meals and Will Gotshall Maxon's wife was actually one of our very first cooks, so we actually owe Pandora a good amount of credit for helping us get off the ground.\n\nCome check out one of our meals and mention you work at Pandora and we'll throw in a free fresh pressed juice or a dessert with your meal :)\n\n-- \n\nHere are our upcoming meals:\n\nJapanese Hot Pot – Seafood Yosenabe with Vegetables ($9)\nTuesday, September 30\nNorth Oakland (near 66th and Shattuck)\nMas' Yosenabe made with a miso based broth and bite-sized ingredients including salmon, manila clams, prawns, scallops, squid, napa cabbage, mushrooms, snow peas as well as some tofu. The dish will be filled out with udon noodles.\nMoms Beef Stew with Root Veggies and Buttered Green Beans ($10)\nWednesday, October 1 5-7pm\nWest Berkeley (near San Pablo and University)\nTerry's mom's beef stew recipe, made with Niman Ranch pork, onions, garlic, bay leaf, carrots, parsnips and potatoes. The stew is served over buttered noodles with a side of buttered green beans with tarragon, and will be gluten free since it will be thickened with brown rice flour.\nGet in touch if you have any questions. Number is 973 879 6447 and email is charley@josephine.com\n\nThanks and cheers!\n\nChris Horgan | Senior Music Analyst | Pandora\n2101 Webster St 16th Fl, Oakland, CA94612\nm 415.794.3786 | chorgan@pandora.com\n\n\n",
-            "category": "Services"
+            "category": "Services",
+            "subCategory": "household"
         });
 
         Posts.insert({
@@ -148,7 +152,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Sublease available - Lake Merritt",
             "description": "I am forwarding this on from someone\n outside of Pandora\n\n\n*********\n\n\nI am looking for a\ntenant to sublease my furnished large one bedroom apartment with parking, laundry and utilities paid. The apartment has\n a fresh coat of paint, is updated and modern inside and will come fully furnished. It is located right on Grand Ave in the Lake Merritt neighborhood. The rent is $1800 and is an incredibly great rental price for the neighborhood, since that's what most places\n in that neighborhood go for without furnishing! This spot is super clean, super safe and right in short walking distance to bars, restaurants, farmers market, etc.\nThis apartment is large enough and is great for a couple!\nThe landlord and I need the new renter or renters to meet all income requirements and have a clean background check. The new renters must sign a year lease but should also\n interested in staying more long term if necessary. I don't want to leave since I love it so much but I am subleasing it furnished because I may be back to Oakland at another point in time. \n\n\nThis apartment will go quick! I am showing it by appointment only if the description meets your needs. Please send an email to malfitanod@gamil.com if interested. \n\nThank You, \nDaniella Malfitano",
-            "category": "Housing"
+            "category": "Housing",
+            "subCategory": "apartments/housing"
         });
 
         Posts.insert({
@@ -286,7 +291,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Roommate Needed for Apt Near Pandora Offices",
             "description": "Hi,\nMy house guest, Sharmani, just landed a sweet apartment near the Pandora office. And, she is looking for a roommate. So I wanted to pass along the details and her info. \n\nSharmani is a recent transplant from NYC. She is working as a graphic designer for a start up in SF. As a roommate, she is friendly, considerate, clean in the kitchen and easy to hang out with. Below is the information on the apartment and some photos are attached.\n\n————\n\nLooking for 1 other roommate - room's over at 22nd st & it's 1000 bucks a mth (not including utilities). If you're fairly sane, clean and responsible with paying bills on time, you should totally send me your info. Otherwise, please don't. \n\nThe place is pretty sweet. Comes with a backyard and 2 living rooms - I'm planning of making one of them into an office/art studio. So if you make art or just want more space for working this would be perfect. \n\nI'm sure you're familiar with the routine. Send me details about yourself (1500 word essays would be pushing it, but a paragraph or two would be cool) and we can take it from there!\n\nEmail me at sharm.d88@gmail.com.\n————\n\nGood luck!\n",
-            "category": "Housing"
+            "category": "Housing",
+            "subCategory": "house swap"
         });
 
         Posts.insert({
@@ -304,7 +310,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Daniel Popsicle at Friday Nights at the de Young",
             "description": "Hi Oakland Pandas,\n\nDan Plonsey's \"Daniel Popsicle\" large-ish band (of which I'm a part) is playing tonight at the DeYoung Museum in Golden Gate Park as part of their \"Friday Nights at the de Young\" series:\n\nhttp://deyoung.famsf.org/calendar/friday-nights-de-young-curated-artist-fellow-lexa-walsh\n\nThere will also be art viewing, art making, a film screening, and more music by the Neil Young tribute band \"Kneel\".  It all sounds like fun and I hope you can attend!\n\nMyra\n",
-            "category": "Gigs"
+            "category": "Gigs",
+            "subCategory": "music"
         });
 
         Posts.insert({
@@ -370,7 +377,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "Pandora U Happy Hour 7th Floor",
             "description": "Hi Oakland –\n \nThe Pandora U Happy Hour will be starting at 5:00pm in the 7th Floor Kitchen. Come join us for beer and snacks!\n \nSee you there! J",
-            "category": "Gigs"
+            "category": "Gigs",
+            "subCategory": "party"
         });
 
         Posts.insert({
@@ -556,7 +564,8 @@ Meteor.startup(function() {
         Posts.insert({
             "title": "JAY-Z & BEYONCE Tickets",
             "description": "Hi Pandas,\n\nThere are (2) extra tickets for the On the Run concert tomorrow, Tuesday 8/5 at AT&T Park – Row 2, Section Lower Field for $290 each.\n\nPlease reply directly to me if you’re interested.\n\nThanks!\nA.",
-            "category": "For Sale"
+            "category": "For Sale",
+            "subCategory": "concert"
         });
 
         Posts.insert({

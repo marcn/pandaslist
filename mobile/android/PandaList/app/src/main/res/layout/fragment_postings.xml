@@ -78,72 +78,140 @@
                 android:padding="16dp"
                 android:layout_below="@+id/create_post_header">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/main_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Send Post to:"
-                    android:textColor="@color/dark_grey"
-                    android:textAppearance="@style/titleText"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_alignParentTop="true"
-                    />
+                    <LinearLayout
+                        android:id="@+id/category_container"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
 
                     <TextView
-                        android:id="@+id/location_name"
-                        android:layout_width="wrap_content"
+                            android:id="@+id/category_title"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:text="Type:"
+                            android:textColor="@color/dark_grey"
+                            android:textAppearance="@style/titleText"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_alignParentTop="true"
+                            />
+
+                        <Spinner
+                            android:id="@+id/post_type"
+                            android:gravity="right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/dark_grey"
+                            android:entries="@array/postTypes"
+                            android:layout_marginRight="8dp"
+                            android:prompt="@string/type" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/title_container"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Oakland"
-                        android:textStyle="bold"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:id="@+id/main_title"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:text="Office:"
+                            android:textColor="@color/dark_grey"
+                            android:textAppearance="@style/titleText"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_alignParentTop="true"
+                            />
+
+                        <Spinner
+                            android:id="@+id/location_name"
+                            android:gravity="right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/dark_grey"
+                            android:entries="@array/postTypes"
+                            android:layout_marginRight="8dp"
+                            android:prompt="@string/type" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/title_label_container"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+
+                    <TextView
+                            android:id="@+id/title_label"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:text="Title"
+                            android:textColor="@color/dark_grey"
+                            android:textAppearance="@style/titleText"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_alignParentTop="true"
+                            />
+                        <Spinner
+                            android:id="@+id/category"
+                            android:gravity="right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/postCategories"
+                            android:textColor="@color/dark_grey"
+                            android:prompt="@string/category"
+                            android:layout_marginRight="8dp"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/subcategory_container"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        >
+
+
+                    <TextView
+                            android:id="@+id/listing_type"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:text="Listing Type"
+                            android:textColor="@color/dark_grey"
+                            android:textAppearance="@style/titleText"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_alignParentTop="true"
+                            />
+
+                        <Spinner
+                        android:id="@+id/subcategory"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/subCategories"
+                        android:prompt="@string/sub_category"
                         android:textColor="@color/dark_grey"
-                        android:textAppearance="@style/titleText"
-                        android:layout_marginLeft="8dp"
-                        android:layout_toRightOf="@id/main_title"
                         android:layout_marginRight="8dp"
-                        android:layout_alignParentTop="true"
                         />
-
-                <Spinner
-                    android:id="@+id/post_type"
-                    android:layout_below="@id/main_title"
-                    android:layout_marginTop="10dip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/dark_grey"
-                    android:entries="@array/postTypes"
-                    android:layout_marginRight="8dp"
-                    android:prompt="@string/type" />
-
-                <Spinner
-                    android:layout_marginTop="10dip"
-                    android:id="@+id/category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/postCategories"
-                    android:textColor="@color/dark_grey"
-
-                    android:prompt="@string/category"
-                    android:layout_marginRight="8dp"
-                    android:layout_below="@+id/post_type"
-                    />
-
-                <Spinner
-                    android:layout_marginTop="10dip"
-                    android:id="@+id/subcategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/subCategories"
-                    android:prompt="@string/sub_category"
-                    android:textColor="@color/dark_grey"
-                    android:layout_marginRight="8dp"
-                    android:layout_below="@+id/category"
-                    />
+                    </LinearLayout>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -158,14 +226,13 @@
                     android:textColorHint="@color/medium_grey"
                     android:textAppearance="@style/titleText"
                     android:singleLine="true"
-                    android:layout_below="@id/subcategory"
                     />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:id="@+id/price"
-                    android:layout_marginTop="8dip"
+                    android:layout_marginTop="10dp"
                     android:hint="Set Price"
                     android:background="@drawable/bottom_line"
                     android:layout_marginLeft="8dp"
@@ -176,7 +243,6 @@
                     android:textColor="@color/dark_grey"
                     android:textColorHint="@color/medium_grey"
                     android:drawableLeft="@drawable/dollar"
-                    android:layout_below="@id/title"
                     />
 
                 <EditText
@@ -193,10 +259,10 @@
                     android:layout_marginLeft="8dp"
                     android:textColorHint="@color/medium_grey"
                     android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_below="@+id/price"/>
+                    android:layout_marginTop="10dp"
+                    />
 
-                </RelativeLayout>
+                </LinearLayout>
             </ScrollView>
 
         </RelativeLayout>

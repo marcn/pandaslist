@@ -3,16 +3,12 @@ package com.pandora.hackathon.pandalist.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.ClickableSpan;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pandora.hackathon.pandalist.R;
@@ -30,7 +26,7 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     private Spinner mCategorySpinner;
     private Spinner mSubCategorySpinner;
     private View mPhotoView;
-    private TextView mLocationName;
+    private Spinner mLocationName;
     private View mCameraView;
     private View mLocationOfficesView;
     private View mCreatePostView;
@@ -62,19 +58,21 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
         mCreatePostView = mainView.findViewById(R.id.send_post);
         mCreatePostView.setOnClickListener(this);
 
-        mLocationName = (TextView)mainView.findViewById(R.id.location_name);
-        setLocationLinkSpan(mLocationName.getText().toString());
-        mLocationName.setOnClickListener(this);
+        mLocationName = (Spinner)mainView.findViewById(R.id.location_name);
+        //setLocationLinkSpan(mLocationName.getText().toString());
+        //mLocationName.setOnClickListener(this);
         return mainView;
     }
 
     private ClickableSpan mClickableSpan;
 
     private void setLocationLinkSpan(String locationText) {
-        SpannableString text = new SpannableString(locationText);
-        text.setSpan(new UnderlineSpan(), 0, mLocationName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mLocationName.setText(text, TextView.BufferType.SPANNABLE);
-        mLocationName.setTextColor(getResources().getColor(R.color.pandora_indigo));
+
+
+        //SpannableString text = new SpannableString(locationText);
+        //text.setSpan(new UnderlineSpan(), 0, mLocationName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //mLocationName.setText(text, TextView.BufferType.SPANNABLE);
+        //mLocationName.setTextColor(getResources().getColor(R.color.pandora_indigo));
 
     }
     @Override

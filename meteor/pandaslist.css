@@ -142,7 +142,7 @@ textarea {
   #headerLogo {
     display: table-cell;
 
-    background-color: #000;
+    /*background-color: #000;*/
     background-image: url(../img/logo.png);
     background-size: 75%;
     background-repeat: no-repeat;
@@ -280,7 +280,7 @@ textarea {
     cursor: pointer;
   }
 
-  #nav h2.active:before { -webkit-transform: rotate(-405deg); }
+  #nav h2.active:before { -webkit-transform: rotate(-315deg); }
 
   #nav h2:before {
     content: '';
@@ -337,7 +337,7 @@ textarea {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     height: 100%;
     -webkit-flex: 4;
             flex: 4;

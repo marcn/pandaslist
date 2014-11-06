@@ -78,6 +78,23 @@ if (Meteor.isClient) {
   });
 
 
+/* begin JS for details page (help me move this later)*/
+
+Template.detail.events({
+  "click .postThumbs span": function(evt) {
+
+    var src = $(evt.currentTarget).children('img').attr('src');
+
+    // $('.postThumbs').children().removeClass('active');
+    // $(evt.currentTarget).addClass('active');
+
+    $('#postHero img').attr('src', src);
+
+    console.log(src);
+
+  }
+});
+
 }
 
 if (Meteor.isServer) {

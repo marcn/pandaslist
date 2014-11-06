@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
@@ -21,9 +20,9 @@ import com.pandora.hackathon.pandalist.activity.PostingActivity;
 /**
  * Created by jmendez on 11/5/14.
  */
-public class PostingFragment extends BaseFragment implements View.OnClickListener {
+public class PostDetailFragment extends BaseFragment implements View.OnClickListener {
 
-    public PostingFragment() {}
+    public PostDetailFragment() {}
 
 
     private Spinner mPostTypeSpinner;
@@ -35,8 +34,8 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     private View mLocationOfficesView;
     private View mCreatePostView;
 
-    public static PostingFragment newInstance() {
-        PostingFragment fragment = new PostingFragment();
+    public static PostDetailFragment newInstance() {
+        PostDetailFragment fragment = new PostDetailFragment();
         return fragment;
     }
 
@@ -44,9 +43,9 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mainView =  inflater.inflate(R.layout.fragment_postings, container, false);
+        View mainView =  inflater.inflate(R.layout.fragment_post_detail, container, false);
         mainView.setOnClickListener(this);
-        mPostTypeSpinner = (Spinner)mainView.findViewById(R.id.post_type);
+      /*  mPostTypeSpinner = (Spinner)mainView.findViewById(R.id.post_type);
         mCategorySpinner = (Spinner)mainView.findViewById(R.id.category);
         mSubCategorySpinner = (Spinner)mainView.findViewById(R.id.subcategory);
 
@@ -64,13 +63,15 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
 
         mLocationName = (TextView)mainView.findViewById(R.id.location_name);
         setLocationLinkSpan(mLocationName.getText().toString());
-        mLocationName.setOnClickListener(this);
+        mLocationName.setOnClickListener(this);*/
         return mainView;
     }
 
     private ClickableSpan mClickableSpan;
 
     private void setLocationLinkSpan(String locationText) {
+
+
         SpannableString text = new SpannableString(locationText);
         text.setSpan(new UnderlineSpan(), 0, mLocationName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mLocationName.setText(text, TextView.BufferType.SPANNABLE);
@@ -80,23 +81,7 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.main_view) {
 
-        } else if (id == R.id.photo_gallery) {
-
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            getActivity().startActivityForResult(photoPickerIntent, PostingActivity.REQUEST_IMAGE_FROM_GALLERY);
-
-        }  else if (id == R.id.photo_camera) {
-            dispatchTakePictureIntent();
-
-        } else if(id == R.id.location_office || id == R.id.location_name) {
-            PopupMenu menu = createLocationOfficesPopup(v);
-            menu.show();
-        } else if (id == R.id.send_post) {
-            Toast.makeText(getActivity(), "Create Post yay!!", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private PopupMenu createLocationOfficesPopup(View anchor) {

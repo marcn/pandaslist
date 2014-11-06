@@ -22,7 +22,10 @@ import android.widget.ArrayAdapter;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.PandasConstants;
+import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.activity.PostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
@@ -45,7 +48,7 @@ import java.util.Map;
  * create an instance of this fragment.
  *
  */
-public class ListingsFragment extends BaseFragment implements View.OnClickListener {
+public class ListingsFragment extends BaseFragment implements View.OnClickListener, ListingRecyclerAdapter.RecyclerViewOnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -112,7 +115,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
         mPostingsRecyclerView = (RecyclerView) mainView.findViewById(R.id.postings_listView);
         mPostingsRecyclerView.setHasFixedSize(true);
-        mPostingsRecyclerView.setAdapter(myRecyclerAdapter = new ListingRecyclerAdapter(createMockList(), R.layout.posts_list_item));
+        mPostingsRecyclerView.setAdapter(myRecyclerAdapter = new ListingRecyclerAdapter(createMockList(), R.layout.posts_list_item, this));
         mPostingsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
         mPostingsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPostingsRecyclerView.setOnScrollListener(mRecycleListViewScrollListener);
@@ -162,6 +165,19 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
             getActivity().startActivity(intent, bundle);
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        PostItemData itemDataClick = new PostItemData();//myRecyclerAdapter.getItemId(position);
+
+        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+
+        Bundle b = new Bundle();
+        b.putSerializable(PandasConstants.INTENT_DATA_POST_ITEM, itemDataClick);
+        intent.putExtras(b);
+
+        getActivity().startActivity(intent);
     }
 
     /**

@@ -23,6 +23,10 @@
         <activity android:name=".activity.PostingActivity"
             android:label="@string/postings"
             android:theme="@style/PandasNoActionBar"/>
+
+        <activity android:name=".activity.LoginActivity"
+            android:label="Login" >
+        </activity>
     </application>
 
 </manifest>

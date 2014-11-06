@@ -6,30 +6,36 @@
 
 
     <h3>Type</h3>
-    <select>
-        <option>-select one-</option>
-        <option>Ring</option>
-        <option>Necklace</option>
+    <select class="listing_type">
+        <option>Normal Listing</option>
+        <option>Bid Listing</option>
+        <option>Contest Listing</option>
     </select>
 
     <h3>Category</h3>
+    <select class="category">
+        <option value="">-select one-</option>
+        {{ #each categories }}
+        <option>{{name}}</option>
+        {{ /each }}
+    </select>
+
+    {{ #if subcategories }}
+    <h3>Sub Category</h3>
     <select>
         <option>-select one-</option>
-        <option>Ring</option>
-        <option>Necklace</option>
-        <option>Earrings</option>
-        <option>Bracelet</option>
-        <option>Other</option>
+        {{ #each subcategories }}
+        <option>{{this}}</option>
+        {{ /each }}
     </select>
+    {{ /if}}
 
     <h3>Office Location</h3>
     <select>
         <option>-select one-</option>
-        <option>Ring</option>
-        <option>Necklace</option>
-        <option>Earrings</option>
-        <option>Bracelet</option>
-        <option>Other</option>
+        {{ #each locations }}
+        <option {{defaultLocationSelected}}>{{name}}</option>
+        {{ /each }}
     </select>
 
     <h3>Title</h3>

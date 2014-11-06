@@ -11,6 +11,7 @@ Router.route('/', function () {
 });
 
 Router.route('/create', function () {
+	Session.set("postCategorySelected", null);
 	this.render('create');
 });
 
@@ -32,6 +33,7 @@ Router.route('/detail/:_id', function () {
 
 Router.onBeforeAction(function() {
  	if (! Meteor.userId()) {
+ 		this.layout('emptyLayout');
 		this.render('login');
  	} else {
 		this.next();

@@ -49,14 +49,10 @@
 
     <ul class="photoPreview">
     {{#each files}}
-    <!--
-        <p>{{percent_uploaded}}%</p>
-        <p><img src="{{url}}" style="max-width: 200px"></p>
-    -->
-        <li>
-            <img src="/img/fpo.png" style="max-width: 200px">
+        <li data-id="{{_id}}">
+            <img src="{{url}}" style="max-width: 200px">
             <div class="options">
-                <input type="radio" name="coverPhoto" value="imageindex">Cover Photo<br>
+                <input type="radio" name="coverPhoto" value="{{_id}}" {{coverPhotoChecked}}>Cover Photo<br>
                 <a>Remove</a>
             </div>
         </li>

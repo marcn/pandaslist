@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.activity.PandaListActivity;
+import com.pandora.hackathon.pandalist.data.Category;
+import com.pandora.hackathon.pandalist.data.DataManager;
 import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
 import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
@@ -60,6 +62,10 @@ public class BaseFragment extends Fragment {
             @Override
             protected void onSubscriptionUpdate(String changeType, String subscriptionName, String docId) {
                 Log.d("DDP UPDATE", "changeType=" + changeType + ",subName=" + subscriptionName + ",docId=" + docId);
+                //FIXME : Not the right place to build data set
+                if(subscriptionName.equals(Category.COLLECTION_NAME)) {
+                    DataManager.getInstance().addCategory(subscriptionName, docId);
+                }
                 PandaListApplication.getBus().post(new DataChangeEvent(subscriptionName, changeType, docId));
             }
         };

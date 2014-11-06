@@ -14,5 +14,6 @@
     <string name="type">Type</string>
     <string name="category">Category</string>
     <string name="sub_category">Subcategory</string>
+    <string name="gcm_sender_id">338135990728</string>
 
 </resources>

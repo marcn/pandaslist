@@ -1,17 +1,25 @@
 package com.pandora.hackathon.pandalist.fragment;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
@@ -19,9 +27,12 @@ import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.pandora.hackathon.pandalist.events.DataChangeEvent;
+import com.pandora.hackathon.pandalist.ui.ListingRecyclerAdapter;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 
@@ -44,12 +55,20 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     private String mParam1;
     private String mParam2;
 
-    private ListView postingsListView;
+    private RecyclerView mPostingsRecyclerView;
+    private ListingRecyclerAdapter myRecyclerAdapter;
+
     private HashSet<String> postingsIdsSet;
     private ArrayAdapter<String> postingsAdapter;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton mFab;
+    private int mScreenWidth;
+    private int mScreenHeight;
+
+    private float mActionBarHeight;
+    private Drawable mActionBarBackgroundDrawable;
+
     public ListingsFragment() {
         // Required empty public constructor
     }
@@ -69,20 +88,38 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        mScreenWidth = size.x;
+        mScreenHeight = size.y;
+
+        final TypedArray styledAttributes = getActivity().getTheme().obtainStyledAttributes(
+                new int[] { android.R.attr.actionBarSize });
+        mActionBarHeight = styledAttributes.getDimension(0, 0);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActionBar().setSubtitle("SubCategory");
         // Inflate the layout for this fragment
         View mainView =  inflater.inflate(R.layout.fragment_listings_main, container, false);
         mFab = (FloatingActionButton)mainView.findViewById(R.id.fab);
         mFab.setOnClickListener(this);
 
-        postingsListView = (ListView) mainView.findViewById(R.id.postings_listView);
+        mPostingsRecyclerView = (RecyclerView) mainView.findViewById(R.id.postings_listView);
+        mPostingsRecyclerView.setHasFixedSize(true);
+        mPostingsRecyclerView.setAdapter(myRecyclerAdapter = new ListingRecyclerAdapter(createMockList(), R.layout.posts_list_item));
+        mPostingsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
+        mPostingsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mPostingsRecyclerView.setOnScrollListener(mRecycleListViewScrollListener);
+
         postingsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
         postingsIdsSet = new HashSet<String>();
-        postingsListView.setAdapter(postingsAdapter);
+
 
 
         return mainView;
@@ -147,6 +184,20 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         PandaListApplication.getDDP().subscribe("posts", new Object[]{});
     }
 
+    /** We need to return an Data object model
+     * to populate the adapter
+     * @return
+     */
+    private List<Object> createMockList() {
+        List<Object> list = new ArrayList<Object>(6);
+        list.add(new Object());
+        list.add(new Object());
+        list.add(new Object());
+        list.add(new Object());
+        list.add(new Object());
+        return list;
+    }
+
     @Subscribe
     public void onDataChangeEvent(DataChangeEvent event) {
         if (event.subscriptionName.equals("posts")) {
@@ -159,4 +210,44 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             }
         }
     }
+
+    private float globalScroll;
+
+    private RecyclerView.OnScrollListener mRecycleListViewScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
+                globalScroll += dy;
+
+
+                ActionBar actionBar = getActionBar();
+                if (globalScroll >= mActionBarHeight) {
+                    if (actionBar.isShowing()) {
+                        actionBar.hide();
+                        ObjectAnimator.ofFloat(mFab, "translationY", mFab.getTranslationY(), 500).setDuration(250).start();
+                    }
+                    globalScroll = 0;
+
+                } else if (dy <= 0) {
+                    if (!actionBar.isShowing()) {
+                        actionBar.show();
+                        ObjectAnimator.ofFloat(mFab, "translationY", mScreenHeight, 0).setDuration(250).start();
+                    }
+                    globalScroll = 0;
+                }
+
+
+            }
+        }
+
+    };
+
 }

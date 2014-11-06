@@ -16,10 +16,11 @@
 
     <input type="file" class="file_bag">
 
+    <p>
     {{#each files}}
-        <p>{{percent_uploaded}}%</p>
-        <p><img src="{{url}}" style="max-width: 200px"></p>
+        <img src="{{url}}" style="max-width: 200px">
     {{/each}}
+    </p>
 
     <br>
 		<input type="submit" value="Submit"/>

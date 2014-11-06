@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="320dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_launcher"
+            android:contentDescription="@string/cd_post_image" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title Goes Here"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/post_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Small description goes here"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/post_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price: $599"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/post_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location: OAK"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

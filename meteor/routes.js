@@ -8,6 +8,7 @@ Router.route('/', function () {
 	this.render('listings');
 }, {
 	name: 'listings'
+	//this.render('listings');
 });
 
 Router.route('/create', function () {

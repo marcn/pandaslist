@@ -14,7 +14,7 @@ if (Meteor.isServer) {
       console.log("Meow meteor");
       var gcm = Meteor.npmRequire('node-gcm');
       var message = new gcm.Message();
-      var sender = new gcm.Sender('AIzaSyDbvGCuwcCVKeSspP0rLuCPdKNdjG6J8uI')
+      var sender = new gcm.Sender('APIKEY');
       console.log(registrationIds);
       sender.sendNoRetry(message, registrationIds, function (err, result) {
         if(err){

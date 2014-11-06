@@ -201,7 +201,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
     @Subscribe
     public void onDPPConnect(DPPConnectEvent event) {
-        PandaListApplication.getDDP().subscribe("posts", new Object[]{});
+        //PandaListApplication.getDDP().subscribe("posts", new Object[]{});
     }
 
     /** We need to return an Data object model

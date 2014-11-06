@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
+import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -451,12 +453,16 @@ public class NavigationDrawerFragment extends BaseFragment {
         wrapper = new SubscribeWrapper();
         wrapper.register();
 
-        //Get Categories
-        PandaListApplication.getDDP().call(DDPMethodResultEvent.CATEGORIES);
     }
 
     public class SubscribeWrapper {
         private boolean registered = false;
+
+        @Subscribe
+        public void onDDPConnectEVent(DPPConnectEvent event) {
+            //Get Categories
+            PandaListApplication.getDDP().call(DDPMethodResultEvent.CATEGORIES);
+        }
 
         @Subscribe
         public void onDDPMethodResultEvent(DDPMethodResultEvent event) {
@@ -473,11 +479,14 @@ public class NavigationDrawerFragment extends BaseFragment {
             listCategories.clear();
             listSubCategories.clear();
 
-            for(String category : data.keySet()) {
-                listCategories.add(category);
+            List<Map<String, Object>> categories = (List<Map<String, Object>>) data.get("categories");
 
-                List<String> subs = (List<String>)data.get(category);
-                listSubCategories.put(category, subs);
+            for(Map<String, Object> category : categories) {
+                String name = (String) category.get("name");
+                listCategories.add(name);
+
+                List<String> subs = (List<String>) category.get("subCategories");
+                listSubCategories.put(name, subs);
             }
         }
 

@@ -6,6 +6,7 @@ import java.util.Map;
  * Created by dsantiagorivera on 11/6/14.
  */
 public class DDPMethodResultEvent {
+    public static String CATEGORIES = "getCategories";
 
     public final String methodName;
     public final Map<String, Object> data;

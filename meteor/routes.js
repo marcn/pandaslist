@@ -19,17 +19,18 @@ Router.route('/settings', function () {
 	this.render('settings');
 });
 
+
 Router.route('/tempForm', function () {
 	this.render('tempForm');
 });
 
 Router.route('/detail/:_id', function () {
-	// TBD
-	//var item = Items.findOne({_id: this.params._id});
 	this.render('detail', {
-		//data: item
-  	});
-});
+		data: function() {
+			return Posts.findOne({_id: this.params._id});
+		}
+	});
+}, {name: "post.show"});
 
 Router.onBeforeAction(function() {
  	if (! Meteor.userId()) {

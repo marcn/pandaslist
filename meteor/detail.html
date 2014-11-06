@@ -1,10 +1,11 @@
-
 <template name="detail">
 
+  <a href="{{pathFor route='listings'}}">Back to Listings</a>
   <div id="post">
 
-    <h2>post title goes here</h2>
+    <h2>{{title}}</h2>
 
+    <div>{{description}}</div>
     <div id="postGallery">
       <div id="postHero">
         <img src="/img/fpo.png">
@@ -18,5 +19,4 @@
 
 
   </div>
-
 </template>

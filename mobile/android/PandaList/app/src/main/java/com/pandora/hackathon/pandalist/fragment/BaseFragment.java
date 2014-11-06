@@ -48,6 +48,8 @@ public class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        PandaListApplication.getBus().register(this);
+
         mReceiver = new DDPBroadcastReceiver(PandaListApplication.getDDP(), getActivity()) {
 
             @Override
@@ -58,7 +60,7 @@ public class BaseFragment extends Fragment {
             @Override
             protected void onSubscriptionUpdate(String changeType, String subscriptionName, String docId) {
                 Log.d("DDP UPDATE", "changeType=" + changeType + ",subName=" + subscriptionName + ",docId=" + docId);
-                PandaListApplication.getBus().post(new DataChangeEvent(changeType, subscriptionName, docId));
+                PandaListApplication.getBus().post(new DataChangeEvent(subscriptionName, changeType, docId));
             }
         };
         MyDDPState.getInstance().connectIfNeeded();
@@ -67,6 +69,8 @@ public class BaseFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
+        PandaListApplication.getBus().unregister(this);
 
         if (mReceiver != null) {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);

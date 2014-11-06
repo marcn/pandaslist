@@ -6,10 +6,13 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
@@ -177,7 +181,13 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         b.putSerializable(PandasConstants.INTENT_DATA_POST_ITEM, itemDataClick);
         intent.putExtras(b);
 
-        getActivity().startActivity(intent);
+        View itemView = mPostingsRecyclerView.getChildAt(position);
+        ImageView imageView = (ImageView)itemView.findViewById(R.id.post_image);
+        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+        Bundle bundle = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(itemView, bitmap, 0, 0).toBundle();
+
+        getActivity().startActivity(intent, bundle);
     }
 
     /**

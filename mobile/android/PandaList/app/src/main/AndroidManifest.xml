@@ -40,7 +40,7 @@
 
         <activity android:name=".activity.PostDetailActivity"
             android:label="@string/post_detail"
-            android:theme="@style/PandasTheme.TranslucentActionBar.ActionBar.Overlay"/>
+            android:theme="@style/PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay"/>
 
         <activity android:name=".activity.LoginActivity"
             android:label="Login" >

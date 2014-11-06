@@ -64,10 +64,25 @@
         <item name="android:maxHeight">10dip</item>
     </style>
 
-    <style name="titleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+    <style name="titleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle"/>
 
 
-    </style>
+        <style name="PandasNoActionBar.TranslucentActionBar" />
+
+        <style name="PandasNoActionBar.TranslucentActionBar.ActionBar" />
+
+        <style name="PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay">
+
+            <item name="android:windowActionBar">false</item>
+            <item name="windowActionBarOverlay">true</item>
+            <item name="android:windowActionBarOverlay">true</item>
+            <item name="android:windowBackground">@android:color/white</item>
+            <item name="colorPrimary">@color/transparent</item>
+            <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+            <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+
+        </style>
+
     <style name="ButtonText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

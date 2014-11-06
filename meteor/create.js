@@ -46,14 +46,21 @@ if (Meteor.isClient) {
 
 		'click .photoPreview a': function(evt) {
 			evt.preventDefault();
-			var id = $(evt.target).parents('li').attr('data-id');
+			var li = $(evt.target).parents('li');
+			var id = li.attr('data-id');
 			console.log("removing ", id);
 			// Remove from post images
 			var images = _.without(Session.get("postImages"), id);
 			// If image was selected for cover photo, select the first remaining image
 			if (Session.get("postCoverPhoto") == id) {
 				console.log("matched post cover photo, setting to ", images[0]);
-				Session.set("postCoverPhoto", images.length > 0 ? images[0] : null);
+				if (images.length > 0) {
+					Session.set("postCoverPhoto", images[0]);
+					// Even though the DOM is updated with "checked" on the element, it doesn't actualy check it
+					$('input[type=radio][value="'+images[0]+'"]', li.parents("ul")).prop("checked", true);
+				} else {
+					Session.set("postCoverPhoto", null);
+				}
 			}
 			Session.set("postImages", images);
 		}

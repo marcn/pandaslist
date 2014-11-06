@@ -52,12 +52,3 @@
       text-overflow: ellipsis;
       overflow: hidden;
     }
-
-    #listings li .info .price:before {
-      content: 'Price: ';
-    }
-
-    #listings li .info .location:before {
-      content: 'Location: ';
-    }
-

@@ -16,6 +16,6 @@
         <item name="android:colorAccent">#224099</item>
 
         <item name="android:navigationBarColor">#000</item>
-        <item name="android:statusBarColor">?colorPrimaryDark</item>
+        <item name="android:statusBarColor">#224099</item>
     </style>
 </resources>

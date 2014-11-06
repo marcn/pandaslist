@@ -1,7 +1,5 @@
 package com.pandora.hackathon.pandalist.activity;
 
-import android.app.LoaderManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.plus.PlusOneButton;
@@ -23,7 +20,6 @@ import com.pandora.hackathon.pandalist.ui.ObservableScrollView;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Handler;
 
 /**
  * Created by rdixit on 11/6/14.
@@ -117,7 +113,7 @@ public class NewPostDetailActivity extends BaseActivity implements ObservableScr
             = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
-            mAddScheduleButtonHeightPixels = mAddScheduleButton.getHeight();
+          //  mAddScheduleButtonHeightPixels = mAddScheduleButton.getHeight();
             recomputePhotoAndScrollingMetrics();
         }
     };
@@ -135,7 +131,7 @@ public class NewPostDetailActivity extends BaseActivity implements ObservableScr
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_post_details);
+        setContentView(R.layout.activity_new_post_details);
         setTitle(null);
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_awesome_toolbar);
@@ -165,6 +161,11 @@ public class NewPostDetailActivity extends BaseActivity implements ObservableScr
 
         mScrollViewChild = findViewById(R.id.scroll_view_child);
         mScrollViewChild.setVisibility(View.INVISIBLE);
+
+        mPhotoViewContainer = findViewById(R.id.session_photo_container);
+        mDetailsContainer = findViewById(R.id.details_container);
+
+        mHeaderBox = findViewById(R.id.header_session);
     }
 
     @Override

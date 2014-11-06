@@ -22,11 +22,9 @@ import android.widget.ArrayAdapter;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
-import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.NewPostDetailActivity;
-import com.pandora.hackathon.pandalist.activity.PostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
@@ -174,9 +172,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
         Intent intent = new Intent(getActivity(), NewPostDetailActivity.class);
 
-        Bundle b = new Bundle();
+        /*Bundle b = new Bundle();
         b.putSerializable(PandasConstants.INTENT_DATA_POST_ITEM, itemDataClick);
-        intent.putExtras(b);
+        intent.putExtras(b);*/
 
 
         getActivity().startActivity(intent);
@@ -188,7 +186,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
      * to the activity and potentially other fragments contained in that
      * activity.
      * <p>
-     * See the Android Training lesson <a href=
+     * See the Android Training lesson  <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
@@ -232,7 +230,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                 item.setTitle(title);
                 item.setDescription(description);
                 item.setPrice(23.56);
-                item.setBitmapResId(R.drawable.ic_launcher);
+                item.setBitmapResId(R.drawable.sofa);
 
 
 

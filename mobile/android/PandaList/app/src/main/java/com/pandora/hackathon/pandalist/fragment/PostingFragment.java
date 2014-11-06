@@ -30,7 +30,7 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     private Spinner mCategorySpinner;
     private Spinner mSubCategorySpinner;
     private View mPhotoView;
-    private TextView mLocationName;
+    private Spinner mLocationName;
     private View mCameraView;
     private View mLocationOfficesView;
     private View mCreatePostView;
@@ -62,9 +62,9 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
         mCreatePostView = mainView.findViewById(R.id.send_post);
         mCreatePostView.setOnClickListener(this);
 
-        mLocationName = (TextView)mainView.findViewById(R.id.location_name);
-        setLocationLinkSpan(mLocationName.getText().toString());
-        mLocationName.setOnClickListener(this);
+        mLocationName = (Spinner)mainView.findViewById(R.id.location_name);
+        //setLocationLinkSpan(mLocationName.getText().toString());
+        //mLocationName.setOnClickListener(this);
         return mainView;
     }
 
@@ -73,10 +73,10 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     private void setLocationLinkSpan(String locationText) {
 
 
-        SpannableString text = new SpannableString(locationText);
-        text.setSpan(new UnderlineSpan(), 0, mLocationName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mLocationName.setText(text, TextView.BufferType.SPANNABLE);
-        mLocationName.setTextColor(getResources().getColor(R.color.pandora_indigo));
+        //SpannableString text = new SpannableString(locationText);
+        //text.setSpan(new UnderlineSpan(), 0, mLocationName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //mLocationName.setText(text, TextView.BufferType.SPANNABLE);
+        //mLocationName.setTextColor(getResources().getColor(R.color.pandora_indigo));
 
     }
     @Override

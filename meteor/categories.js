@@ -59,3 +59,12 @@ if (Meteor.isClient) {
   	}	
   });
 }
+
+if (Meteor.isServer) {
+  Meteor.methods({
+    "getCategories": function() {
+      var categories = Categories.find().fetch();
+      return {"method":"getCategories", "data": {"categories": categories}};
+    }
+  });
+}

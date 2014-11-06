@@ -3,6 +3,7 @@ package com.pandora.hackathon.pandalist;
 import android.app.Application;
 import android.content.Context;
 
+import android.os.Handler;
 import com.pandora.hackathon.pandalist.activity.PandaListActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.gcm.GcmService;
@@ -23,7 +24,7 @@ public class PandaListApplication extends Application {
 
         PandaListApplication.sContext = getApplicationContext();
         PandaListApplication.appBus = new Bus();
-        ddp = MyDDPState.setupInstance(sContext);
+        ddp = MyDDPState.setupInstance(sContext, new Handler());
 
         // Perform init
         doInit();

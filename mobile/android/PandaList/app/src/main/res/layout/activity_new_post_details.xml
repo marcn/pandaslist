@@ -24,10 +24,79 @@
                 android:id="@+id/session_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/ic_launcher"
                 android:scaleType="centerCrop" />
         </FrameLayout>
 
-        <include layout="@layout/activity_post_details" />
+
+        <LinearLayout android:id="@+id/details_container"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:paddingTop="16dp"
+            android:paddingRight="4dp"
+            android:paddingBottom="@dimen/session_details_extra_space_bottom"
+            android:clipToPadding="false">
+
+
+
+
+        </LinearLayout>
+
+        <!-- Title/subtitle bar (floating; position determined at run time as the content view scrolls) -->
+        <LinearLayout
+            android:id="@+id/header_session"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+
+
+            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:iosched="http://schemas.android.com/apk/res-auto"
+                iosched:theme="@style/ActionBarThemeOverlay"
+                iosched:popupTheme="@style/ActionBarPopupThemeOverlay"
+                android:id="@+id/my_awesome_toolbar"
+                android:background="@null"
+                iosched:titleTextAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize" />
+
+            <!-- Session title -->
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="@dimen/keyline_2_session_detail"
+                android:layout_marginRight="@dimen/keyline_1"
+                android:text="Title"
+                android:id="@+id/session_title"
+                android:maxLines="4"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_large"
+                android:lineSpacingMultiplier="1.1"
+                />
+
+            <!-- Session subtitle -->
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/keyline_2_session_detail"
+                android:layout_marginRight="@dimen/keyline_1"
+                android:text="Subtitle"
+                android:id="@+id/session_subtitle"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:textColor="@color/medium_grey"
+                />
+
+        </LinearLayout>
+
+
 
         <!-- FAB -->
 

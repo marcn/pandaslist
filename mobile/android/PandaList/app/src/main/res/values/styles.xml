@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="PandasAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/pandora_indigo</item>
-        <item name="colorPrimaryDark">@color/cyan</item>
+        <item name="colorPrimaryDark">#224099</item>
         <item name="colorAccent">@color/medium_grey</item>
         <item name="android:actionBarStyle">@style/PandasTheme.ActionBar</item>
         <item name="actionBarStyle">@style/PandasTheme.ActionBar</item>
@@ -40,7 +40,6 @@
     <style name="PandasTheme.TranslucentActionBar.ActionBar" />
 
     <style name="PandasTheme.TranslucentActionBar.ActionBar.Overlay">
-        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
@@ -48,9 +47,7 @@
         <item name="android:background">@drawable/ab_background</item>
     </style>
 
-    <style name="Widget.ActionBar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
+
 
     <style name="spinnerStyle" parent="Widget.AppCompat.Spinner.DropDown">
 
@@ -77,9 +74,6 @@
             <item name="windowActionBarOverlay">true</item>
             <item name="android:windowActionBarOverlay">true</item>
             <item name="android:windowBackground">@android:color/white</item>
-            <item name="colorPrimary">@color/transparent</item>
-            <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
-            <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
 
         </style>
 
@@ -131,4 +125,12 @@
     <style name="SpinnerTheme.DropDown">
         <item name="android:spinnerMode">dropdown</item>
     </style>
+
+    <style name="ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlHighlight">#3fff</item>
+    </style>
+
+    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

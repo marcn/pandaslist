@@ -62,10 +62,6 @@ public class BaseFragment extends Fragment {
             @Override
             protected void onSubscriptionUpdate(String changeType, String subscriptionName, String docId) {
                 Log.d("DDP UPDATE", "changeType=" + changeType + ",subName=" + subscriptionName + ",docId=" + docId);
-                //FIXME : Not the right place to build data set
-                if(subscriptionName.equals(Category.COLLECTION_NAME)) {
-                    DataManager.getInstance().addCategory(subscriptionName, docId);
-                }
                 PandaListApplication.getBus().post(new DataChangeEvent(subscriptionName, changeType, docId));
             }
         };

@@ -450,6 +450,9 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         wrapper = new SubscribeWrapper();
         wrapper.register();
+
+        //Get Categories
+        PandaListApplication.getDDP().call(DDPMethodResultEvent.CATEGORIES);
     }
 
     public class SubscribeWrapper {
@@ -457,7 +460,7 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         @Subscribe
         public void onDDPMethodResultEvent(DDPMethodResultEvent event) {
-            if (event.methodName.equalsIgnoreCase("getCategories")) {
+            if (event.methodName.equalsIgnoreCase(DDPMethodResultEvent.CATEGORIES)) {
 
                 processCategoryData(event.data);
 

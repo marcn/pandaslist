@@ -41,6 +41,14 @@ input, textarea, select {
   margin: 0.5rem;
 }
 
+input[type="file"] {
+  background-color: transparent;
+}
+
+input[type="radio"] {
+  width: auto;
+}
+
 textarea {
   height: 20rem;
 }

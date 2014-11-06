@@ -11,15 +11,34 @@
 }
 
 
+@font-face {
+    font-family: 'Avenir';
+    src: url('/fonts/AvenirNextLTPro-Regular.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Avenir';
+    src: url('/fonts/AvenirNextLTPro-UltLt.otf');
+    font-weight: 100;
+    font-style: normal;
+}
+
+
 html {
   font-size: 10px;
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #444;
   /*font-size: 0;*/
   background-color: #eaeaea;
+}
+
+h1, h2, h3, h4 {
+  font-weight: normal;
 }
 
 p, ul {
@@ -27,6 +46,10 @@ p, ul {
   line-height: 2.5rem;
   text-align: left;
   /*margin: 0 0 3rem 0;*/
+}
+
+li {
+  list-style: none;
 }
 
 input, textarea, select {
@@ -38,15 +61,27 @@ input, textarea, select {
   border-radius: 0;
   height: 3.4rem;
   width: 40rem;
-  margin: 0.5rem;
+  margin: 0.7rem;
 }
 
 input[type="file"] {
-  background-color: transparent;
+  display: none;
+}
+
+.fileUpload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  vertical-align: top;
 }
 
 input[type="radio"] {
-  width: auto;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.4rem 0.4rem 0 0.7rem;
+  vertical-align: top;
+
 }
 
 textarea {
@@ -236,9 +271,11 @@ textarea {
 ============================================================*/
 
 #main {
-  margin-left: 28rem;
-  margin-top: 12rem;
-  display: block;
-  vertical-align: top;
+  margin: 12rem 0 6rem 28rem;
   background-color: rgba(255,0,0,0.1);
 }
+
+
+
+
+

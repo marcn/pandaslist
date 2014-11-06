@@ -1,3 +1,22 @@
+
+Template.tempForm.created = function() {
+	Session.set("newPostImages", []);
+};
+
+var handleImageUpload = function(event, template) {
+	FS.Utility.eachFile(event, function(file) {
+		Images.insert(file, function (err, fileObj) {
+			if (err) {
+				console.log(err);
+			} else {
+				var images = Session.get("newPostImages");
+				images.push(fileObj._id);
+				Session.set("newPostImages", images);
+			}
+		});
+	});
+}
+
 Template.tempForm.events({
   'submit form': function(e) {
 		e.preventDefault();
@@ -11,31 +30,14 @@ Template.tempForm.events({
 		Posts.insert(post);  
 	},
 
-	'change .file_bag': function(event, template) {
-		FS.Utility.eachFile(event, function(file) {
-			Images.insert(file, function (err, fileObj) {
-			//Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-			console.log(err);
-			console.log(fileObj);
-			});
-		});
-	},
-
-	'dropped .dropzone': function(event, temp) {
-		console.log('files dropped');
-		FS.Utility.eachFile(event, function(file) {
-			Images.insert(file, function (err, fileObj) {
-			//Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-			console.log(err);
-			console.log(fileObj);
-			});
-		});
-	}
+	'change .file_bag': _.bind(handleImageUpload, this),
+	'dropped .dropzone': _.bind(handleImageUpload, this)
 
 });
 
+
 Template.tempForm.helpers({
 	"files": function(){
-		return Images.find();
+		return Images.find({ _id: {$in: Session.get("newPostImages")}});
 	}
 });

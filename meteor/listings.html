@@ -10,16 +10,20 @@
 
 <template name="row">
 
-  <li>
-    <div class="imgFrame">
-      <img src="/img/fpo.png">
-    </div>
-    <div class="info">
-      <h3><a href="{{pathFor route='post.show'}}">{{title}}</a></h3>
-      
-      <p class="price">$100</p>
-      <p class="location">3</p>
-    </div>
-  </li>
+    <a href="{{pathFor route='post.show'}}">
+    <li>
+
+        <div class="imgFrame">
+          <img src="/img/fpo.png">
+        </div>
+        <div class="info">
+          <h3>{{title}}</h3>
+
+          <p class="price">$100</p>
+          <p class="location">3</p>
+        </div>
+
+    </li>
+    </a>
 
 </template>

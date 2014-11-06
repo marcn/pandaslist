@@ -23,8 +23,8 @@ public class Category {
     }
 
     public static Category ParseCategory(Map<String, Object> categoryData) {
-        String name = categoryData.get(TAG_NAME).toString();
-        ArrayList<String> subcategories = (ArrayList<String>)categoryData.get(TAG_SUB_CATEGORY);
+        String name = ParserHelper.parseString(categoryData, TAG_NAME);
+        ArrayList<String> subcategories = ParserHelper.parseStringArrayList(categoryData, TAG_SUB_CATEGORY);
         return new Category(name, subcategories);
     }
 
@@ -34,5 +34,26 @@ public class Category {
 
     public List<String> getSubcategories() {
         return subcategories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category that = (Category) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (subcategories != null ? !subcategories.equals(that.subcategories) : that.subcategories != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (subcategories != null ? subcategories.hashCode() : 0);
+
+        return result;
     }
 }

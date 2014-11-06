@@ -15,11 +15,9 @@ if (Meteor.isClient) {
     },
     isChecked: function() {
       if (Subscriptions.find({'userIds': Meteor.user()._id, category: this.category+'.'+this.subCategory}).fetch().length > 0) {
-        //console.log("checked");
         return "checked";
       }
       else {
-        //console.log("NOT checked");
         return "";
       } 
     }

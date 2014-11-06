@@ -75,8 +75,8 @@ Router.onBeforeAction(function() {
 });
 
 Router.map(function() {
-   this.route('methodExample', {
-       path: '/api/call',
+   this.route('storeRegistrationId', {
+       path: '/storeRegistrationId',
        where: 'server',
        action: function() {
            // GET, POST, PUT, DELETE

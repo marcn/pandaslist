@@ -22,7 +22,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pandora.hackathon.pandalist.R;
-import com.pandora.hackathon.pandalist.fragment.BaseFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -42,7 +41,7 @@ public class NavigationDrawerFragment extends BaseFragment {
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    /**
+    /**`
      * A pointer to the current callbacks instance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
@@ -91,8 +90,10 @@ public class NavigationDrawerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
+
+        View mainView = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView = (ListView) mainView.findViewById(R.id.listview_drawer);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,7 +110,7 @@ public class NavigationDrawerFragment extends BaseFragment {
                         getString(R.string.title_section3),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return mDrawerListView;
+        return mainView;
     }
 
     public boolean isDrawerOpen() {

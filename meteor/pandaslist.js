@@ -1,10 +1,5 @@
 if (Meteor.isClient) {
 	// client-specific code
-	Template.listings.helpers({
-		listing: function() {
-				return Posts.find();
-			}
-	});
 }
 
 if (Meteor.isServer) {
@@ -27,6 +22,7 @@ Images = new FS.Collection("images", {
     	},
     	onInvalid: function (message) {
 			if (Meteor.isClient) {
+				// TODO: show nicer dialog?
 				alert(message);
 			} else {
 				console.log(message);

@@ -1,26 +1,88 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="PandasAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/pandora_indigo</item>
+        <item name="colorPrimaryDark">@color/cyan</item>
+        <item name="colorAccent">@color/medium_grey</item>
+        <item name="android:actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="android:spinnerStyle">@style/SpinnerTheme</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerTheme.DropDown</item>
+        <item name="android:spinnerDropDownItemStyle">@style/DropDownItemSpinnerTheme</item>
+        <item name="android:listViewStyle">@style/ListViewSpinnerTheme</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewSpinnerTheme.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
+    </style>
+
+    <style name="PandasTheme.ActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:titleTextStyle">@style/PandasTheme.ActionBar.TextTitle</item>
+        <item name="titleTextStyle">@style/PandasTheme.ActionBar.TextTitle</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+    </style>
+
+
+    <style name="PandasTheme.ActionBar.TextTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="PandasNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/semi_transparent</item>
+        <item name="android:windowBackground">@color/semi_background_grey</item>
         <item name="android:spinnerStyle">@style/spinnerStyle</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+
+    </style>
+
+    <style name="PandasTheme.TranslucentActionBar" />
+
+    <style name="PandasTheme.TranslucentActionBar.ActionBar" />
+
+    <style name="PandasTheme.TranslucentActionBar.ActionBar.Overlay">
+        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/ab_background</item>
+    </style>
+
+    <style name="Widget.ActionBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="spinnerStyle" parent="Widget.AppCompat.Spinner.DropDown">
-        <item name="android:background">@android:color/transparent</item>
+
         <item name="android:clickable">true</item>
     </style>
-    <style name="SpinnerItem" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.DropDownItem</item>
+    <style name="SpinnerItem" parent="Base.Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+
         <item name="android:textColor">#999999</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:maxHeight">10dip</item>
     </style>
+
+    <style name="titleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle"/>
+
+
+        <style name="PandasNoActionBar.TranslucentActionBar" />
+
+        <style name="PandasNoActionBar.TranslucentActionBar.ActionBar" />
+
+        <style name="PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay">
+
+            <item name="android:windowActionBar">false</item>
+            <item name="windowActionBarOverlay">true</item>
+            <item name="android:windowActionBarOverlay">true</item>
+            <item name="android:windowBackground">@android:color/white</item>
+            <item name="colorPrimary">@color/transparent</item>
+            <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+            <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+
+        </style>
+
     <style name="ButtonText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -33,5 +95,40 @@
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="DropDownItemSpinnerTheme" parent="android:Widget.DropDownItem.Spinner">
+        <item name="android:checkMark">@drawable/btn_radio_holo_light</item>
+    </style>
+
+    <style name="ListViewSpinnerTheme" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="ListViewSpinnerTheme.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:background">@drawable/spinner_background_holo_light</item>
+        <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="SpinnerAppTheme" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:background">@drawable/spinner_background_holo_light</item>
+        <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="ListViewAppTheme" parent="android:Widget.Holo.Light.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="SpinnerItemTheme"
+        parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="SpinnerTheme.DropDown">
+        <item name="android:spinnerMode">dropdown</item>
     </style>
 </resources>

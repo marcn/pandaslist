@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -44,6 +45,9 @@ public class LoginActivity extends BaseActivity {
 
     private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
+    private static  final String PREF_USERNAME = "pref.username";
+    private static  final String PREF_AUTH_TOKEN = "pref.token";
+
     /**
      * broadcast receiver for DDP events
      */
@@ -65,8 +69,13 @@ public class LoginActivity extends BaseActivity {
 
         setContentView(R.layout.activity_login);
 
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        mEmail = prefs.getString(PREF_USERNAME, "");
+
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
+        mEmailView.setText(mEmail);
+
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -89,7 +98,7 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btnSignInWithGoogle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickUserAccount();
+                getUsername();
             }
         });
     }
@@ -181,6 +190,8 @@ public class LoginActivity extends BaseActivity {
             // Receiving a result from the AccountPicker
             if (resultCode == RESULT_OK) {
                 mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                // Save email to preferences
+                getPreferences(MODE_PRIVATE).edit().putString(PREF_USERNAME, mEmail).commit();
                 // With the account name acquired, go get the auth token
                 getUsername();
             } else if (resultCode == RESULT_CANCELED) {
@@ -236,7 +247,16 @@ public class LoginActivity extends BaseActivity {
         if (mEmail == null) {
             pickUserAccount();
         } else {
-            new GetUsernameTask(mEmail, SCOPE).execute();
+
+            SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+            String token = prefs.getString(PREF_AUTH_TOKEN, "");
+            if(token != null && token.length() > 0) {
+                // We have a saved token, try to login
+                MyDDPState.getInstance().login(token);
+            } else {
+                // Fetch new token and login
+                new GetTokenTask(mEmail, SCOPE).execute();
+            }
         }
     }
 
@@ -264,25 +284,23 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    class GetUsernameTask extends AsyncTask<Void, Void, String> {
+    class GetTokenTask extends AsyncTask<Void, Void, String> {
         String mEmail;
         String mScope;
 
-        GetUsernameTask(String email, String scope) {
+        GetTokenTask(String email, String scope) {
             this.mEmail = email;
             this.mScope = scope;
         }
 
-        /**
-         * Executes the asynchronous job. This runs when you call execute()
-         * on the AsyncTask instance.
-         */
         @Override
         protected String doInBackground(Void... params) {
             String token = null;
             try {
                 token = fetchToken();
                 if (token != null) {
+                    // Save token to preferences
+                    getPreferences(MODE_PRIVATE).edit().putString(PREF_AUTH_TOKEN, token).commit();
                     // Got the token, try to login
                     MyDDPState.getInstance().login(token);
                 }

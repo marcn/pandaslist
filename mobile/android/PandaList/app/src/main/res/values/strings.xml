@@ -3,6 +3,7 @@
 
     <string name="app_name">PandaList</string>
     <string name="postings">Postings</string>
+    <string name="post_detail">Post Details</string>
     <string name="title_section1">Listings</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>

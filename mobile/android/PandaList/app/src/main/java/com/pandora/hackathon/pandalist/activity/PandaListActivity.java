@@ -1,10 +1,14 @@
 package com.pandora.hackathon.pandalist.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
@@ -37,6 +41,7 @@ public class PandaListActivity extends BaseActivity {
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         MyDDPState.setupInstance(getApplicationContext());
+
     }
 
     public void onSectionAttached(int number) {
@@ -87,4 +92,10 @@ public class PandaListActivity extends BaseActivity {
     }
 
 
+    private BroadcastReceiver  mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //do something based on the intent's action
+        }
+    };
 }

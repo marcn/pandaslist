@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#673AB7</color>
+    <color name="primary">@color/violet</color>
     <color name="primary_pressed">#311B92</color>
     <color name="ripple">#D1C4E9</color>
     <color name="semi_transparent">#11333333</color>
+    <color name="pandora_indigo">#224099</color>
+    <color name="pandora_indigo_transparent">#22224099</color>
+    <color name="cyan">#00edee</color>
+    <color name="red">#F24444</color>
+    <color name="violet">#915a7a</color>
+    <color name="dark_grey">#666666</color>
+    <color name="medium_grey">#ababab</color>
+    <color name="lite_grey">#dbdbdb</color>
+    <color name="white">#FFFFFF</color>
+    <color name="background_grey">#F3F3F3</color>
+    <color name="semi_background_grey">#66F3F3F3</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

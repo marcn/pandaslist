@@ -14,19 +14,14 @@
 </template>
 
 <template name="row">
-<!-- 	<tr>
-		<td>{{category}}</td>
-    	<td>{{title}}</td>
-    	<td>{{description}}</td>
-    </tr>
- -->
 
   <li>
     <div class="imgFrame">
       <img src="img/fpo.png">
     </div>
     <div class="info">
-      <h3>{{title}}</h3>
+      <h3><a href="{{pathFor route='post.show'}}">{{title}}</a></h3>
+      
       <p class="price">$100</p>
       <p class="location">3</p>
     </div>

@@ -35,6 +35,7 @@ h1, h2, h3, h4 {
 
 a {
   text-decoration: none;
+  color: #00adee;
 }
 
 p, ul {
@@ -86,11 +87,11 @@ textarea {
 
 
 .btn {
-  background-color: transparent;
-  border-radius: 5px;
+  background-color: #00adee;
+  border-radius: 1rem;
   border: 1px solid #00adee;
   font-size: 2rem;
-  color: #00adee;
+  color: #fff;
   display: inline-block;
   padding: 0.5rem 3rem;
   -webkit-transition: all 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
@@ -103,6 +104,7 @@ textarea {
 
 .price:before { content: 'Price: '; }
 .location:before { content: 'Location: '; }
+
 
 /*============================================================
   GRID
@@ -122,27 +124,6 @@ textarea {
 }
 
 
-.row {
-  width: 100%;
-  font-size: 0;
-}
-
-  .row > div {
-    margin-right: 2%;
-    display: inline-block;
-    vertical-align: top;
-  }
-
-  .row img { width: 100%; }
-
-  .row .half   { width: 49%; max-width: 480px; }
-  .row .third  { width: 32%; max-width: 320px; }
-  .row .fourth { width: 23.5%; }
-
-  .row .half:nth-child(even) { margin-right: 0; }
-  .row .third:nth-child(3n)  { margin-right: 0; }
-  .row .fourth:nth-child(4n) { margin-right: 0; }
-
 
 /*============================================================
   HEADER
@@ -150,31 +131,30 @@ textarea {
 
 #header {
   position: fixed;
+
+  display: table;
   width: 100%;
   z-index: 2;
   background-color: #224099;
   height: 6rem;
-
-  /*opacity: 1;*/
-  /*position: relative;*/
 }
 
   #headerLogo {
-    display: inline-block;
-    vertical-align: top;
+    display: table-cell;
 
-    height: 100%;
-    background-image: url(../img/fpo.png);
-    background-size: 100% 100%;
-    width: 160px;
-
-    background-color: #ddd;
+    /*background-color: #000;*/
+    background-image: url(../img/logo.png);
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 26rem;
   }
 
   #headerSearch {
-    display: inline-block;
-    vertical-align: top;
-    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+
   }
 
   #headerSearch input {
@@ -183,11 +163,87 @@ textarea {
 
 
   #headerAdmin {
-    display: inline-block;
-    vertical-align: top;
-    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    min-width: 18rem;
+    padding-right: 4rem;
+
     color: #fff;
     font-size: 1.3rem;
+    background-color: #224099;
+    position: relative;
+  }
+
+  #headerAdmin:after {
+    content: '';
+    background-image: url(../img/arrow.png);
+    background-size: 100%;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    margin-top: -1rem;
+    width: 2rem;
+    height: 2rem;
+    -webkit-transition: all 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  }
+
+  #headerAdmin:hover:after {
+    -webkit-transform: rotateX(180deg);
+  }
+
+  #headerAdmin:hover ul {
+    -webkit-transform: translate3d(0,0,0);
+  }
+
+  #headerAdmin ul {
+    z-index: -1;
+    position: absolute;
+    top: 6rem;
+    right: 1rem;
+    background-color: #999;
+    -webkit-transition: all 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    -webkit-transform: translate3d(0,-100%,0);
+  }
+
+  #headerAdmin li {
+    border-bottom: 1px solid #ababab;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    text-align: right;
+    min-width: 15rem;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    color: #ababab;
+    background-color: #fff;
+  }
+
+  #headerAdmin li:hover {
+    background-color: #fff;
+  }
+
+  #headerAdmin .login-display-name {
+    display: none;
+  }
+
+  #headerAdmin .login-button {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: right;
+    top: 0;
+    left: 0;
+    padding: 1rem 2rem;
+    color: #ababab;
+  }
+
+  #headerAdmin .login-button:hover {
+    background-color: transparent;
   }
 
 
@@ -203,44 +259,56 @@ textarea {
 
   z-index: 1;
   position: fixed;
+
   left: 0;
   top: 0;
-  padding: 12rem 0 12rem 3rem;
+  padding: 12rem 0 12rem 7rem;
   color: #ababab;
 
   -webkit-transition: all 500ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
   -webkit-transform: translate3d(0,0,0);
 }
 
+  #nav .btn {
+    margin: 0 0 3rem -3rem;
+  }
+
   #nav h2 {
     position: relative;
     font-weight: normal;
     font-size: 2rem;
-    margin: 2rem 0 1rem 4rem;
+    cursor: pointer;
   }
 
-  #nav h2.active:before { -webkit-transform: rotate(45deg); }
+  #nav h2.active:before { -webkit-transform: rotate(-315deg); }
 
   #nav h2:before {
-    content: '+';
+    content: '';
+    background-image: url(../img/plus.png);
+    background-size: 100%;
+
     text-align: center;
     position: absolute;
     color: #dbdbdb;
     top: 50%;
-    left: -4rem;
-    margin-top: -1.4rem;
-    width: 2.8rem;
-    height: 2.8rem;
-/*    border-radius: 50%;
-    border: 1px solid #00adee;*/
-    font-size: 2rem;
-    font-weight: normal;
+    left: -3rem;
+    margin-top: -0.9rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    -webkit-transition: all 500ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
   }
 
   #nav ul {
-    margin: 0 0 2rem 4rem;
-    border-bottom: 1px solid #ccc;
+    display: none;
+    margin-top: 1rem;
   }
+
+  #nav hr {
+    margin: 2rem 0;
+    border: none;
+    border-bottom: 1px solid #dbdbdb;
+  }
+
 
   #nav li {
     font-size: 0;
@@ -269,7 +337,7 @@ textarea {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     height: 100%;
     -webkit-flex: 4;
             flex: 4;

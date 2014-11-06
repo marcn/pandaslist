@@ -5,24 +5,74 @@ if (Meteor.isClient) {
 		Session.set("postCategorySelected", null);
 		Session.set("postImages", []);
 		Session.set("postCoverPhoto", null);
+		Session.set("formChanges", 0);
 	};
 
 	var handleImageUpload = function(event, template) {
-		FS.Utility.eachFile(event, function(file) {
-			Images.insert(file, function (err, fileObj) {
-				if (err) {
-					console.log(err);
-				} else {
-					var images = Session.get("postImages");
-					images.push(fileObj._id);
-					Session.set("postImages", images);
-					// If cover photo hasn't been chosen yet, auto-select this image
-					if (!Session.get("postCoverPhoto")) {
-						Session.set("postCoverPhoto", fileObj._id);
-					}
+		event.preventDefault();
+		var files = event.target.files;
+		S3.upload(files, "/images", function(err,result) {
+			if (err) {
+				console.log(err);
+			} else {
+				var image = Images.insert({
+					url: result.url
+				});
+				var images = Session.get("postImages");
+				images.push(image);
+				Session.set("postImages", images);
+				// If cover photo hasn't been chosen yet, auto-select this image
+				if (!Session.get("postCoverPhoto")) {
+					Session.set("postCoverPhoto", image);
 				}
+			}
+			
+		});
+		// FS.Utility.eachFile(event, function(file) {
+		// 	Images.insert(file, function (err, fileObj) {
+		// 		if (err) {
+		// 			console.log(err);
+		// 		} else {
+		// 			var images = Session.get("postImages");
+		// 			images.push(fileObj._id);
+		// 			Session.set("postImages", images);
+		// 			// If cover photo hasn't been chosen yet, auto-select this image
+		// 			if (!Session.get("postCoverPhoto")) {
+		// 				Session.set("postCoverPhoto", fileObj._id);
+		// 			}
+		// 		}
+		// 	});
+		// });
+	}
+
+	var getFormData = function(template) {
+		var data = {};
+		if (Session.get("postCategorySelected")) {
+			_.each(['category', 'subcategory', 'location', 'title', 'description', 'delivery_method'], function(name) {
+				data[name] = template.$("."+name).val();
+			});
+		}
+		return data;
+	}
+
+	var getPostData = function(template) {
+		var post = getFormData(Template.instance());
+		var coverPhoto = Session.get("postCoverPhoto");
+		post['coverPhoto'] = coverPhoto;
+		post['coverPhotoUrl'] = coverPhoto != null ? Images.findOne(coverPhoto).url : null;
+		var photos = [];
+		_.each(Session.get("postImages"), function(image) {
+			photos.push({
+				id: image,
+				url: Images.findOne(image).url
 			});
 		});
+		post['photos'] = photos;
+		post['createdBy'] = Meteor.user()._id;
+		post['creationDate'] = new Date().getTime();
+		post['published'] = true;
+		console.log(post);
+		return post;
 	}
 
 	Template.create.events({
@@ -33,7 +83,11 @@ if (Meteor.isClient) {
 				Session.set("postCategorySelected", value != "" ? value : null);
 			}
 		},
-		
+
+		"change, keyup": function(evt) {
+			Session.set("formChanges", Session.get("formChanges")+1);
+		},
+
 		'change .file_bag': _.bind(handleImageUpload, this),
 		'dropped .dropzone': _.bind(handleImageUpload, this),
 
@@ -63,12 +117,27 @@ if (Meteor.isClient) {
 				}
 			}
 			Session.set("postImages", images);
-		}
+		},
 
+		'click .post': function() {
+			var post = getPostData(Template.instance());
+			var id = Posts.insert(post);
+			Router.go("/detail/"+id);
+		},
+
+		'click .preview': function() {
+			Session.set("previewPost", getPostData(Template.instance()));
+			Router.go("/preview");
+		}
 
 	});
 
 	Template.create.helpers({
+
+		"previewPost": function() {
+			return Session.get("previewPost");
+		},
+
 		"categories": function(){
 			return Categories.find();
 		},
@@ -99,6 +168,24 @@ if (Meteor.isClient) {
 			if (this._id == Session.get("postCoverPhoto")) {
 				return "CHECKED";
 			}
+		},
+
+		"formHasEnoughInfo": function() {
+			Session.get("formChanges");	// create reactive dependency
+			var category = Categories.findOne({name: Session.get("postCategorySelected")});
+			var needsSubcategory = category && category.subCategories.length > 0;
+			var data = getFormData(Template.instance());
+			if (
+				(data['category'] && data['category'].length > 0) &&
+				(!needsSubcategory || (data['subcategory'] && data['subcategory'].length > 0)) &&
+				(data['location'] && data['location'].length > 0) &&
+				(data['title'] && data['title'].length > 0) &&
+				(data['description'] && data['description'].length > 0) &&
+				(data['delivery_method'] && data['delivery_method'].length > 0)
+			) {
+				return true;
+			}
+			return false;
 		}
 
 	});

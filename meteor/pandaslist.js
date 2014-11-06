@@ -13,19 +13,22 @@ Accounts.config({
 	loginExpirationInDays: null
 });
 
-Images = new FS.Collection("images", {
-	stores: [new FS.Store.FileSystem("images")],
-	filter: {
-		allow: {
-			contentTypes: ['image/*'],
-			extensions: ['png', 'gif', 'jpg']
-    	},
-    	onInvalid: function (message) {
-			if (Meteor.isClient) {
-				alert(message);
-			} else {
-				console.log(message);
-			}
-    	}
-	}
-});
+// Images = new FS.Collection("images", {
+// 	stores: [new FS.Store.FileSystem("images")],
+// 	filter: {
+// 		allow: {
+// 			contentTypes: ['image/*'],
+// 			extensions: ['png', 'gif', 'jpg']
+//     	},
+//     	onInvalid: function (message) {
+// 			if (Meteor.isClient) {
+// 				// TODO: show nicer dialog?
+// 				alert(message);
+// 			} else {
+// 				console.log(message);
+// 			}
+//     	}
+// 	}
+// });
+
+Images = new Mongo.Collection('images');

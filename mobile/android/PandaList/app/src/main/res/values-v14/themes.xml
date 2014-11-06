@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="PandasTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="colorPrimary">@color/pandora_indigo</item>
+        <item name="colorPrimaryDark">@color/cyan</item>
+        <item name="colorAccent">@color/medium_grey</item>
+        <item name="android:actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <!-- API 14 theme customizations can go here. -->
+        <item name="android:spinnerStyle">@style/SpinnerAppTheme</item>
+        <item name="android:dropDownListViewStyle">@style/ListViewAppTheme</item>
+        <item name="android:listViewStyle">@style/ListViewAppTheme</item>
+    </style>
+
+</resources>

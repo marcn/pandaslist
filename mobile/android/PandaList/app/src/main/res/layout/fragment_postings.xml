@@ -94,9 +94,9 @@
 
                     <TextView
                             android:id="@+id/category_title"
-                            android:layout_width="90dp"
+                            android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Type:"
+                            android:text="Post Type:"
                             android:textColor="@color/dark_grey"
                             android:textAppearance="@style/titleText"
                             android:layout_marginLeft="8dp"
@@ -126,7 +126,7 @@
 
                         <TextView
                             android:id="@+id/main_title"
-                            android:layout_width="90dp"
+                            android:layout_width="95dp"
                             android:layout_height="wrap_content"
                             android:text="Office:"
                             android:textColor="@color/dark_grey"
@@ -142,7 +142,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/dark_grey"
-                            android:entries="@array/postTypes"
+                            android:entries="@array/offices"
                             android:layout_marginRight="8dp"
                             android:prompt="@string/type" />
                     </LinearLayout>
@@ -159,9 +159,9 @@
 
                     <TextView
                             android:id="@+id/title_label"
-                            android:layout_width="90dp"
+                            android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="Category"
                             android:textColor="@color/dark_grey"
                             android:textAppearance="@style/titleText"
                             android:layout_marginLeft="8dp"
@@ -191,9 +191,9 @@
 
                     <TextView
                             android:id="@+id/listing_type"
-                            android:layout_width="90dp"
+                            android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Listing Type"
+                            android:text="Subcategory"
                             android:textColor="@color/dark_grey"
                             android:textAppearance="@style/titleText"
                             android:layout_marginLeft="8dp"

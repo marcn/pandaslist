@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -37,6 +38,8 @@ import com.keysolutions.ddpclient.DDPClient.CONNSTATE;
 import com.keysolutions.ddpclient.DDPClient.DdpMessageField;
 import com.keysolutions.ddpclient.DDPClient.DdpMessageType;
 import com.keysolutions.ddpclient.DDPListener;
+import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
 
 /**
  * Base/common handling of DDP state with default handling of collection data as maps
@@ -81,7 +84,8 @@ public class DDPStateSingleton extends MeteorAuthCommands
      * Override to point to your server's port
      */
     protected static final Integer sMeteorPort = 3000;
-    
+    private final Handler mHandler;
+
     /** reference to lower level DDP websocket client */
     protected DDPClient mDDP;
 
@@ -108,13 +112,13 @@ public class DDPStateSingleton extends MeteorAuthCommands
     /** Google GSON object for parsing JSON */
     protected final Gson mGSON = new Gson();
 
-    public static void initInstance(Context context) {
-        // only called by MyApplication
-        if (mInstance == null) {
-            // Create the instance
-            mInstance = new DDPStateSingleton(context);
-        }
-    }
+//    public static void initInstance(Context context) {
+//        // only called by MyApplication
+//        if (mInstance == null) {
+//            // Create the instance
+//            mInstance = new DDPStateSingleton(context);
+//        }
+//    }
 
     /**
      * Gets an instance of this class
@@ -128,8 +132,9 @@ public class DDPStateSingleton extends MeteorAuthCommands
      * Constructor for class (hidden because this is a singleton)
      * @param context Android application context
      */
-    protected DDPStateSingleton(Context context) {
+    protected DDPStateSingleton(Context context, Handler handler) {
         this.mContext = context;
+        this.mHandler = handler;
         createDDPCLient();
         // disable IPv6 if we're running on Android emulator because websocket
         // library doesn't work with it
@@ -395,6 +400,16 @@ public class DDPStateSingleton extends MeteorAuthCommands
                     broadcastSubscriptionChanged(collName,
                             DdpMessageType.CHANGED, docId);
                 }
+            } else if (msgtype.equals(DdpMessageType.RESULT)) {
+                Map<String, Object> result = (Map<String, Object>) ((Map<String, Object>) msg).get(DdpMessageType.RESULT);
+                String methodName = (String) result.get("method");
+                final DDPMethodResultEvent event = new DDPMethodResultEvent(methodName, (Map<String, Object>) result.get("data"));
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        PandaListApplication.getBus().post(event);
+                    }
+                });
             }
         }
     }
@@ -542,5 +557,9 @@ public class DDPStateSingleton extends MeteorAuthCommands
             }
         }
         return email;
+    }
+
+    public void call(String method) {
+        mDDP.call(method, new Object[]{});
     }
 }

@@ -20,7 +20,32 @@ Router.route('/', function () {
 
 Router.route('/create', function () {
 	Session.set("postCategorySelected", null);
+	Session.get("previewPost", null);
 	this.render('create');
+});
+
+Router.route('/edit', function () {
+	var post = Session.get("previewPost");
+	if (post == null) {
+		Router.go('/create');
+	} else {
+		Session.set("postCategorySelected", null);
+		this.render('create');
+	}
+});
+
+Router.route('/preview', function() {
+	var post = Session.get("previewPost");
+	if (post != null) {
+		post['isPreview'] = true;
+		this.render('detail', {
+			data: function() {
+				return post;
+			}
+		});
+	} else {
+		Router.go('/create');
+	}
 });
 
 Router.route('/settings', function () {

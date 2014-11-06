@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="offices">
+        <item>Oakland</item>
+        <item>NYC</item>
+        <item>Santa Monica</item>
+        <item>Chicago</item>
+        <item>Hawaii</item>
+    </array>
 
     <array name="postTypes">
         <item>Normal Listing</item>
@@ -14,11 +21,43 @@
         <item>Gigs</item>
     </array>
 
-
     <array name="subCategories">
-        <item>Cars</item>
-        <item>Sofas</item>
-        <item>Cats</item>
-        <item>Tables</item>
+        <item>antiques</item>
+        household, jewelry, materials, motorcycles, music instruments, photo/video, rvs/camp, sporting, tickets, tools, toys/games, video gaming
+        <item>appliances</item>
+        <item>arts and crafts</item>
+        <item>auto parts</item>
+        <item>baby/kid</item>
+        <item>barter</item>
+        <item>beauty/health</item>
+        <item>bikes</item>
+        <item>boats</item>
+        <item>books</item>
+        <item>business</item>
+        <item>cars/trucks</item>
+        <item>cds/dvd/vhs</item>
+        <item>clothes/accessories</item>
+        <item>collectibles</item>
+        <item>computers</item>
+        <item>electronics</item>
+        <item>farm/garden</item>
+        <item>free</item>
+        <item>furniture</item>
+        <item>garage sale</item>
+        <item>general</item>
+        <item>heavy equipment</item>
+        <item>household</item>
+        <item>jewelry</item>
+        <item>materials</item>
+        <item>motorcycles</item>
+        <item>music</item>
+        <item>instruments</item>
+        <item>photo/video</item>
+        <item>rvs/camp</item>
+        <item>sporting</item>
+        <item>tickets</item>
+        <item>tools</item>
+        <item>toys/games</item>
+        <item>video gaming</item>
     </array>
 </resources>

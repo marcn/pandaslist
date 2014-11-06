@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,15 +19,22 @@ import java.util.List;
 
 public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecyclerAdapter.ViewHolder> {
 
-    private List<Object> mItems;
+    private List<PostItemData> mItems;
     private int ItemLayout;
     private Context mCtx;
     private RecyclerViewOnItemClickListener mListener;
 
-    public ListingRecyclerAdapter(List<Object> items, int itemLayout, RecyclerViewOnItemClickListener listener) {
+    public ListingRecyclerAdapter(List<PostItemData> items, int itemLayout, RecyclerViewOnItemClickListener listener) {
         this.mItems = items;
         this.ItemLayout = itemLayout;
         this.mListener = listener;
+    }
+
+    public void setItems(List<PostItemData> items) {
+        this.mItems = items;
+
+        notifyItemRangeChanged(0, mItems.size());
+
     }
 
     @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,14 +43,15 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
     }
 
     @Override public void onBindViewHolder(ViewHolder holder, int position) {
-        Object item = mItems.get(position);
+        PostItemData item = mItems.get(position);
 
-
-        holder.image.setImageBitmap(null);
+        holder.title.setText(item.getTitle());
+        holder.desc.setText(item.getDescription());
         Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
-        Picasso.with(holder.image.getContext()).load(R.drawable.ic_launcher).into(holder.image);
+        Picasso.with(holder.image.getContext()).load((int)item.getBitmapResId()).into(holder.image);
         holder.itemView.setTag(item);
     }
+
 
     @Override public int getItemCount() {
         return mItems.size();

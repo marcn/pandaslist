@@ -214,27 +214,37 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
      * to populate the adapter
      * @return
      */
-    private List<Object> createMockList() {
-        List<Object> list = new ArrayList<Object>(6);
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
+    private List<PostItemData> createMockList() {
+        List<PostItemData> list = new ArrayList<PostItemData>(6);
+
         return list;
     }
 
     @Subscribe
     public void onDataChangeEvent(DataChangeEvent event) {
+
+        List<PostItemData> listItems = new ArrayList<PostItemData>();
+        PostItemData item = new PostItemData();
+
         if (event.subscriptionName.equals("posts")) {
             if (event.changeType.equals("added")) {
                 MyDDPState ddp = PandaListApplication.getDDP();
                 Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
-                if (postingsIdsSet.add(event.docId)) {
-                    postingsAdapter.add(post.get("title").toString());
-                }
+
+                String title = post.get("title") != null ? post.get("title").toString() : "";
+                String category = post.get("category") != null ? post.get("category").toString() : "";
+                String description = post.get("description") != null ? post.get("description").toString() : "";
+
+                item.setTitle(title);
+                item.setDescription(description);
+                item.setPrice(23.56);
+                item.setBitmapResId(R.drawable.ic_launcher);
+                listItems.add(item);
+
             }
+            myRecyclerAdapter.setItems(listItems);
         }
+
     }
 
     private float globalScroll;

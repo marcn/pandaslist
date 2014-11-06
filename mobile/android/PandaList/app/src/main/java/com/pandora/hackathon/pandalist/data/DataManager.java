@@ -4,7 +4,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
+import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
+import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
+import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
+import com.pandora.hackathon.pandalist.events.DataChangeEvent;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,15 +24,20 @@ import java.util.Map;
  */
 public class DataManager {
 
+    public static final String TAG = "DataManager";
+
     private static DataManager _instance;
 
-    public static DataManager getInstance() {
+    /**
+     * Should be called from the Application
+     * @return
+     */
+    public static DataManager setupInstance() {
         if(_instance == null) {
-            synchronized (DataManager.class) {
-                if(_instance == null) {
-                    _instance = new DataManager();
-                }
-            }
+            _instance = new DataManager();
+            PandaListApplication.getBus().register(_instance);
+        } else {
+            throw new RuntimeException("DataManager already setup");
         }
         return _instance;
     }
@@ -34,6 +45,8 @@ public class DataManager {
     private DataManager() {
 
     }
+
+    private DDPBroadcastReceiver mReceiver;
 
     private ArrayList<Category> categories = new ArrayList<Category>();
     private ArrayList<Category> locations = new ArrayList<Category>();
@@ -45,7 +58,7 @@ public class DataManager {
 
     private ArrayList<Category> getCategories(boolean fetchAll) {
        if(fetchAll || categories.size() == 0) {
-           //TODO: Implement it
+           PandaListApplication.getDDP().call("getCategories");
        }
         return categories;
     }
@@ -53,9 +66,42 @@ public class DataManager {
     public void addCategory(String subscriptionName, String docId) {
         MyDDPState ddp = PandaListApplication.getDDP();
         Map<String, Object> categoryData = ddp.getCollection(subscriptionName).get(docId);
-        Category category = Category.ParseCategory(categoryData);
+        Category category = Category.parseCategory(categoryData);
         if(category != null) {
             categories.add(category);
+        }
+    }
+
+    @Subscribe
+    public void onDPPConnect(DPPConnectEvent event) {
+        // DDP Connected try to fetch categories
+        if(categories.size() == 0) {
+            PandaListApplication.getDDP().call("getCategories");
+        }
+    }
+
+    @Subscribe
+    public void onDDPMethodResultEvent(DDPMethodResultEvent event) {
+        Log.i(TAG, "Got ddp result" + event.methodName);
+
+        if("getCategories".equals(event.methodName)) {
+
+            ArrayList<Category> newCategories = new ArrayList<Category>();
+            Map<String, Object> data = event.data;
+            ArrayList<Map<String, Object>> value = (ArrayList<Map<String, Object>>)data.get("categories");
+            for(Map obj : value) {
+                Category category = Category.parseCategory(obj);
+                if(category != null) {
+                    newCategories.add(category);
+                }
+            }
+
+            if(newCategories.size() > 0) {
+                // Clear existing categories
+                categories.clear();
+                // Add new categories
+                categories.addAll(newCategories);
+            }
         }
     }
 }

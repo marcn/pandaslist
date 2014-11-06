@@ -20,7 +20,32 @@ Router.route('/', function () {
 
 Router.route('/create', function () {
 	Session.set("postCategorySelected", null);
+	Session.get("previewPost", null);
 	this.render('create');
+});
+
+Router.route('/edit', function () {
+	var post = Session.get("previewPost");
+	if (post == null) {
+		Router.go('/create');
+	} else {
+		Session.set("postCategorySelected", null);
+		this.render('create');
+	}
+});
+
+Router.route('/preview', function() {
+	var post = Session.get("previewPost");
+	if (post != null) {
+		post['isPreview'] = true;
+		this.render('detail', {
+			data: function() {
+				return post;
+			}
+		});
+	} else {
+		Router.go('/create');
+	}
 });
 
 Router.route('/settings', function () {
@@ -41,10 +66,26 @@ Router.route('/detail/:_id', function () {
 }, {name: "post.show"});
 
 Router.onBeforeAction(function() {
- 	if (! Meteor.userId()) {
- 		this.layout('emptyLayout');
+	if(Meteor.isClient && !Meteor.userId()) {
+	 	this.layout('emptyLayout');
 		this.render('login');
- 	} else {
+	 } else {
 		this.next();
 	}
 });
+
+Router.map(function() {
+   this.route('methodExample', {
+       path: '/api/call',
+       where: 'server',
+       action: function() {
+           // GET, POST, PUT, DELETE
+           var requestMethod = this.request.method;
+           // Data from a POST request
+           var requestData = this.request.body;
+           // Could be, e.g. application/xml, etc.
+           this.response.writeHead(200, {'Content-Type': 'text/html'});
+           this.response.end('<html><body>Your request was a ' + requestMethod + '</body></html>');
+       }
+   });
+});   

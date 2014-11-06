@@ -2,9 +2,12 @@ package com.pandora.hackathon.pandalist.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -18,10 +21,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
+import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -52,12 +67,14 @@ public class NavigationDrawerFragment extends BaseFragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
+    private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+
+    ExpandableListAdapter adapter;
 
     public NavigationDrawerFragment() {
     }
@@ -78,6 +95,8 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+
+        prepareListData();
     }
 
     @Override
@@ -91,26 +110,30 @@ public class NavigationDrawerFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+        prepareListData();
+
         View mainView = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView = (ListView) mainView.findViewById(R.id.listview_drawer);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mDrawerListView = (ExpandableListView) mainView.findViewById(R.id.listview_drawer);
+
+        adapter = new ExpandableListAdapter(this.getActivity(), listCategories, listSubCategories);
+
+        mDrawerListView.setAdapter(adapter);
+        mDrawerListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                selectItem(childPosition);
+                return false;
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mainView;
+    }
+
+    private void setupListView(ExpandableListView listView) {
+
     }
 
     public boolean isDrawerOpen() {
@@ -221,6 +244,15 @@ public class NavigationDrawerFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (wrapper != null) {
+            wrapper.unregister();
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
@@ -277,5 +309,195 @@ public class NavigationDrawerFragment extends BaseFragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+
+    public static class ExpandableListAdapter extends BaseExpandableListAdapter {
+
+        private Context _context;
+        private List<String> _listCategory; // header titles
+        // child data in format of header title, child title
+        private HashMap<String, List<String>> _listSubCategory;
+
+        public ExpandableListAdapter(Context context, List<String> listDataHeader,
+                                     HashMap<String, List<String>> listChildData) {
+            this._context = context;
+            this._listCategory = listDataHeader;
+            this._listSubCategory = listChildData;
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosititon) {
+            return this._listSubCategory.get(this._listCategory.get(groupPosition))
+                    .get(childPosititon);
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, final int childPosition,
+                                 boolean isLastChild, View convertView, ViewGroup parent) {
+
+            final String childText = (String) getChild(groupPosition, childPosition);
+
+            if (convertView == null) {
+                LayoutInflater infalInflater = (LayoutInflater) this._context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = infalInflater.inflate(R.layout.category_sub_list_item, null);
+            }
+
+            TextView txtListChild = (TextView) convertView.findViewById(R.id.subcategory_item);
+
+            txtListChild.setText(childText);
+            return convertView;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return this._listSubCategory.get(this._listCategory.get(groupPosition))
+                    .size();
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return this._listCategory.get(groupPosition);
+        }
+
+        @Override
+        public int getGroupCount() {
+            return this._listSubCategory.size();
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                                 View convertView, ViewGroup parent) {
+            String headerTitle = (String) getGroup(groupPosition);
+            if (convertView == null) {
+                LayoutInflater infalInflater = (LayoutInflater) this._context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = infalInflater.inflate(R.layout.category_list_item, null);
+            }
+
+            TextView lblListHeader = (TextView) convertView.findViewById(R.id.category_item);
+            lblListHeader.setTypeface(null, Typeface.BOLD);
+            lblListHeader.setText(headerTitle);
+
+            return convertView;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
+    }
+
+    private List<String> listCategories = new ArrayList<String>();
+    private HashMap<String, List<String>> listSubCategories = new HashMap<String, List<String>>();
+
+    private SubscribeWrapper wrapper = null;
+
+    /*
+     * Preparing the list data
+     */
+    private void prepareListData() {
+//        listDataHeader = new ArrayList<String>();
+//        listDataChild = new HashMap<String, List<String>>();
+//
+//        // Adding child data
+//        listDataHeader.add("Top 250");
+//        listDataHeader.add("Now Showing");
+//        listDataHeader.add("Coming Soon..");
+//
+//        // Adding child data
+//        List<String> top250 = new ArrayList<String>();
+//        top250.add("The Shawshank Redemption");
+//        top250.add("The Godfather");
+//        top250.add("The Godfather: Part II");
+//        top250.add("Pulp Fiction");
+//        top250.add("The Good, the Bad and the Ugly");
+//        top250.add("The Dark Knight");
+//        top250.add("12 Angry Men");
+//
+//        List<String> nowShowing = new ArrayList<String>();
+//        nowShowing.add("The Conjuring");
+//        nowShowing.add("Despicable Me 2");
+//        nowShowing.add("Turbo");
+//        nowShowing.add("Grown Ups 2");
+//        nowShowing.add("Red 2");
+//        nowShowing.add("The Wolverine");
+//
+//        List<String> comingSoon = new ArrayList<String>();
+//        comingSoon.add("2 Guns");
+//        comingSoon.add("The Smurfs 2");
+//        comingSoon.add("The Spectacular Now");
+//        comingSoon.add("The Canyons");
+//        comingSoon.add("Europa Report");
+//
+//        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+//        listDataChild.put(listDataHeader.get(1), nowShowing);
+//        listDataChild.put(listDataHeader.get(2), comingSoon);
+
+        wrapper = new SubscribeWrapper();
+        wrapper.register();
+
+    }
+
+    public class SubscribeWrapper {
+        private boolean registered = false;
+
+        @Subscribe
+        public void onDDPConnectEVent(DPPConnectEvent event) {
+            //Get Categories
+            PandaListApplication.getDDP().call(DDPMethodResultEvent.CATEGORIES);
+        }
+
+        @Subscribe
+        public void onDDPMethodResultEvent(DDPMethodResultEvent event) {
+            if (event.methodName.equalsIgnoreCase(DDPMethodResultEvent.CATEGORIES)) {
+
+                processCategoryData(event.data);
+
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+        private void processCategoryData(Map<String, Object> data) {
+            if (data ==null) return;
+            listCategories.clear();
+            listSubCategories.clear();
+
+            List<Map<String, Object>> categories = (List<Map<String, Object>>) data.get("categories");
+
+            for(Map<String, Object> category : categories) {
+                String name = (String) category.get("name");
+                listCategories.add(name);
+
+                List<String> subs = (List<String>) category.get("subCategories");
+                listSubCategories.put(name, subs);
+            }
+        }
+
+        public void register() {
+            if(registered) return;
+            PandaListApplication.getBus().register(this);
+        }
+
+        public void unregister() {
+            if(!registered)return;
+            PandaListApplication.getBus().unregister(this);
+        }
     }
 }

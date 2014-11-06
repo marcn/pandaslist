@@ -4,7 +4,11 @@
 
 
   <div id="createPost">
-    <h2>Create A Post</h2>
+    {{#if previewPost}}
+        <h2>Edit Post</h2>
+    {{else}}
+        <h2>Create A Post</h2>
+    {{/if}}
 
     <h3>Type</h3>
     <select class="category">
@@ -34,6 +38,9 @@
 
     <h3>Title</h3>
     <input type="text" class="title">
+
+    <h3>Price</h3>
+    <input type="text" class="price">
 
     <h3>Description</h3>
     <textarea class="description"></textarea>
@@ -77,7 +84,8 @@
     <div class="submit_buttons" style="text-align:center; padding:10px; height:60px;">
         {{#if formHasEnoughInfo}}
             <button class="btn preview" style="margin-right:25px;">Preview</button>
-            <button class="btn post">Post</button>
+            <button class="btn post" style="margin-right:25px;">Post</button>
+            <button class="btn cancel">Cancel</button>
         {{/if}}
     </div>
 

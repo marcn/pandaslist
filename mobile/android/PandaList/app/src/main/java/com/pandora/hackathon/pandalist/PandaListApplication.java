@@ -3,7 +3,9 @@ package com.pandora.hackathon.pandalist;
 import android.app.Application;
 import android.content.Context;
 
+import android.os.Handler;
 import com.pandora.hackathon.pandalist.activity.PandaListActivity;
+import com.pandora.hackathon.pandalist.data.DataManager;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.gcm.GcmService;
 import com.squareup.otto.Bus;
@@ -16,6 +18,7 @@ public class PandaListApplication extends Application {
     private static Context sContext = null;
     private static Bus appBus = null;
     private static MyDDPState ddp = null;
+    private static DataManager dataManager = null;
 
     @Override
     public void onCreate() {
@@ -23,7 +26,10 @@ public class PandaListApplication extends Application {
 
         PandaListApplication.sContext = getApplicationContext();
         PandaListApplication.appBus = new Bus();
-        ddp = MyDDPState.setupInstance(sContext);
+        ddp = MyDDPState.setupInstance(sContext, new Handler());
+
+        // Setup data manager
+        dataManager = DataManager.setupInstance();
 
         // Perform init
         doInit();
@@ -44,5 +50,9 @@ public class PandaListApplication extends Application {
 
     public static MyDDPState getDDP() {
         return ddp;
+    }
+
+    public static DataManager getDataManager() {
+        return dataManager;
     }
 }

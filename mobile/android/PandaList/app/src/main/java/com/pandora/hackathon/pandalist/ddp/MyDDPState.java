@@ -11,13 +11,11 @@ public class MyDDPState extends DDPStateSingleton {
         super(context);
     }
 
-    public static void setupInstance(Context context) {
+    public static MyDDPState setupInstance(Context context) {
         if (mInstance == null) {
             mInstance = new MyDDPState(context);
         }
-    }
 
-    public static MyDDPState getInstance() {
         return (MyDDPState) mInstance;
     }
 }

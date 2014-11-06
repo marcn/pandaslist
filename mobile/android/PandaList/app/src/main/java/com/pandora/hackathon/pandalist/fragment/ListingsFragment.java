@@ -20,6 +20,7 @@ import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.squareup.otto.Subscribe;
 
+import java.util.HashSet;
 import java.util.Map;
 
 
@@ -43,6 +44,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     private String mParam2;
 
     private ListView postingsListView;
+    private HashSet<String> postingsIdsSet;
     private ArrayAdapter<String> postingsAdapter;
 
     private OnFragmentInteractionListener mListener;
@@ -78,6 +80,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
         postingsListView = (ListView) mainView.findViewById(R.id.postings_listView);
         postingsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
+        postingsIdsSet = new HashSet<String>();
         postingsListView.setAdapter(postingsAdapter);
 
 
@@ -146,7 +149,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             if (event.changeType.equals("added")) {
                 MyDDPState ddp = PandaListApplication.getDDP();
                 Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
-                postingsAdapter.add(post.get("title").toString());
+                if (postingsIdsSet.add(event.docId)) {
+                    postingsAdapter.add(post.get("title").toString());
+                }
             }
         }
     }

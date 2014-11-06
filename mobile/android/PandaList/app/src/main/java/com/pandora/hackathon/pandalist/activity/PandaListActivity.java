@@ -3,17 +3,17 @@ package com.pandora.hackathon.pandalist.activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import com.keysolutions.ddpclient.android.DDPBroadcastReceiver;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
+import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
 
 
-public class PandaListActivity extends BaseActivity
-          {
+public class PandaListActivity extends BaseActivity {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -25,8 +25,6 @@ public class PandaListActivity extends BaseActivity
      */
     private CharSequence mTitle;
     private DDPBroadcastReceiver mReceiver;
-
-    private TextView myTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +40,7 @@ public class PandaListActivity extends BaseActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        MyDDPState.initInstance(getApplicationContext());
-
-        myTextView = (TextView) findViewById(R.id.textView);
+        MyDDPState.setupInstance(getApplicationContext());
     }
 
     public void onSectionAttached(int number) {
@@ -99,11 +95,18 @@ public class PandaListActivity extends BaseActivity
         super.onResume();
 
         mReceiver = new DDPBroadcastReceiver(MyDDPState.getInstance(), this) {
+
+            @Override
+            protected void onDDPConnect(DDPStateSingleton ddp) {
+                ddp.subscribe("posts", new Object[]{});
+            }
+
             @Override
             protected void onSubscriptionUpdate(String changeType, String subscriptionName, String docId) {
+                Log.d("DDP UPDATE", "changeType="+changeType + ",subName="+subscriptionName + ",docId="+docId);
 
-                myTextView.setText("Received something!");
             }
         };
+        MyDDPState.getInstance().connectIfNeeded();
     }
 }

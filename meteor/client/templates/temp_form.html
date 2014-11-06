@@ -13,9 +13,15 @@
 		<textarea cols="50" rows="10" name="description" placeholder="description" ></textarea><br>
 
 		<br>
-		<input type="file" class="file_bag">
-		<br>
 
+    <input type="file" class="file_bag">
+
+    {{#each files}}
+        <p>{{percent_uploaded}}%</p>
+        <p><img src="{{url}}" style="max-width: 200px"></p>
+    {{/each}}
+
+    <br>
 		<input type="submit" value="Submit"/>
 	</form>
 </template>	

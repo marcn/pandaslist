@@ -12,4 +12,5 @@ service-configuration
 iron:router
 cfs:standard-packages
 cfs:filesystem
+lepozepo:s3
 

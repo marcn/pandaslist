@@ -6,13 +6,10 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,13 +19,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.activity.NewPostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
@@ -175,19 +172,14 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     public void onItemClick(int position) {
         PostItemData itemDataClick = new PostItemData();//myRecyclerAdapter.getItemId(position);
 
-        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+        Intent intent = new Intent(getActivity(), NewPostDetailActivity.class);
 
         Bundle b = new Bundle();
         b.putSerializable(PandasConstants.INTENT_DATA_POST_ITEM, itemDataClick);
         intent.putExtras(b);
 
-        View itemView = mPostingsRecyclerView.getChildAt(position);
-        ImageView imageView = (ImageView)itemView.findViewById(R.id.post_image);
-        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
 
-        Bundle bundle = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(itemView, bitmap, 0, 0).toBundle();
-
-        getActivity().startActivity(intent, bundle);
+        getActivity().startActivity(intent);
     }
 
     /**
@@ -214,27 +206,41 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
      * to populate the adapter
      * @return
      */
-    private List<Object> createMockList() {
-        List<Object> list = new ArrayList<Object>(6);
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
-        list.add(new Object());
+    private List<PostItemData> createMockList() {
+        List<PostItemData> list = new ArrayList<PostItemData>(6);
+
         return list;
     }
 
+    List<PostItemData> mListItems = new ArrayList<PostItemData>();
+
     @Subscribe
     public void onDataChangeEvent(DataChangeEvent event) {
+
+        PostItemData item = null;
+
         if (event.subscriptionName.equals("posts")) {
             if (event.changeType.equals("added")) {
                 MyDDPState ddp = PandaListApplication.getDDP();
                 Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
-                if (postingsIdsSet.add(event.docId)) {
-                    postingsAdapter.add(post.get("title").toString());
-                }
+
+                String title = post.get("title") != null ? post.get("title").toString() : "";
+                String category = post.get("category") != null ? post.get("category").toString() : "";
+                String description = post.get("description") != null ? post.get("description").toString() : "";
+
+                item = new PostItemData();
+                item.setTitle(title);
+                item.setDescription(description);
+                item.setPrice(23.56);
+                item.setBitmapResId(R.drawable.ic_launcher);
+
+
+
             }
+            mListItems.add(item);
+            myRecyclerAdapter.setItems(mListItems);
         }
+
     }
 
     private float globalScroll;

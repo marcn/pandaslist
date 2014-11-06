@@ -8,7 +8,13 @@
       <input type="text">
     </div>
     <div id="headerAdmin">
-      {{> loginButtons}}
+
+      <div>{{ currentUser.profile.name }}</div>
+      <ul>
+        <li>Settings</li>
+        <li>{{> loginButtons}}</li>
+      </ul>
+
     </div>
   </div>
 
@@ -29,4 +35,4 @@
 
 <template name="emptyLayout">
   {{> yield}}
-</template>  
+</template>

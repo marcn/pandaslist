@@ -9,21 +9,40 @@ if (Meteor.isClient) {
 	};
 
 	var handleImageUpload = function(event, template) {
-		FS.Utility.eachFile(event, function(file) {
-			Images.insert(file, function (err, fileObj) {
-				if (err) {
-					console.log(err);
-				} else {
-					var images = Session.get("postImages");
-					images.push(fileObj._id);
-					Session.set("postImages", images);
-					// If cover photo hasn't been chosen yet, auto-select this image
-					if (!Session.get("postCoverPhoto")) {
-						Session.set("postCoverPhoto", fileObj._id);
-					}
+		event.preventDefault();
+		var files = event.target.files;
+		S3.upload(files, "/images", function(err,result) {
+			if (err) {
+				console.log(err);
+			} else {
+				var image = Images.insert({
+					url: result.url
+				});
+				var images = Session.get("postImages");
+				images.push(image);
+				Session.set("postImages", images);
+				// If cover photo hasn't been chosen yet, auto-select this image
+				if (!Session.get("postCoverPhoto")) {
+					Session.set("postCoverPhoto", image);
 				}
-			});
+			}
+			
 		});
+		// FS.Utility.eachFile(event, function(file) {
+		// 	Images.insert(file, function (err, fileObj) {
+		// 		if (err) {
+		// 			console.log(err);
+		// 		} else {
+		// 			var images = Session.get("postImages");
+		// 			images.push(fileObj._id);
+		// 			Session.set("postImages", images);
+		// 			// If cover photo hasn't been chosen yet, auto-select this image
+		// 			if (!Session.get("postCoverPhoto")) {
+		// 				Session.set("postCoverPhoto", fileObj._id);
+		// 			}
+		// 		}
+		// 	});
+		// });
 	}
 
 	var getFormData = function(template) {
@@ -40,12 +59,12 @@ if (Meteor.isClient) {
 		var post = getFormData(Template.instance());
 		var coverPhoto = Session.get("postCoverPhoto");
 		post['coverPhoto'] = coverPhoto;
-		post['coverPhotoUrl'] = coverPhoto != null ? Images.findOne(coverPhoto).url() : null;
+		post['coverPhotoUrl'] = coverPhoto != null ? Images.findOne(coverPhoto).url : null;
 		var photos = [];
 		_.each(Session.get("postImages"), function(image) {
 			photos.push({
 				id: image,
-				url: Images.findOne(image).url()
+				url: Images.findOne(image).url
 			});
 		});
 		post['photos'] = photos;

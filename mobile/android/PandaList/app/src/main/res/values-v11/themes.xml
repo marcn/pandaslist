@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="PandasTheme" parent="android:Theme.Holo.Light">
+        <item name="colorPrimary">@color/pandora_indigo</item>
+        <item name="colorPrimaryDark">@color/cyan</item>
+        <item name="colorAccent">@color/medium_grey</item>
+        <item name="android:actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerTheme</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
+
+        <!-- Drawable used as a background for activated items. -->
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
+    </style>
+
+</resources>

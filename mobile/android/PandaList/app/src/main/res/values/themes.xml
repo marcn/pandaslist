@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="PandasTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="PandasTheme" parent="android:Theme.Light">
         <item name="colorPrimary">@color/pandora_indigo</item>
         <item name="colorPrimaryDark">@color/cyan</item>
         <item name="colorAccent">@color/medium_grey</item>
         <item name="android:actionBarStyle">@style/PandasTheme.ActionBar</item>
         <item name="actionBarStyle">@style/PandasTheme.ActionBar</item>
-        <item name="android:fitsSystemWindows">true</item>
         <item name="android:spinnerStyle">@style/SpinnerTheme</item>
         <item name="android:dropDownSpinnerStyle">@style/SpinnerTheme.DropDown</item>
         <item name="android:spinnerDropDownItemStyle">@style/DropDownItemSpinnerTheme</item>

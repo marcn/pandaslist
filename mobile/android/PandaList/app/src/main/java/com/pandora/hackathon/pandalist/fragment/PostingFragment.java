@@ -3,11 +3,10 @@ package com.pandora.hackathon.pandalist.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,6 +22,8 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
 
 
     private Spinner mPostTypeSpinner;
+    private AdapterView.OnItemSelectedListener mPostTypeItemSelectedListener;
+
     private Spinner mCategorySpinner;
     private Spinner mSubCategorySpinner;
     private View mPhotoView;
@@ -37,14 +38,16 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mainView =  inflater.inflate(R.layout.fragment_postings, container, false);
         mainView.setOnClickListener(this);
-        mPostTypeSpinner = (Spinner)mainView.findViewById(R.id.post_type);
+
+        createPostTypeAdapter(mainView);
+
         mCategorySpinner = (Spinner)mainView.findViewById(R.id.category);
         mSubCategorySpinner = (Spinner)mainView.findViewById(R.id.subcategory);
+        mLocationName = (Spinner)mainView.findViewById(R.id.location_name);
 
         mPhotoView = mainView.findViewById(R.id.photo_gallery);
         mPhotoView.setOnClickListener(this);
@@ -58,23 +61,25 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
         mCreatePostView = mainView.findViewById(R.id.send_post);
         mCreatePostView.setOnClickListener(this);
 
-        mLocationName = (Spinner)mainView.findViewById(R.id.location_name);
-        //setLocationLinkSpan(mLocationName.getText().toString());
-        //mLocationName.setOnClickListener(this);
         return mainView;
     }
 
-    private ClickableSpan mClickableSpan;
+    private void createPostTypeAdapter(View mainView) {
+        mPostTypeSpinner = (Spinner) mainView.findViewById(R.id.post_type);
+        mPostTypeItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //TODO handle showing/hiding date picker, time picker
+            }
 
-    private void setLocationLinkSpan(String locationText) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-
-        //SpannableString text = new SpannableString(locationText);
-        //text.setSpan(new UnderlineSpan(), 0, mLocationName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //mLocationName.setText(text, TextView.BufferType.SPANNABLE);
-        //mLocationName.setTextColor(getResources().getColor(R.color.pandora_indigo));
-
+            }
+        };
+        mPostTypeSpinner.setOnItemSelectedListener(mPostTypeItemSelectedListener);
     }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -89,21 +94,9 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
         }  else if (id == R.id.photo_camera) {
             dispatchTakePictureIntent();
 
-        } else if(id == R.id.location_office || id == R.id.location_name) {
-            PopupMenu menu = createLocationOfficesPopup(v);
-            menu.show();
         } else if (id == R.id.send_post) {
             Toast.makeText(getActivity(), "Create Post yay!!", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private PopupMenu createLocationOfficesPopup(View anchor) {
-        PopupMenu menu = new PopupMenu(getActivity(), anchor);
-        menu.getMenu().add("Oakland");
-        menu.getMenu().add("Hawaii");
-        menu.getMenu().add("New York");
-
-        return menu;
     }
 
     private void dispatchTakePictureIntent() {

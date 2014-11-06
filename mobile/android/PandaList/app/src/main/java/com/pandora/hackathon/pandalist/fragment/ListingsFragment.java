@@ -1,6 +1,7 @@
 package com.pandora.hackathon.pandalist.fragment;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -119,7 +120,10 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             //open new Activity with Fragment createPost
             Intent intent = new Intent(getActivity(), PostingActivity.class);
 
-            getActivity().startActivity(intent);
+            Bundle bundle = ActivityOptions.makeScaleUpAnimation(mFab, 0, 0,
+                    0, 0).toBundle();
+
+            getActivity().startActivity(intent, bundle);
         }
     }
 

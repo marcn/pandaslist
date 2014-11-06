@@ -1,20 +1,35 @@
 <template name="listings">
-	You are logged in as {{currentUser.profile.name}}, here are the listings: 
 
-	<table>
-	<th>Category</th>
-	<th>Title</th>
-	<th>Description</th>
-		{{#each listing}}
-			{{> row}}
-		{{/each}}
-	</table>
+  <link rel="stylesheet" type="text/css" href="/css/listings.css">
+
+	You are logged in as {{currentUser.profile.name}}, here are the listings:
+
+
+  <ul id="listings">
+    {{#each listing}}
+      {{> row}}
+    {{/each}}
+  </ul>
+
 </template>
 
 <template name="row">
-	<tr>
+<!-- 	<tr>
 		<td>{{category}}</td>
     	<td>{{title}}</td>
     	<td>{{description}}</td>
-    </tr>	
+    </tr>
+ -->
+
+  <li>
+    <div class="imgFrame">
+      <img src="img/fpo.png">
+    </div>
+    <div class="info">
+      <h3>{{title}}</h3>
+      <p class="price">$100</p>
+      <p class="location">3</p>
+    </div>
+  </li>
+
 </template>

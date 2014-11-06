@@ -8,7 +8,8 @@ if (Meteor.isClient) {
       // turn obj to arr
     	for (var key in groups) {
     		var obj = groups[key];
-    		arr.push({category: key, count: groups[key].length})
+        var selected = (this.query.category == key);
+    		arr.push({category: key, count: groups[key].length, selected: selected})
     	}
       return arr;
     }
@@ -16,7 +17,10 @@ if (Meteor.isClient) {
 
   Template.subCategories.helpers({
     cssClass: function() {
-    	return (this.count === 0) ? "inactive" : "";
+      if(this.selected)
+        return "active";
+      else
+    	 return (this.count === 0) ? "inactive" : "";
     }
   });
 

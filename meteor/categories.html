@@ -1,9 +1,6 @@
 
 <template name="categories">
-
-
    <div id="nav">
-
       <a href="/create"><div id="createPostBtn" class="btn">Create A Post</div></a>
 
       <h2 class="active">Most Recent</h2>
@@ -35,7 +32,7 @@
 </template>
 
 <template name="subCategories">
-  <li class="{{cssClass}}">
+  <li class="{{cssClass}}" data-listing-category="{{pathFor route='listings'}}?category={{category}}">
     <span class="num">{{count}}</span>
     <span class="name">{{category}}</span>
   </li>

@@ -5,11 +5,18 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
+import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
+import com.pandora.hackathon.pandalist.ddp.MyDDPState;
+import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.pandora.hackathon.pandalist.fragment.ListingsFragment;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
 import com.pandora.hackathon.pandalist.R;
@@ -19,6 +26,8 @@ import com.pandora.hackathon.pandalist.R;
  */
 public class BaseActivity  extends ActionBarActivity implements ListingsFragment.OnFragmentInteractionListener, NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+
+    private DDPBroadcastReceiver mReceiver;
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -82,5 +91,4 @@ public class BaseActivity  extends ActionBarActivity implements ListingsFragment
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
 }

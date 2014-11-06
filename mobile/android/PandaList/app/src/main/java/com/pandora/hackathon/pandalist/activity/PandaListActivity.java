@@ -3,12 +3,9 @@ package com.pandora.hackathon.pandalist.activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.pandora.hackathon.pandalist.R;
-import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
-import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
 
@@ -24,7 +21,6 @@ public class PandaListActivity extends BaseActivity {
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private DDPBroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,23 +86,5 @@ public class PandaListActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        mReceiver = new DDPBroadcastReceiver(MyDDPState.getInstance(), this) {
-
-            @Override
-            protected void onDDPConnect(DDPStateSingleton ddp) {
-                ddp.subscribe("posts", new Object[]{});
-            }
-
-            @Override
-            protected void onSubscriptionUpdate(String changeType, String subscriptionName, String docId) {
-                Log.d("DDP UPDATE", "changeType="+changeType + ",subName="+subscriptionName + ",docId="+docId);
-
-            }
-        };
-        MyDDPState.getInstance().connectIfNeeded();
-    }
 }

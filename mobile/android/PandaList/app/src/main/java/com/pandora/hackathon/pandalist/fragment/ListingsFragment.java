@@ -9,9 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import com.melnykov.fab.FloatingActionButton;
+import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
+import com.pandora.hackathon.pandalist.ddp.MyDDPState;
+import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
+import com.pandora.hackathon.pandalist.events.DataChangeEvent;
+import com.squareup.otto.Subscribe;
+
+import java.util.Map;
 
 
 /**
@@ -32,6 +41,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ListView postingsListView;
+    private ArrayAdapter<String> postingsAdapter;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton mFab;
@@ -63,6 +75,11 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         View mainView =  inflater.inflate(R.layout.fragment_listings_main, container, false);
         mFab = (FloatingActionButton)mainView.findViewById(R.id.fab);
         mFab.setOnClickListener(this);
+
+        postingsListView = (ListView) mainView.findViewById(R.id.postings_listView);
+        postingsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
+        postingsListView.setAdapter(postingsAdapter);
+
 
         return mainView;
     }
@@ -118,4 +135,19 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         public void onFragmentInteraction(Uri uri);
     }
 
+    @Subscribe
+    public void onDPPConnect(DPPConnectEvent event) {
+        PandaListApplication.getDDP().subscribe("posts", new Object[]{});
+    }
+
+    @Subscribe
+    public void onDataChangeEvent(DataChangeEvent event) {
+        if (event.subscriptionName.equals("posts")) {
+            if (event.changeType.equals("added")) {
+                MyDDPState ddp = PandaListApplication.getDDP();
+                Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
+                postingsAdapter.add(post.get("title").toString());
+            }
+        }
+    }
 }

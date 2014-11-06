@@ -78,22 +78,32 @@ if (Meteor.isClient) {
   });
 
 
-/* begin JS for details page (help me move this later)*/
+/* begin JS for details page (help me move this later) */
 
-Template.detail.events({
-  "click .postThumbs span": function(evt) {
+  Template.detail.events({
+    "click .postThumbs span": function(evt) {
 
-    var src = $(evt.currentTarget).children('img').attr('src');
+      if ( $(evt.currentTarget).hasClass('active') ) return false;
 
-    // $('.postThumbs').children().removeClass('active');
-    // $(evt.currentTarget).addClass('active');
+      $('.postThumbs span').removeClass('active');
 
-    $('#postHero img').attr('src', src);
+      var src = $(evt.currentTarget).children('img').attr('src');
 
-    console.log(src);
+      $(evt.currentTarget).addClass('active');
 
-  }
-});
+      $('#postHero img.active').removeClass('active');
+
+      var x ='<img src="'+src+'">';
+
+      $('#postHero').append(x);
+
+      setTimeout(function(){
+        $('#postHero img').eq(0).remove();
+        $('#postHero img').addClass('active');
+      },300);
+
+    }
+  });
 
 }
 

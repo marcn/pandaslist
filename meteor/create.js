@@ -48,7 +48,7 @@ if (Meteor.isClient) {
 	var getFormData = function(template) {
 		var data = {};
 		if (Session.get("postCategorySelected")) {
-			_.each(['category', 'subcategory', 'location', 'title', 'description', 'delivery_method'], function(name) {
+			_.each(['category', 'subcategory', 'location', 'title', 'price', 'description', 'delivery_method'], function(name) {
 				data[name] = template.$("."+name).val();
 			});
 		}

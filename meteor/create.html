@@ -4,15 +4,7 @@
   <div id="createPost">
     <h2>Create A Post</h2>
 
-
     <h3>Type</h3>
-    <select class="listing_type">
-        <option>Normal Listing</option>
-        <option>Bid Listing</option>
-        <option>Contest Listing</option>
-    </select>
-
-    <h3>Category</h3>
     <select class="category">
         <option value="">-select one-</option>
         {{ #each categories }}
@@ -21,7 +13,7 @@
     </select>
 
     {{ #if subcategories }}
-    <h3>Sub Category</h3>
+    <h3>Category</h3>
     <select>
         <option>-select one-</option>
         {{ #each subcategories }}

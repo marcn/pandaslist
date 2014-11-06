@@ -11,6 +11,11 @@ if (Meteor.isClient) {
 	var handleImageUpload = function(event, template) {
 		event.preventDefault();
 		var files = event.target.files;
+		if (files.item(0).type.indexOf("image/") != 0) {
+			alert("Only image files are allowed");
+			// Only allow image uploads
+			return;
+		}
 		S3.upload(files, "/images", function(err,result) {
 			if (err) {
 				console.log(err);

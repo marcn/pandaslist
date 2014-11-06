@@ -3,7 +3,7 @@
 
    <div id="nav">
 
-      <a href="/create"><div id="createPostBtn" class="btn">Create A Post</div></a>
+      <a class="btn" href="/create">Create A Post</a>
 
       <h2 class="active">Most Recent</h2>
       {{#each categoryGroups}}
@@ -34,7 +34,8 @@
     {{#each subCategoryGroups}}
       {{> subCategory}}
     {{/each}}
-  </ul>  
+  </ul>
+  <hr>
 </template>
 
 <template name="subCategory">

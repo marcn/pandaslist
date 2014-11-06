@@ -22,6 +22,7 @@ Images = new FS.Collection("images", {
     	},
     	onInvalid: function (message) {
 			if (Meteor.isClient) {
+				// TODO: show nicer dialog?
 				alert(message);
 			} else {
 				console.log(message);

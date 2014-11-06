@@ -14,4 +14,5 @@ cfs:standard-packages
 cfs:filesystem
 lepozepo:s3
 raix:ui-dropped-event
-
+npm-container
+meteorhacks:npm

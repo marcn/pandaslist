@@ -29,7 +29,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -428,7 +427,7 @@ public class DDPStateSingleton extends MeteorAuthCommands
             String docId) {
         if (mCollections.containsKey(collName)) {
             Map<String, Map<String,Object>> collection = mCollections.get(collName);
-            Map<String, Object> doc = collection
+            Map<String, Object> doc = (Map<String, Object>) collection
                     .get(docId);
             if (doc != null) {
                 // take care of field updates
@@ -558,9 +557,5 @@ public class DDPStateSingleton extends MeteorAuthCommands
             }
         }
         return email;
-    }
-
-    public void call(String method) {
-        mDDP.call(method, new Object[]{});
     }
 }

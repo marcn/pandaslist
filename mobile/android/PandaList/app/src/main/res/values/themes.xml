@@ -1,0 +1,15 @@
+<resources>
+    <style name="PandasTheme" parent="android:Theme.Light">
+        <item name="colorPrimary">@color/pandora_indigo</item>
+        <item name="colorPrimaryDark">@color/cyan</item>
+        <item name="colorAccent">@color/medium_grey</item>
+        <item name="android:actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/PandasTheme.ActionBar</item>
+        <item name="android:spinnerStyle">@style/SpinnerTheme</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerTheme.DropDown</item>
+        <item name="android:spinnerDropDownItemStyle">@style/DropDownItemSpinnerTheme</item>
+        <item name="android:listViewStyle">@style/ListViewSpinnerTheme</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewSpinnerTheme.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
+    </style>
+</resources>

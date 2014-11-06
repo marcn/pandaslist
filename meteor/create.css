@@ -89,3 +89,18 @@
     text-decoration: underline;
     vertical-align: bottom;
   }
+
+
+
+/*============================================================
+  RESPONSIVE CSS
+============================================================*/
+
+@media screen and (max-width: 960px) {
+
+  #createPost h3 {
+    display: block;
+    text-align: left;
+  }
+
+}

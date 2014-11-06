@@ -16,8 +16,8 @@
 
     {{ #if subcategories }}
     <h3>Category</h3>
-    <select>
-        <option>-select one-</option>
+    <select class="subcategory">
+        <option value="">-select one-</option>
         {{ #each subcategories }}
         <option>{{this}}</option>
         {{ /each }}
@@ -25,18 +25,18 @@
     {{ /if}}
 
     <h3>Office Location</h3>
-    <select>
-        <option>-select one-</option>
+    <select class="location">
+        <option value="">-select one-</option>
         {{ #each locations }}
         <option {{defaultLocationSelected}}>{{name}}</option>
         {{ /each }}
     </select>
 
     <h3>Title</h3>
-    <input type="text">
+    <input type="text" class="title">
 
     <h3>Description</h3>
-    <textarea></textarea>
+    <textarea class="description"></textarea>
 
     <h3>Photos</h3>
 
@@ -68,11 +68,18 @@
 -->
 
     <h3>Delivery Method</h3>
-    <select>
-      <option>Office Pickup</option>
-      <option>Go to seller's location</option>
-      <option>Seller goes to buyer's location</option>
+    <select class="delivery_method">
+      <option value="office_pickup">Office Pickup</option>
+      <option value="goto_seller">Go to seller's location</option>
+      <option value="goto_buyer">Seller goes to buyer's location</option>
     </select>
+
+    <div class="submit_buttons" style="text-align:center; padding:10px; height:60px;">
+        {{#if formHasEnoughInfo}}
+            <button class="btn preview" style="margin-right:25px;">Preview</button>
+            <button class="btn post">Post</button>
+        {{/if}}
+    </div>
 
   </div>
 

@@ -1,11 +1,19 @@
 
 Router.configure({
 	// the default layout
-	layoutTemplate: 'layout'
+	layoutTemplate: 'layout',
+
+	data: function () {
+    	return this.params;
+  	},
 });
 
 Router.route('/', function () {
-	this.render('listings');
+	this.render('listings', {
+		data: function() {
+			return this.params.query;
+		}
+	});
 }, {
 	name: 'listings'
 });

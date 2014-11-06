@@ -36,6 +36,26 @@ if (Meteor.isClient) {
 		return data;
 	}
 
+	var getPostData = function(template) {
+		var post = getFormData(Template.instance());
+		var coverPhoto = Session.get("postCoverPhoto");
+		post['coverPhoto'] = coverPhoto;
+		post['coverPhotoUrl'] = coverPhoto != null ? Images.findOne(coverPhoto).url() : null;
+		var photos = [];
+		_.each(Session.get("postImages"), function(image) {
+			photos.push({
+				id: image,
+				url: Images.findOne(image).url()
+			});
+		});
+		post['photos'] = photos;
+		post['createdBy'] = Meteor.user()._id;
+		post['creationDate'] = new Date().getTime();
+		post['published'] = true;
+		console.log(post);
+		return post;
+	}
+
 	Template.create.events({
 		"change select": function(evt) {
 			var classChanged = evt.target.className;
@@ -81,29 +101,24 @@ if (Meteor.isClient) {
 		},
 
 		'click .post': function() {
-			var post = getFormData(Template.instance());
-			var coverPhoto = Session.get("postCoverPhoto");
-			post['coverPhoto'] = coverPhoto;
-			post['coverPhotoUrl'] = coverPhoto != null ? Images.findOne(coverPhoto).url() : null;
-			var photos = [];
-			_.each(Session.get("postImages"), function(image) {
-				photos.push({
-					id: image,
-					url: Images.findOne(image).url()
-				});
-			});
-			post['photos'] = photos;
-			post['createdBy'] = Meteor.user()._id;
-			post['creationDate'] = new Date().getTime();
-			post['published'] = true;
-			console.log(post);
+			var post = getPostData(Template.instance());
 			var id = Posts.insert(post);
 			Router.go("/detail/"+id);
+		},
+
+		'click .preview': function() {
+			Session.set("previewPost", getPostData(Template.instance()));
+			Router.go("/preview");
 		}
 
 	});
 
 	Template.create.helpers({
+
+		"previewPost": function() {
+			return Session.get("previewPost");
+		},
+
 		"categories": function(){
 			return Categories.find();
 		},

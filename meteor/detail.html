@@ -3,6 +3,10 @@
   <a href="{{pathFor route='listings'}}">Back to Listings</a>
   <div id="post">
 
+    {{#if isPreview}}
+    <div>PREVIEW</div>
+    {{/if}}
+
     <h2>{{title}}</h2>
 
     <p class="price">$2399</p>
@@ -25,7 +29,12 @@
     <p class="description">{{description}}</p>
 
 
-    <a href="#" class="btn">Purchase</a>
+    {{#if isPreview}}
+      <a href="#" class="btn">Edit</a>
+      <a href="#" class="btn">Post</a>
+    {{else}}
+      <a href="#" class="btn">Purchase</a>
+    {{/if}}
 
 
     <div class="postComments">

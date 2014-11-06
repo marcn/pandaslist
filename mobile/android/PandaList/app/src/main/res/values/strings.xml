@@ -14,5 +14,21 @@
     <string name="type">Type</string>
     <string name="category">Category</string>
     <string name="sub_category">Subcategory</string>
+    <string name="gcm_sender_id">338135990728</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+
+    <string name="text_sign_in">Sign in</string>
+    <string name="text_sign_in_google">Google Sign in</string>
+    <string name="pick_account">Please select an account to login</string>
+
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+    <string name="cd_post_image">Post image</string>
 
 </resources>

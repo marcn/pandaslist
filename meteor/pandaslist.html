@@ -1,50 +1,6 @@
 <head>
   <title>PandasList</title>
-
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <script type="text/javascript" src="/js/uiEvents.js"></script>
-
 </head>
 
 <body>
-
-  <div id="header">
-    <div id="headerLogo">
-    </div>
-    <div id="headerSearch">
-      <input type="text">
-    </div>
-    <div id="headerAdmin">
-      {{> loginButtons}}
-    </div>
-  </div>
-
-  <!--nav bar-->
-  <!-- {{> categories}} -->
-
-  <div class="wrapper">
-
-    <div id="main">
-
-      <!--views-->
-      <!--
-      {{> create}}
-      {{> detail}}
-      {{> listings}}
-      {{> tempForm}}
-      -->
-
-      {{ #if currentUser }}
-      {{> loginRequired}}
-      {{ /if }}
-    </div>
-
-  </div>
-
-
 </body>
-
-<template name="loginRequired">
-	<br><br>
-	You must log in to use this site.
-</template>

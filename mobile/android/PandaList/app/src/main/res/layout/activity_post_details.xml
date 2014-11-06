@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="220dp"
+            android:src="@drawable/ic_launcher"
+            android:contentDescription="@string/cd_post_image" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Sample Title Goes Here"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/post_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price: $599"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/post_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Location: OAK"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/post_newline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here."/>
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:text="Purchase" />
+
+    </LinearLayout>
+
+</ScrollView>

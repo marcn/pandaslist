@@ -1,18 +1,27 @@
 
-Router.route('/', function () {
-	//this.render('listings');
+Router.configure({
+	// the default layout
+	layoutTemplate: 'layout'
 });
 
-Router.route('/listings', function () {
+Router.route('/', function () {
 	this.render('listings');
-}, {name: "listings"});
+}, {
+	name: 'listings'
+});
 
 Router.route('/create', function () {
+	Session.set("postCategorySelected", null);
 	this.render('create');
 });
 
 Router.route('/settings', function () {
 	this.render('settings');
+});
+
+
+Router.route('/tempForm', function () {
+	this.render('tempForm');
 });
 
 Router.route('/detail/:_id', function () {
@@ -25,6 +34,7 @@ Router.route('/detail/:_id', function () {
 
 Router.onBeforeAction(function() {
  	if (! Meteor.userId()) {
+ 		this.layout('emptyLayout');
 		this.render('login');
  	} else {
 		this.next();

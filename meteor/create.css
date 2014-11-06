@@ -12,7 +12,16 @@
 
 #createPost h3 {
   display: inline-block;
+  vertical-align: top;
+  margin-top: 1rem;
   width: 14rem;
   text-align: right;
   font-size: 1.5rem;
+}
+
+#createPost .radioList {
+  width: 40rem;
+  margin: 0.5rem;
+  display: inline-block;
+  font-size: 1.3rem;
 }

@@ -1,49 +1,60 @@
 
 <template name="create">
 
-  <link rel="stylesheet" type="text/css" href="/css/createPost.css">
-
   <div id="createPost">
     <h2>Create A Post</h2>
 
-
     <h3>Type</h3>
-    <select>
-        <option>-select one-</option>
-        <option>Ring</option>
-        <option>Necklace</option>
+    <select class="category">
+        <option value="">-select one-</option>
+        {{ #each categories }}
+        <option>{{name}}</option>
+        {{ /each }}
     </select>
 
+    {{ #if subcategories }}
     <h3>Category</h3>
     <select>
         <option>-select one-</option>
-        <option>Ring</option>
-        <option>Necklace</option>
-        <option>Earrings</option>
-        <option>Bracelet</option>
-        <option>Other</option>
+        {{ #each subcategories }}
+        <option>{{this}}</option>
+        {{ /each }}
     </select>
+    {{ /if}}
 
     <h3>Office Location</h3>
     <select>
         <option>-select one-</option>
-        <option>Ring</option>
-        <option>Necklace</option>
-        <option>Earrings</option>
-        <option>Bracelet</option>
-        <option>Other</option>
+        {{ #each locations }}
+        <option {{defaultLocationSelected}}>{{name}}</option>
+        {{ /each }}
     </select>
 
     <h3>Title</h3>
-    <input type="text" name="form_name">
+    <input type="text">
 
     <h3>Description</h3>
-    <textarea name="form_comments"></textarea>
+    <textarea></textarea>
+
+    <h3>Photos</h3>
+    <input type="file" class="file_bag">
+
+    {{#each files}}
+        <p>{{percent_uploaded}}%</p>
+        <p><img src="{{url}}" style="max-width: 200px"></p>
+    {{/each}}
+
+    <h3>Listing Type</h3>
+    <div class="radioList">
+      <input type="radio" name="listingType" value="male">Classified Listing<br>
+      <input type="radio" name="listingType" value="female">Bid &amp; Auction<br>
+      <input type="radio" name="listingType" value="female">Contest<br>
+    </div>
+
 
     <h3>Delivery Method</h3>
     <select>
-        <option>-select one-</option>
-        <option>Ring</option>
+      <option>default</option>
     </select>
 
   </div>

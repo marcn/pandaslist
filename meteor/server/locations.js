@@ -1,7 +1,6 @@
 // Seed the locations
 Meteor.startup(function () {
     if (Locations.find().count() == 0) {
-    	Locations.insert({ name: 'Oakland'});
     	Locations.insert({ name: 'Atlanta'});
     	Locations.insert({ name: 'Aukland'});
     	Locations.insert({ name: 'Boulder'});
@@ -19,6 +18,7 @@ Meteor.startup(function () {
     	Locations.insert({ name: 'Minneapolis'});
     	Locations.insert({ name: 'Melbourne'});
     	Locations.insert({ name: 'New York'});
+        Locations.insert({ name: 'Oakland'});
     	Locations.insert({ name: 'Phoenix'});
     	Locations.insert({ name: 'Portland'});
     	Locations.insert({ name: 'Santa Monica'});

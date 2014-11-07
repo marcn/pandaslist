@@ -20,9 +20,10 @@ import android.view.ViewGroup;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
-import com.pandora.hackathon.pandalist.activity.NewPostDetailActivity;
+import com.pandora.hackathon.pandalist.activity.PostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
@@ -181,13 +182,13 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onItemClick(int position) {
-       // PostItemData itemDataClick = myRecyclerAdapter.getItemId(position);
+        PostItemData itemDataClick = myRecyclerAdapter.getItem(position);
 
-        Intent intent = new Intent(getActivity(), NewPostDetailActivity.class);
+        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
 
-        /*Bundle b = new Bundle();
+        Bundle b = new Bundle();
         b.putSerializable(PandasConstants.INTENT_DATA_POST_ITEM, itemDataClick);
-        intent.putExtras(b);*/
+        intent.putExtras(b);
 
 
         getActivity().startActivity(intent);
@@ -300,6 +301,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         String published  = post.get("published") != null ? post.get("published").toString() : "";
         String price  = post.get("price") != null ? post.get("price").toString() : "";
         item = new PostItemData();
+        item.setCategory(category);
+        item.setSubcategory(subcategory);
+        item.setCreatedBy(createdBy);
         item.setTitle(title);
         item.setDescription(description);
         item.setImageUrl(coverPhotoUrl);

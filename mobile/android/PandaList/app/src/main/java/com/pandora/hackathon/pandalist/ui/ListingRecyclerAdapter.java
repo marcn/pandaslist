@@ -44,6 +44,10 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
 
     }
 
+    public PostItemData getItem(int position) {
+        return mItems.get(position);
+    }
+
     @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(ItemLayout, parent, false);
         return new ViewHolder(v, mListener);

@@ -38,7 +38,7 @@ if (Meteor.isServer) {
     "uploadImage": function(imageName) {
     	var url = "http://pandaslist.s3.amazonaws.com/images/" + imageName;
     	var entry = Images.insert({"url": url});
-    	return {"method":"uploadImage", "data": {"imageId": enetry._id}};
+    	return {"method":"uploadImage", "data": {"id": entry, "url": url}};
     }
   });
 }

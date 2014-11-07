@@ -8,7 +8,9 @@
         android:id="@+id/profile_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+
+        android:backgroundTintMode="multiply"
+        android:background="@color/violet_light"
         android:padding="8dp">
 
 
@@ -48,7 +50,22 @@
         android:layout_below="@id/profile_view"
         android:background="#FFF"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
+        android:divider="@color/violet"
         android:dividerHeight="0dp"
         tools:context=".NavigationDrawerFragment" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="SETTINGS"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_settings"
+        android:drawablePadding="10dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView"/>
 </RelativeLayout>

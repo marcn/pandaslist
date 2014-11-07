@@ -9,6 +9,7 @@
     <color name="cyan">#00edee</color>
     <color name="red">#F24444</color>
     <color name="violet">#915a7a</color>
+    <color name="violet_light">#DECED7</color>
     <color name="dark_grey">#666666</color>
     <color name="medium_grey">#ababab</color>
     <color name="lite_grey">#dbdbdb</color>

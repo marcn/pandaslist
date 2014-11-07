@@ -17,7 +17,6 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
@@ -32,7 +31,6 @@ import com.pandora.hackathon.pandalist.ui.ListingRecyclerAdapter;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -58,9 +56,6 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
     private RecyclerView mPostingsRecyclerView;
     private ListingRecyclerAdapter myRecyclerAdapter;
-
-    private HashSet<String> postingsIdsSet;
-    private ArrayAdapter<String> postingsAdapter;
 
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton mFab;
@@ -123,9 +118,6 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         mPostingsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
         mPostingsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPostingsRecyclerView.setOnScrollListener(mRecycleListViewScrollListener);
-
-        postingsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
-        postingsIdsSet = new HashSet<String>();
 
         return mainView;
     }

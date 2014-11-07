@@ -25,7 +25,7 @@ if (Meteor.isClient) {
 
 	Template.row.helpers({
 		coverPhotoUrl: function() {
-			return (this.coverPhotoUrl) ? this.coverPhotoUrl : '/img/fpo.png';
+			return (this.coverPhotoUrl) ? this.coverPhotoUrl : '/img/hackweek_Pandalist_default-img.png';
 		},
 		isSearch: function() {
 			return (this.search) ? true : false;

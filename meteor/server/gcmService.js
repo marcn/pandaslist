@@ -20,13 +20,12 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.methods({
     'sendPushNotification': function(post, registrationId){
-      this.unblock();
       var gcm = Meteor.npmRequire('node-gcm');
       var message = new gcm.Message();
       message.addDataWithKeyValue("post",post);
       var sender = new gcm.Sender(GCM_API);
       var registrationIds =[];
-      registrationIds.push(registrationId);
+      registrationIds.push(registrationId)
       sender.sendNoRetry(message, registrationIds, function (err, result) {
         if(err){
           console.log('Error:'+err);
@@ -40,7 +39,7 @@ if (Meteor.isServer) {
       // Let other method calls from the same client start running,
       // without waiting for the email sending to complete.
       this.unblock();
-      
+      process.env.MAIL_URL="smtp://username%40gmail.com:password@smtp.gmail.com:465/"; 
       console.log('send email');
       console.log(Email.send({
         to: 'rmordoff@gmail.com',
@@ -48,6 +47,7 @@ if (Meteor.isServer) {
         subject: 'Pandalist - ' + post.category + ' - ' + post.title,
         html: '<h2>'+post.title+'</h2><p>'+post.description+'</p><img src="'+post.coverPhotoUrl+'/>'
       }));
+      console.log('send email');
     },
 
     'notifySubscribers': function(post){
@@ -68,11 +68,11 @@ if (Meteor.isServer) {
           {fields: {registrationId:1, _id:0}}).registrationId;
         console.log(userId+":"+registrationId);
         
-        var user = Meteor.users.findOne({_id: userId});
+        var user = users.findOne({_id: userId}).fetch();
         if(user.sendEmails)
           Meteor.call('sendEmail', user, post);
         if(user.sendPushNotification)
-          Meteor.call('sendPushNotification', post, registrationId);
+          Meteor.call('sendPushNotification', registrationId);
       }
     },
 

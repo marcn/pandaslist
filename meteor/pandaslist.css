@@ -361,6 +361,12 @@ textarea {
   #nav li.inactive { opacity: 0.3; cursor: default;}
 
 
+  #nav .new {
+    background-color: #58c5ee;
+  }
+
+
+
 /*============================================================
   RESPONSIVE CSS
 ============================================================*/

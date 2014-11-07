@@ -28,6 +28,14 @@ if (Meteor.isClient) {
       e.preventDefault();
       
       var userId = Meteor.userId();
+
+      // set notification types
+      var sendEmails = ($('input[name=notification-email]', e.target).val()) ? true : false;
+      var sendPushNotifications = ($('input[name=notification-push]', e.target).val()) ? true : false
+
+      Meteor.users.update(userId, {$set: {sendEmails: sendEmails}});
+      Meteor.users.update(userId, {$set: {sendPushNotifications: sendPushNotifications}});
+      
       // remove all subs for user
       var currentSubs = Subscriptions.find({'userIds': userId}).fetch();
       for(var i = 0; i < currentSubs.length; i++) {

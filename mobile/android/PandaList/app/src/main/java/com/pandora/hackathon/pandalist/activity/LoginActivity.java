@@ -63,6 +63,7 @@ public class LoginActivity extends BaseActivity implements
     private static  final String PREF_DISPLAY_NAME = "pref.displayname";
     private static  final String PREF_FIRST_NAME = "pref.displayname";
     private static  final String PREF_LAST_NAME = "pref.displayname";
+    private static  final String PREF_IMAGE_URL = "pref.imageurl";
     private static  final String PREF_AUTH_TOKEN = "pref.token";
 
     /**
@@ -72,6 +73,7 @@ public class LoginActivity extends BaseActivity implements
 
     private String mEmail;
     private String mDisplayName;
+    private String mImageUrl;
     private String mPassword;
 
     // UI references.
@@ -312,6 +314,7 @@ public class LoginActivity extends BaseActivity implements
         Intent intent = new Intent(LoginActivity.this, PandaListActivity.class);
         intent.putExtra("name", mDisplayName);
         intent.putExtra("email", mEmail);
+        intent.putExtra("image", mImageUrl);
         startActivity(intent);
         finish();
     }
@@ -381,12 +384,17 @@ public class LoginActivity extends BaseActivity implements
 
             mEmail = mPlusClient.getAccountName();
             mDisplayName = currentPerson.getDisplayName();
+
+            Person.Image image = currentPerson.getImage();
+            mImageUrl = (image == null) ? "" : image.getUrl();
+
             // Save email to preferences
             SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
             editor.putString(PREF_USERNAME, mEmail);
             editor.putString(PREF_DISPLAY_NAME, currentPerson.getDisplayName());
             editor.putString(PREF_FIRST_NAME, currentPerson.getName().getGivenName());
             editor.putString(PREF_LAST_NAME, currentPerson.getName().getFamilyName());
+            editor.putString(PREF_IMAGE_URL, mImageUrl);
             editor.commit();
             // With the account name acquired, go get the auth token
             getUsername();

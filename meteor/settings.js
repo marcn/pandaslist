@@ -14,7 +14,7 @@ if (Meteor.isClient) {
       return this.subCategories;
     },
     isChecked: function() {
-      if (Subscriptions.find({'userIds': Meteor.user()._id, category: this.category+'.'+this.subCategory}).fetch().length > 0) {
+      if (Subscriptions.find({'userIds': Meteor.userId(), category: this.category+'.'+this.subCategory}).fetch().length > 0) {
         return "checked";
       }
       else {
@@ -27,7 +27,7 @@ if (Meteor.isClient) {
     'submit form': function(e) {
       e.preventDefault();
       
-      var userId = Meteor.user()._id;
+      var userId = Meteor.userId();
       // remove all subs for user
       var currentSubs = Subscriptions.find({'userIds': userId}).fetch();
       for(var i = 0; i < currentSubs.length; i++) {

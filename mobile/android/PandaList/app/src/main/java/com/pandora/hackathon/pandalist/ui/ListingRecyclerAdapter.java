@@ -62,7 +62,7 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
                     public void onGenerated(Palette palette) {
 
                         int color = palette.getLightMutedColor(Color.parseColor("#22224099"));
-                        int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
+                        int colorAlpha = Color.argb(100, Color.red(color), Color.green(color), Color.blue(color));
 
                         holder.detailContainer.setBackgroundColor(colorAlpha);
                     }

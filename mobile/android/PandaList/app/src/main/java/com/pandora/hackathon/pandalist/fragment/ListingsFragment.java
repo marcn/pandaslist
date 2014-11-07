@@ -251,13 +251,16 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         PostItemData item;
         String title = post.get("title") != null ? post.get("title").toString() : "";
         String category = post.get("category") != null ? post.get("category").toString() : "";
+        String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
         String description = post.get("description") != null ? post.get("description").toString() : "";
-
+        String coverPhotoUrl  = post.get("coverPhotoUrl") != null ? post.get("coverPhotoUrl").toString() : "";
+        String createdBy  = post.get("createdBy") != null ? post.get("createdBy").toString() : "";
+        String published  = post.get("published") != null ? post.get("published").toString() : "";
         item = new PostItemData();
         item.setTitle(title);
         item.setDescription(description);
         item.setPrice(23.56);
-        item.setBitmapResId(R.drawable.sofa);
+        item.setBitmapUrl(coverPhotoUrl);
         return item;
     }
 

@@ -75,17 +75,18 @@ Router.onBeforeAction(function() {
 });
 
 Router.map(function() {
-   this.route('methodExample', {
-       path: '/api/call',
+   this.route('storeRegistrationId', {
+       path: '/storeRegistrationId',
        where: 'server',
        action: function() {
-           // GET, POST, PUT, DELETE
            var requestMethod = this.request.method;
-           // Data from a POST request
-           var requestData = this.request.body;
-           // Could be, e.g. application/xml, etc.
+           var userId = this.request.query.userId;
+           var registrationId = this.request.query.registrationId;
+           Meteor.users.update({_id:userId}, {_id:userId, registrationId:registrationId}, 
+           	{upsert:true});
            this.response.writeHead(200, {'Content-Type': 'text/html'});
-           this.response.end('<html><body>Your request was a ' + requestMethod + '</body></html>');
+           this.response.end('<html><body>Your userId:' + userId + ' and registrationId:'
+           	+registrationId+'</body></html>');
        }
    });
 });   

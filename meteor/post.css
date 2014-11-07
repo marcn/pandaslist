@@ -1,7 +1,7 @@
 #post h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid #adadad;
 }
 
 #post p {
@@ -11,7 +11,7 @@
 }
 
 #post .description {
-  margin: 3rem 0;
+  margin: 6rem 0 3rem 0;
 }
 
 #postGallery {
@@ -89,7 +89,7 @@
 }
 
 .postComments {
-  margin: 3rem 0;
+  margin: 10rem 0 6rem 0;
 }
 
 .postComments ul {

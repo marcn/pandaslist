@@ -60,4 +60,10 @@
         <item>toys/games</item>
         <item>video gaming</item>
     </array>
+
+    <array name="deliveryMethod">
+        <item>Office Pickup</item>
+        <item>Go to seller\'s location</item>
+        <item>Seller goes to buyer\'s location</item>
+    </array>
 </resources>

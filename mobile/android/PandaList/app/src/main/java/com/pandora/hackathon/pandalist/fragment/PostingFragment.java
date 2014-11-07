@@ -3,11 +3,14 @@ package com.pandora.hackathon.pandalist.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pandora.hackathon.pandalist.R;
@@ -31,6 +34,10 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
     private View mCameraView;
     private View mLocationOfficesView;
     private View mCreatePostView;
+    private EditText mTitle;
+    private EditText mPrice;
+    private EditText mDescription;
+    private Spinner mDeliverySpinner;
 
     public static PostingFragment newInstance() {
         PostingFragment fragment = new PostingFragment();
@@ -48,6 +55,7 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
         mCategorySpinner = (Spinner)mainView.findViewById(R.id.category);
         mSubCategorySpinner = (Spinner)mainView.findViewById(R.id.subcategory);
         mLocationName = (Spinner)mainView.findViewById(R.id.location_name);
+        mDeliverySpinner = (Spinner)mainView.findViewById(R.id.delivery_spinner);
 
         mPhotoView = mainView.findViewById(R.id.photo_gallery);
         mPhotoView.setOnClickListener(this);
@@ -60,6 +68,11 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
 
         mCreatePostView = mainView.findViewById(R.id.send_post);
         mCreatePostView.setOnClickListener(this);
+
+
+        mTitle = (EditText)mainView.findViewById(R.id.title);
+        mPrice = (EditText)mainView.findViewById(R.id.price);
+        mDescription = (EditText)mainView.findViewById(R.id.description);
 
         return mainView;
     }
@@ -95,8 +108,42 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
             dispatchTakePictureIntent();
 
         } else if (id == R.id.send_post) {
-            Toast.makeText(getActivity(), "Create Post yay!!", Toast.LENGTH_SHORT).show();
+            if(validateFields()) {
+                Toast.makeText(getActivity(), "Create Post yay!!", Toast.LENGTH_SHORT).show();
+            }
         }
+    }
+
+    private boolean validateFields() {
+        boolean valid = true;
+
+        mTitle.setError(null);
+        mPrice.setError(null);
+        mDescription.setError(null);
+
+        View focusView = null;
+        // Check for a valid description.
+        if (TextUtils.isEmpty(mDescription.getText().toString())) {
+            mDescription.setError(getString(R.string.error_field_required));
+            focusView = mDescription;
+        }
+        // Check for a valid price.
+        if (TextUtils.isEmpty(mPrice.getText().toString())) {
+            mPrice.setError(getString(R.string.error_field_required));
+            focusView = mPrice;
+        }
+        // Check for a valid title.
+        if (TextUtils.isEmpty(mTitle.getText().toString())) {
+            mTitle.setError(getString(R.string.error_field_required));
+            focusView = mTitle;
+        }
+        if (focusView != null) {
+            // There was an error; focus the first form field with an error.
+            focusView.requestFocus();
+            valid = false;
+        }
+
+        return valid;
     }
 
     private void dispatchTakePictureIntent() {

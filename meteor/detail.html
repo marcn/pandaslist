@@ -9,33 +9,37 @@
 
     <h2>{{title}}</h2>
 
-    <p class="price">$2399</p>
-    <p class="location">OAKTOWN</p>
+    {{#if price}}
+      <p class="price">{{price}}</p>
+    {{/if}}
+    <p class="location">{{location}}</p>
 
 
+    {{#if photos}}
     <div id="postGallery">
       <div id="postHero">
-        <img class="active" src="http://placehold.it/400x600">
+        <img class="active" src="{{coverPhotoUrl}}">
       </div>
+      {{#if moreThanOnePhoto}}
       <div class="postThumbs">
-        <span><img src="http://placehold.it/350x150"></span>
-        <span><img src="http://placehold.it/150x350"></span>
-        <span><img src="http://placehold.it/350x350"></span>
-        <span><img src="http://placehold.it/400x600"></span>
-        <span><img src="http://placehold.it/1800x1200"></span>
-        <span><img src="http://placehold.it/600x400"></span>
+        {{#each photos}}
+        <span><img src="{{url}}"></span>
+        {{/each}}
       </div>
+      {{/if}}
     </div>
+    {{/if}}
 
     <p class="description">{{description}}</p>
 
-
-    {{#if isPreview}}
-      <a href="#" class="btn edit">Edit</a>
-      <a href="#" class="btn post">Post</a>
-    {{else}}
-      <a href="#" class="btn purchse">Purchase</a>
-    {{/if}}
+    <div style="text-align:center">
+      {{#if isPreview}}
+        <button class="btn edit">Edit</button>
+        <button class="btn post">Post</button>
+      {{else}}
+        <button class="btn purchse">Contact</button>
+      {{/if}}
+    </div>
 
 
     <div class="postComments">
@@ -44,9 +48,6 @@
         <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike?</li>
         <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
       </ul>
-
-
-
     </div>
 
 

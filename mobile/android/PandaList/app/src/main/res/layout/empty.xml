@@ -20,8 +20,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textColor="#FF4444"
 
-        android:text="Error loading content. Please try again later."/>
+        android:text="There are no listings available in the moment. Come back later"/>
 
 </LinearLayout>

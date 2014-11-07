@@ -21,11 +21,6 @@
         <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
     </style>
 
-    <style name="PandasAppTheme.BlackStatusBar">
-        <item name="colorPrimaryDark">#000</item>
-
-    </style>
-
 
     <style name="PandasTheme.ActionBar.TextTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/white</item>

@@ -13,7 +13,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.pandora.hackathon.pandalist.PandaListApplication;
-import com.pandora.hackathon.pandalist.aws.Constants;
 import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.squareup.otto.Subscribe;
@@ -155,7 +154,7 @@ public class GcmService {
      * using the 'from' address in the message.
      */
     private static void sendRegistrationIdToBackend(String regId) {
-        String userId = Constants.getPandalistUserId();
+        String userId = "1"; // TODO: fake user id for testing purpose
         if (userId == null || TextUtils.isEmpty(regId)) {
             Log.e(TAG, "Invalid user id or reg id.");
             return;

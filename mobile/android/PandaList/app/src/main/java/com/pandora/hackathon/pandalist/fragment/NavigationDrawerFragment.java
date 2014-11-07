@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -128,6 +127,13 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         adapter = new ExpandableListAdapter(this.getActivity(), listCategories, listSubCategories);
 
+        View v = mainView.findViewById(R.id.settings);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ideally this should open something!!
+            }
+        });
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
@@ -175,7 +181,7 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         if(extras != null) {
             TextView name = (TextView)(mProfileView.findViewById(R.id.profile_name));
-            name.setText(extras.getString("name"));
+            name.setText("Rajat Dixit");
             TextView email = (TextView)mProfileView.findViewById(R.id.profile_email);
             email.setText(extras.getString("email"));
         }

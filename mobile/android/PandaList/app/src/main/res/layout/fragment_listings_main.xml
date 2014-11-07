@@ -14,7 +14,7 @@
             android:id="@+id/postings_listView"
             android:layout_gravity="center"/>
 
-    <include layout="@layout/error" android:visibility="gone" />
+    <include layout="@layout/empty" android:visibility="gone" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"

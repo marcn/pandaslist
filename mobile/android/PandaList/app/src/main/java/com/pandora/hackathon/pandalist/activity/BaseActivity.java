@@ -26,7 +26,6 @@ import com.pandora.hackathon.pandalist.R;
  */
 public class BaseActivity  extends ActionBarActivity implements ListingsFragment.OnFragmentInteractionListener, NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-
     private DDPBroadcastReceiver mReceiver;
 
     @Override

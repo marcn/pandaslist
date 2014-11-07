@@ -7,6 +7,7 @@ import java.util.Map;
  */
 public class DDPMethodResultEvent {
     public static String CATEGORIES = "getCategories";
+    public static String REGISTRATION = "storeRegistrationId";
 
     public final String methodName;
     public final Map<String, Object> data;

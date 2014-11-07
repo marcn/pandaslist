@@ -1,6 +1,5 @@
 package com.pandora.hackathon.pandalist.fragment;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
@@ -10,7 +9,6 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -337,7 +335,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
 
-            if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
+        /*    if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_SETTLING) {
                 globalScroll += dy;
 
 
@@ -358,7 +356,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                 }
 
 
-            }
+            }*/
         }
 
     };

@@ -35,6 +35,13 @@
 
     </style>
 
+    <style name="PandasAppTheme.BlackStatusBar">
+        <item name="colorPrimaryDark">#000</item>
+
+    </style>
+
+
+
     <style name="PandasTheme.TranslucentActionBar" />
 
     <style name="PandasTheme.TranslucentActionBar.ActionBar" />

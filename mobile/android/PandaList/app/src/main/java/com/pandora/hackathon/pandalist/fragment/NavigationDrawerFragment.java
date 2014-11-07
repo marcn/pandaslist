@@ -181,7 +181,7 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         if(extras != null) {
             TextView name = (TextView)(mProfileView.findViewById(R.id.profile_name));
-            name.setText("Rajat Dixit");
+            name.setText("Jennifer Mendez");
             TextView email = (TextView)mProfileView.findViewById(R.id.profile_email);
             email.setText(extras.getString("email"));
         }

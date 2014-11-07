@@ -6,7 +6,6 @@
 
     <RelativeLayout
         android:id="@+id/profile_view"
-        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/bg_bamboo"

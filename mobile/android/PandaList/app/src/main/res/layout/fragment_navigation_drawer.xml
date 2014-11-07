@@ -6,16 +6,17 @@
 
     <RelativeLayout
         android:id="@+id/profile_view"
+        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:backgroundTintMode="multiply"
-        android:background="@color/lite_grey"
+        android:background="@drawable/drawer_back"
         android:padding="8dp">
 
 
         <com.pandora.hackathon.pandalist.ui.BezelImageView
             android:id="@+id/profile_image"
+            android:layout_marginLeft="2dp"
             android:layout_width="@dimen/navdrawer_profile_image_size"
             android:layout_height="@dimen/navdrawer_profile_image_size"
             android:scaleType="centerCrop"
@@ -24,12 +25,15 @@
 
         <TextView
             android:id="@+id/profile_name"
+            android:layout_marginTop="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/profile_image"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_above="@+id/profile_email"
             android:text="Rajat D."
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         />
 
 
@@ -38,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/profile_name"
+            android:layout_below="@+id/profile_image"
             android:text="rdxit@pandora.com"
+            android:textColor="#ffffff"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         />
 

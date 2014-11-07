@@ -1,6 +1,8 @@
 
 if (Meteor.isClient) {
 
+	var DEFAULT_COMMENT_TEXT = "Type a question or comment here";
+
 	Template.detail.events({
 
 		'click .edit': function() {
@@ -50,6 +52,26 @@ if (Meteor.isClient) {
 				$('#postHero img').eq(0).remove();
 				$('#postHero img').addClass('active');
 			}, 300);
+		},
+
+		"focus .comment": function(evt) {
+			if (evt.target.value == DEFAULT_COMMENT_TEXT) {
+				evt.target.value = "";
+			}
+		},
+
+		"click .addComment": function() {
+			var field = Template.instance().$(".comment");
+			var val = field.val().trim();
+			if (val != "" && val != DEFAULT_COMMENT_TEXT) {
+				Comments.insert({
+					text: val,
+					sender: Meteor.userId(),
+					post: Template.currentData()._id,
+					creationDate: new Date().getTime()
+				});
+				field.val(DEFAULT_COMMENT_TEXT);
+			}
 		}
 
 	});
@@ -64,6 +86,19 @@ if (Meteor.isClient) {
 		"isExistingPost": function() {
 			console.log("isExistingPost: ", Template.currentData());
 			return Template.currentData()._id;
+		},
+		"defaultCommentText": function() {
+			return DEFAULT_COMMENT_TEXT;
+		},
+		"comments": function() {
+			return Comments.find({ post: Template.currentData()._id }, { sort: {creationDate: 1}});
+		},
+		"commenter": function() {
+			return Meteor.users.findOne(this.sender).profile.name;
+		},
+		"commentDate": function() {
+			//return moment(this.creationDate).fromNow();
+			return moment(this.creationDate).format("MM/D/YY h:mm a");
 		}
 	});
 

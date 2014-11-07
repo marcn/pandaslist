@@ -49,15 +49,18 @@
 			{{/if}}
 		</div>
 
-
 		<div class="postComments">
 			<ul>
-				<li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
-				<li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike?</li>
-				<li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
+				{{#each comments}}
+				<li><span>{{commenter}}</span> said, {{commentDate}} : {{text}}</li>
+				{{/each}}
 			</ul>
 		</div>
 
+		<div class="newComment">
+			<textarea class="comment" style="width:100%">{{defaultCommentText}}</textarea>
+			<button class="btn addComment" style="float:right">Post Comment</button>
+		</div>
 
 	</div>
 

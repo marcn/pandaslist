@@ -101,6 +101,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:maxLines="4"
                 android:hint="Comments"
                 />
 
@@ -128,6 +131,7 @@
                     style="?android:attr/selectableItemBackground"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"
+                    android:textColor="@color/white"
                     android:text="I'm Interested" />
             </LinearLayout>
 

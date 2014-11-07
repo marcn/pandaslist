@@ -36,8 +36,6 @@ import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Activity which displays a login screen to the user
@@ -91,6 +89,8 @@ public class LoginActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+
+        getSupportActionBar().hide();
 
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         mEmail = prefs.getString(PREF_USERNAME, "");

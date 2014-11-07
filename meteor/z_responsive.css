@@ -52,4 +52,23 @@
   }
 
 
+
+  #createPost h3 {
+    display: block;
+    text-align: left;
+  }
+
+
+
+
+
+  .postThumbs span {
+    width: 32%;
+    padding-bottom: 22%;
+  }
+
+  .postThumbs span:nth-child(4n) {margin: 2% 2% 0 0; }
+  .postThumbs span:nth-child(3n) {margin: 0; }
+
+
 }

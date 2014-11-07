@@ -1,6 +1,17 @@
 <template name="detail">
 
-	<a href="{{pathFor route='listings'}}">Back to Listings</a>
+
+	<div class="breadcrumb">
+		<a href="{{pathFor route='listings'}}">All Listings</a>
+		{{#if category}}
+		&#187; <a href="/?category={{category}}">{{category}}</a>
+		{{/if}}
+		{{#if subCategory}}
+		&#187; <a href="/?category={{category}}&subcategory={{subCategory}}">{{subCategory}}</a>
+		{{/if}}
+	</div>
+
+
 	<div id="post">
 
 		{{#if isPreview}}
@@ -8,6 +19,8 @@
 		{{/if}}
 
 		<h2>{{title}}</h2>
+
+		<p class="poster">Posted by: {{posterName}}</p>
 
 		{{#if price}}
 			<p class="price">{{price}}</p>

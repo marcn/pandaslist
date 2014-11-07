@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,7 @@ import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
-import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
-import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.pandora.hackathon.pandalist.ui.ListingRecyclerAdapter;
 import com.squareup.otto.Subscribe;
 
@@ -143,6 +142,19 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         return mainView;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                getPosts();
+            }
+        }, 700);
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -222,22 +234,33 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
 
+       getPosts();
+    }
+
+    private void getPosts() {
         mListItems.clear();
+        myRecyclerAdapter.setItems(mListItems);
+
+        myRecyclerAdapter.notifyDataSetChanged();
+
 
         Map<String, Map<String, Object>> postings = PandaListApplication.getDDP().getCollection("posts");
         if (postings != null && !postings.isEmpty()) {
+            Log.d("JEnny", "onResume + ");
+
             for (String postId : postings.keySet()) {
 
                 Map<String, Object> post = postings.get(postId);
                 String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
 
-                if (mPostSubCategoryName.equals(subcategory)) {
-                    mListItems.add(createPostItem(post));
+
+                if (mPostSubCategoryName != null && mPostSubCategoryName.equals(subcategory)) {
+                    mListItems.add(createPostItem(postId, post));
                 }
             }
         }
 
-        Handler h = new Handler();
+    /*    Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -249,13 +272,12 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                     }
                 }
             }
-        }, 7000);
+        }, 7000);*/
 
         myRecyclerAdapter.setItems(mListItems);
         myRecyclerAdapter.notifyDataSetChanged();
         getActionBar().setSubtitle(mPostSubCategoryName);
     }
-
     /** We need to return an Data object model
      * to populate the adapter
      * @return
@@ -268,51 +290,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
     List<PostItemData> mListItems = new ArrayList<PostItemData>();
 
-    @Subscribe
-    public void onDataChangeEvent(DataChangeEvent event) {
-
-        PostItemData item = null;
-        didGetDataEvent = true;
-
-        if (event.subscriptionName.equals("posts")) {
-            //	[0] = {com.google.gson.internal.LinkedTreeMap$Node@830036917072}"category" -> "For Sale"
-            //	[1] = {com.google.gson.internal.LinkedTreeMap$Node@830036917344}"subcategory" -> "tickets"
-            //	[2] = {com.google.gson.internal.LinkedTreeMap$Node@830036917616}"location" -> "Oakland"
-            //	[3] = {com.google.gson.internal.LinkedTreeMap$Node@830036918088}"title" -> "Children's Hospital Oakland Fundraiser Raffle - Win 4 Roundtrip Southwest Airline Tickets"
-            //	[4] = {com.google.gson.internal.LinkedTreeMap$Node@830036927000}"description" -> "Hello,\n \nIn my free time, I am the president of Blossom Garden Alameda, a non-profit organization that raises money for Childrenâ€™s Hospital Oakland. This year we are having a really great event on October 18th, Moonlight Circus Soiree...
-            //	[5] = {com.google.gson.internal.LinkedTreeMap$Node@830036927272}"delivery_method" -> "office_pickup"
-            //	[6] = {com.google.gson.internal.LinkedTreeMap$Node@830036927616}"coverPhoto" -> "FmeFCtg55HuPK5ngy"
-            //	[7] = {com.google.gson.internal.LinkedTreeMap$Node@830036928040}"coverPhotoUrl" -> "http://pandaslist.s3.amazonaws.com/images/frjHchAkHgnNRSm2v.jpg"
-            //	[8] = {com.google.gson.internal.LinkedTreeMap$Node@830036929160}"photos" -> size = 1
-            //	[9] = {com.google.gson.internal.LinkedTreeMap$Node@830036929504}"createdBy" -> "bDmQDa5kof62GFBmp"
-            //	[10] = {com.google.gson.internal.LinkedTreeMap$Node@830036929688}"creationDate" -> "1.415311744469E12"
-            //	[11] = {com.google.gson.internal.LinkedTreeMap$Node@830036929976}"published" -> "true"
-
-            if (event.changeType.equals("added")) {
-                MyDDPState ddp = PandaListApplication.getDDP();
-                Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
-
-                String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
-                if (!mPostSubCategoryName.equals(subcategory)) {
-                    return;
-                }
-                item = createPostItem(post);
-
-            }
-            mListItems.add(item);
-            myRecyclerAdapter.setItems(mListItems);
-            myRecyclerAdapter.notifyDataSetChanged();
-        }
 
 
-        if (mListItems.isEmpty()) {
-            getView().findViewById(R.id.error_view).setVisibility(View.VISIBLE);
-        } else {
-            getView().findViewById(R.id.error_view).setVisibility(View.GONE);
-        }
-    }
-
-    private PostItemData createPostItem(Map<String, Object> post) {
+    private PostItemData createPostItem(String postId, Map<String, Object> post) {
         PostItemData item = null;
 
         String title = post.get("title") != null ? post.get("title").toString() : "";
@@ -325,7 +305,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         String createdBy  = post.get("createdBy") != null ? post.get("createdBy").toString() : "";
         String published  = post.get("published") != null ? post.get("published").toString() : "";
         String price  = post.get("price") != null ? post.get("price").toString() : "";
+
         item = new PostItemData();
+        item.setId(postId);
         item.setCategory(category);
         item.setSubcategory(subcategory);
         item.setCreatedBy(createdBy);
@@ -336,6 +318,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         item.setSubcategory(subcategory);
         item.setCategory(category);
         item.setPrice(price);
+
+        Log.d("JEnny", "title + " + title);
+
         return item;
     }
 

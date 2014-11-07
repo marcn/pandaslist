@@ -35,14 +35,6 @@
   -webkit-transform: translate3d(-50%,-40%,0);
 }
 
-.loginHotSpot:hover + .loginBg {
-  -webkit-transform: scale(1);
-  opacity: 1;
-}
-
-.loginHotSpot:hover .panda { -webkit-transform: rotate3d(1, 1, 0, 180deg) scale(1) translate3d(0,-13%,0); }
-.loginHotSpot:hover .pandaList { -webkit-transform: rotate3d(1, -1, 0, 0deg) scale(1) translate3d(0,-13%,0); }
-
 .panda {
   width: 100%;
   padding-bottom: 100%;
@@ -114,3 +106,16 @@
   #login-buttons .text-besides-image {
     display: none;
   }
+
+
+@media screen and (min-width: 940px) {
+
+  .loginHotSpot:hover + .loginBg {
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+
+  .loginHotSpot:hover .panda { -webkit-transform: rotate3d(1, 1, 0, 180deg) scale(1) translate3d(0,-13%,0); }
+  .loginHotSpot:hover .pandaList { -webkit-transform: rotate3d(1, -1, 0, 0deg) scale(1) translate3d(0,-13%,0); }
+
+}

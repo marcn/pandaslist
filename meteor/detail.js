@@ -3,6 +3,16 @@ if (Meteor.isClient) {
 
 	var DEFAULT_COMMENT_TEXT = "Type a question or comment here";
 
+	var addComment = function(text, interested) {
+		Comments.insert({
+			text: text,
+			sender: Meteor.userId(),
+			post: Template.currentData()._id,
+			creationDate: new Date().getTime(),
+			isInterested: interested
+		});
+	}
+
 	Template.detail.events({
 
 		'click .edit': function() {
@@ -35,7 +45,7 @@ if (Meteor.isClient) {
 		},
 
 		'click .contact': function() {
-			console.log("contact");
+			addComment(null, true);
 		},
 
 		"click .postThumbs span": function(evt) {
@@ -64,12 +74,7 @@ if (Meteor.isClient) {
 			var field = Template.instance().$(".comment");
 			var val = field.val().trim();
 			if (val != "" && val != DEFAULT_COMMENT_TEXT) {
-				Comments.insert({
-					text: val,
-					sender: Meteor.userId(),
-					post: Template.currentData()._id,
-					creationDate: new Date().getTime()
-				});
+				addComment(val, false);
 				field.val(DEFAULT_COMMENT_TEXT);
 			}
 		}

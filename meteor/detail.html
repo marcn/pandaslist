@@ -45,14 +45,20 @@
 					<button class="btn delete">Delete</button>
 				{{/if}}
 			{{else}}
-				<button class="btn contact">Contact</button>
+				<button class="btn contact">I'm Interested</button>
 			{{/if}}
 		</div>
 
 		<div class="postComments">
 			<ul>
 				{{#each comments}}
-				<li><span>{{commenter}}</span> said, {{commentDate}} : {{text}}</li>
+				<li>
+					{{#if isInterested}}
+					<span>{{commenter}}</span> has expressed interest in this item, {{commentDate}}
+					{{else}}
+					<span>{{commenter}}</span> said, {{commentDate}} : {{text}}
+					{{/if}}
+				</li>
 				{{/each}}
 			</ul>
 		</div>

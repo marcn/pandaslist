@@ -60,20 +60,21 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
         } else {
             holder.price.setText(mContext.getString(R.string.price, item.getPrice()));
         }
-        Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
+
         String url = item.getImageUrl();
         if (url != null && url != "") {
             Picasso.with(holder.image.getContext()).load(url).into(new Target() {
 
                 @Override
                 public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                    holder.image.setImageBitmap(bitmap);
                     Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
                         @Override
                         public void onGenerated(Palette palette) {
 
-                            int color = palette.getLightMutedColor(Color.parseColor("#22915a7a"));
-                            int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
-                            holder.image.setImageBitmap(bitmap);
+                            int color = palette.getDarkMutedColor(Color.parseColor("#22dbdbdb"));
+                            int colorAlpha = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
+
                             holder.detailContainer.setBackgroundColor(colorAlpha);
                         }
                     });
@@ -81,12 +82,12 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
 
                 @Override
                 public void onBitmapFailed(Drawable errorDrawable) {
-
+                    Log.e("Jenny", "onBitmapFailed");
                 }
 
                 @Override
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                    Log.e("Jenny", "onPrepareLoad");
                 }
             });
         } else {

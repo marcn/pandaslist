@@ -118,8 +118,6 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         if (savedInstanceState != null) {
             //probably orientation change
             mPostSubCategoryName = (String) savedInstanceState.getSerializable("list");
-        } else {
-            mPostSubCategoryName = "";
         }
     }
 
@@ -238,7 +236,6 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         myRecyclerAdapter.setItems(mListItems);
         myRecyclerAdapter.notifyDataSetChanged();
         getActionBar().setSubtitle(mPostSubCategoryName);
-
     }
 
     /** We need to return an Data object model

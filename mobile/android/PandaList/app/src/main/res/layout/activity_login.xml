@@ -47,26 +47,26 @@
 
         <Button
             android:id="@+id/btnSignIn"
-            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_blue"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            style="?android:attr/selectableItemBackground"
+            android:textColor="@color/white"
+            android:background="#00adee"
+
             android:text="@string/text_sign_in" />
 
         <Button
             android:id="@+id/btnSignInWithGoogle"
-            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/sign_in_button"
-            android:background="@drawable/btn_blue"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:background="#00adee"
+            android:padding="8dip"
+            style="?android:attr/selectableItemBackground"
+            android:textColor="@color/white"
             android:text="@string/text_sign_in_google" />
     </LinearLayout>
 </RelativeLayout>

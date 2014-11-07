@@ -1,5 +1,6 @@
 package com.pandora.hackathon.pandalist.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -36,7 +37,8 @@ public class PandaListActivity extends BaseActivity {
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.drawer_layout),
+                getIntent().getExtras());
 
         MyDDPState.setupInstance(getApplicationContext(), new Handler());
         GcmService.getInstance().register(this);

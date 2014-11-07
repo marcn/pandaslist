@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +67,7 @@ public class NavigationDrawerFragment extends BaseFragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private RelativeLayout mProfileView;
     private DrawerLayout mDrawerLayout;
     private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
@@ -120,6 +123,7 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         View mainView = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+        mProfileView = (RelativeLayout) mainView.findViewById(R.id.profile_view);
         mDrawerListView = (ExpandableListView) mainView.findViewById(R.id.listview_drawer);
 
         adapter = new ExpandableListAdapter(this.getActivity(), listCategories, listSubCategories);
@@ -162,8 +166,19 @@ public class NavigationDrawerFragment extends BaseFragment {
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
+        setUp(fragmentId, drawerLayout, null);
+    }
+
+    public void setUp(int fragmentId, DrawerLayout drawerLayout, Bundle extras) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
+
+        if(extras != null) {
+            TextView name = (TextView)(mProfileView.findViewById(R.id.profile_name));
+            name.setText(extras.getString("name"));
+            TextView email = (TextView)mProfileView.findViewById(R.id.profile_email);
+            email.setText(extras.getString("email"));
+        }
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);

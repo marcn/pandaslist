@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,16 +27,24 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.plus.model.people.Person;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Activity which displays a login screen to the user
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements
+        PlusClient.ConnectionCallbacks, PlusClient.OnConnectionFailedListener,
+        PlusClient.OnAccessRevokedListener{
 
     private static final String TAG = "LoginActivity";
 
@@ -43,9 +52,17 @@ public class LoginActivity extends BaseActivity {
     private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
     private static final int REQUEST_CODE_RECOVER_FROM_AUTH_ERROR = 1002;
 
+    private static final int DIALOG_GET_GOOGLE_PLAY_SERVICES = 1;
+
+    private static final int REQUEST_CODE_SIGN_IN = 1;
+    private static final int REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES = 2;
+
     private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
     private static  final String PREF_USERNAME = "pref.username";
+    private static  final String PREF_DISPLAY_NAME = "pref.displayname";
+    private static  final String PREF_FIRST_NAME = "pref.displayname";
+    private static  final String PREF_LAST_NAME = "pref.displayname";
     private static  final String PREF_AUTH_TOKEN = "pref.token";
 
     /**
@@ -54,11 +71,15 @@ public class LoginActivity extends BaseActivity {
     private BroadcastReceiver mReceiver;
 
     private String mEmail;
+    private String mDisplayName;
     private String mPassword;
 
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
+
+    private PlusClient mPlusClient;
+    private ConnectionResult mConnectionResult;
 
     /**
      * Handles creation of this activity
@@ -101,6 +122,11 @@ public class LoginActivity extends BaseActivity {
                 getUsername();
             }
         });
+
+        // Setup Plus Client
+        mPlusClient = new PlusClient.Builder(this, this, this)
+                .setScopes(Scopes.PROFILE)
+                .build();
     }
 
     protected void onResume() {
@@ -156,9 +182,6 @@ public class LoginActivity extends BaseActivity {
         dialog.show();
     }
 
-    /**
-     * Called when pausing or rotating app
-     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -204,6 +227,13 @@ public class LoginActivity extends BaseActivity {
                 && resultCode == RESULT_OK) {
             // Receiving a result that follows a GoogleAuthException, try auth again
             getUsername();
+        } else if (requestCode == REQUEST_CODE_SIGN_IN
+                || requestCode == REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES) {
+            if (resultCode == RESULT_OK && !mPlusClient.isConnected()
+                    && !mPlusClient.isConnecting()) {
+                // This time, connect should succeed.
+                mPlusClient.connect();
+            }
         }
     }
 
@@ -244,20 +274,46 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void getUsername() {
-        if (mEmail == null) {
-            pickUserAccount();
-        } else {
-
+        if (mEmail != null && mEmail.length() > 0) {
             SharedPreferences prefs = getPreferences(MODE_PRIVATE);
             String token = prefs.getString(PREF_AUTH_TOKEN, "");
             if(token != null && token.length() > 0) {
                 // We have a saved token, try to login
-                MyDDPState.getInstance().login(token);
+
+//                Object[] params = new Object[1];
+//                Map<String,Object> options = new HashMap<String, Object>();
+//                params[0] = options;
+//                options.put("email", mEmail);
+//                options.put("accessToken", token);
+//
+//                MyDDPState.getInstance().call("login", params);
+                loginSuccessNavigateToMainActivity();
             } else {
                 // Fetch new token and login
                 new GetTokenTask(mEmail, SCOPE).execute();
             }
+        } else {
+            int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+            if (available != ConnectionResult.SUCCESS) {
+                showDialog(DIALOG_GET_GOOGLE_PLAY_SERVICES);
+                return;
+            }
+
+            try {
+                mConnectionResult.startResolutionForResult(this, REQUEST_CODE_SIGN_IN);
+            } catch (IntentSender.SendIntentException e) {
+                // Fetch a new result to start.
+                mPlusClient.connect();
+            }
         }
+    }
+
+    private void loginSuccessNavigateToMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, PandaListActivity.class);
+        intent.putExtra("name", mDisplayName);
+        intent.putExtra("email", mEmail);
+        startActivity(intent);
+        finish();
     }
 
     public void handleException(final Exception e) {
@@ -284,6 +340,74 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id != DIALOG_GET_GOOGLE_PLAY_SERVICES) {
+            return super.onCreateDialog(id);
+        }
+
+        int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (available == ConnectionResult.SUCCESS) {
+            return null;
+        }
+        if (GooglePlayServicesUtil.isUserRecoverableError(available)) {
+            return GooglePlayServicesUtil.getErrorDialog(
+                    available, this, REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES);
+        }
+        return new AlertDialog.Builder(this)
+                .setMessage("Error")
+                .setCancelable(true)
+                .create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPlusClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        mPlusClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Person currentPerson = mPlusClient.getCurrentPerson();
+
+        if(currentPerson != null) {
+            Log.d(TAG, "Logged in as : " + currentPerson.getDisplayName());
+
+            mEmail = mPlusClient.getAccountName();
+            mDisplayName = currentPerson.getDisplayName();
+            // Save email to preferences
+            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+            editor.putString(PREF_USERNAME, mEmail);
+            editor.putString(PREF_DISPLAY_NAME, currentPerson.getDisplayName());
+            editor.putString(PREF_FIRST_NAME, currentPerson.getName().getGivenName());
+            editor.putString(PREF_LAST_NAME, currentPerson.getName().getFamilyName());
+            editor.commit();
+            // With the account name acquired, go get the auth token
+            getUsername();
+        }
+    }
+
+    @Override
+    public void onDisconnected() {
+        Log.d(TAG, "onDisconnected");
+    }
+
+    @Override
+    public void onAccessRevoked(ConnectionResult connectionResult) {
+        Log.d(TAG, "onAccessRevoked");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        mConnectionResult = connectionResult;
+    }
+
     class GetTokenTask extends AsyncTask<Void, Void, String> {
         String mEmail;
         String mScope;
@@ -302,7 +426,7 @@ public class LoginActivity extends BaseActivity {
                     // Save token to preferences
                     getPreferences(MODE_PRIVATE).edit().putString(PREF_AUTH_TOKEN, token).commit();
                     // Got the token, try to login
-                    MyDDPState.getInstance().login(token);
+//                    MyDDPState.getInstance().login(token);
                 }
             } catch (IOException e) {
                 // The fetchToken() method handles Google-specific exceptions,
@@ -311,6 +435,15 @@ public class LoginActivity extends BaseActivity {
                 Log.e(TAG, "IOException", e);
             }
             return token;
+        }
+
+        @Override
+        protected void onPostExecute(String token) {
+
+            if(token != null) {
+                loginSuccessNavigateToMainActivity();
+            }
+            super.onPostExecute(token);
         }
 
         /**

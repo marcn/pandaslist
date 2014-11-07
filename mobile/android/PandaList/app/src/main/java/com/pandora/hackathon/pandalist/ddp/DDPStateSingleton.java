@@ -560,19 +560,6 @@ public class DDPStateSingleton extends MeteorAuthCommands
         return email;
     }
 
-    public void sendRegistrationId(String regId) {
-        if (mUserId == null || TextUtils.isEmpty(regId)) {
-            Log.e(TAG, "Invalid user id or reg id.");
-            return;
-        }
-        Object[] methodArgs = new Object[1];
-        Map<String,Object> options = new HashMap<String,Object>();
-        methodArgs[0] = options;
-        options.put("userId", mUserId);
-        options.put("registrationId", regId);
-        mDDP.call("storeRegistrationId", methodArgs);
-    }
-
     public void call(String method) {
         call(method, new Object[]{});
     }

@@ -28,7 +28,6 @@ import java.util.Map;
  */
 public class BaseActivity  extends ActionBarActivity implements ListingsFragment.OnFragmentInteractionListener, NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-
     private DDPBroadcastReceiver mReceiver;
 
     @Override

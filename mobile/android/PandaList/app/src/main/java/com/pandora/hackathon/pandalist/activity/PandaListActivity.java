@@ -6,11 +6,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
 import com.pandora.hackathon.pandalist.gcm.GcmService;
-
 
 public class PandaListActivity extends BaseActivity {
 
@@ -88,6 +88,4 @@ public class PandaListActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

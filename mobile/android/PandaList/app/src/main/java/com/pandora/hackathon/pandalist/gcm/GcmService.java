@@ -6,12 +6,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
+import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
+import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
+import com.squareup.otto.Subscribe;
 
 import java.io.IOException;
 
@@ -31,9 +35,14 @@ public class GcmService {
     private static GcmService gcmService;
     private static GoogleCloudMessaging gcm;
 
+    private static boolean mIsDDPConnected;
     private static String regid;
 
     private static Context context;
+
+    private GcmService() {
+        PandaListApplication.getBus().register(this);
+    }
 
     public static synchronized GcmService getInstance() {
         if (gcmService == null) {
@@ -73,9 +82,9 @@ public class GcmService {
             gcm = GoogleCloudMessaging.getInstance(context);
             regid = getRegistrationId(context);
 
-            if (regid.isEmpty()) {
+            //if (regid.isEmpty()) {
                 new RegisterAysnc().execute();
-            }
+            //}
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -145,7 +154,24 @@ public class GcmService {
      * using the 'from' address in the message.
      */
     private static void sendRegistrationIdToBackend(String regId) {
-        DDPStateSingleton.getInstance().sendRegistrationId(regId);
+        String userId = "1"; // TODO: fake user id for testing purpose
+        if (userId == null || TextUtils.isEmpty(regId)) {
+            Log.e(TAG, "Invalid user id or reg id.");
+            return;
+        }
+        while (!mIsDDPConnected) {
+            Log.d(TAG, "storeRegistrationId -- Waiting for DDP connection...");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "storeRegistrationId -- Sending reg id for user " + userId + ": " + regId);
+        Object[] methodArgs = new Object[2];
+        methodArgs[0] = userId;
+        methodArgs[1] = regId;
+        PandaListApplication.getDDP().call(DDPMethodResultEvent.REGISTRATION, methodArgs);
     }
 
     /**
@@ -201,6 +227,23 @@ public class GcmService {
             Log.i(TAG, msg);
 
             return null;
+        }
+    }
+
+    @Subscribe
+    public void onDDPConnectEVent(DPPConnectEvent event) {
+        mIsDDPConnected = true;
+    }
+
+    @Subscribe
+    public void onDDPMethodResultEvent(DDPMethodResultEvent event) {
+        if (event.methodName.equalsIgnoreCase(DDPMethodResultEvent.REGISTRATION)) {
+            if (event.data == null || event.data.size() == 0) {
+                System.out.println("storeRegistrationId -- no result");
+            }
+            for (String key : event.data.keySet()) {
+                System.out.println("storeRegistrationId -- " + key + ": " + event.data.get(key).toString());
+            }
         }
     }
 }

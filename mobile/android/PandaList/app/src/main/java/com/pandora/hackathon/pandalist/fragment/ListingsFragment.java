@@ -255,7 +255,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
 
                 if (mPostSubCategoryName != null && mPostSubCategoryName.equals(subcategory)) {
-                    mListItems.add(createPostItem(post));
+                    mListItems.add(createPostItem(postId, post));
                 }
             }
         }
@@ -292,7 +292,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
 
 
-    private PostItemData createPostItem(Map<String, Object> post) {
+    private PostItemData createPostItem(String postId, Map<String, Object> post) {
         PostItemData item = null;
 
         String title = post.get("title") != null ? post.get("title").toString() : "";
@@ -305,7 +305,9 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         String createdBy  = post.get("createdBy") != null ? post.get("createdBy").toString() : "";
         String published  = post.get("published") != null ? post.get("published").toString() : "";
         String price  = post.get("price") != null ? post.get("price").toString() : "";
+
         item = new PostItemData();
+        item.setId(postId);
         item.setCategory(category);
         item.setSubcategory(subcategory);
         item.setCreatedBy(createdBy);

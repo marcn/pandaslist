@@ -19,14 +19,16 @@ if (Meteor.isClient) {
       }
       else {
         return "";
-      } 
+      }
     }
   });
 
   Template.subscriptions.events({
+
+
     'submit form': function(e) {
       e.preventDefault();
-      
+
       var userId = Meteor.userId();
 
       // set notification types
@@ -35,7 +37,7 @@ if (Meteor.isClient) {
 
       Meteor.users.update(userId, {$set: {sendEmails: sendEmails}});
       Meteor.users.update(userId, {$set: {sendPushNotifications: sendPushNotifications}});
-      
+
       // remove all subs for user
       var currentSubs = Subscriptions.find({'userIds': userId}).fetch();
       for(var i = 0; i < currentSubs.length; i++) {
@@ -57,13 +59,34 @@ if (Meteor.isClient) {
             sub.userIds.push(userId);
           else
             sub.userIds = [userId];
-          Subscriptions.update(sub._id, {$set: {userIds: sub.userIds}});  
+          Subscriptions.update(sub._id, {$set: {userIds: sub.userIds}});
         } else {
           Subscriptions.insert({category: category, userIds: [userId]});
         }
-        
+
       }
 
-    }  
+    },
+
+
+    // checkall
+    'click .checkall': function(evt) {
+
+      var el = $(evt.currentTarget),
+           i = $('.checkall').index(el);
+
+      $('.subCatBlock').eq(i).children('.subCatSub').children('input').each(function() {
+        if ( el.is(':checked') )
+          $(this).prop('checked', true)
+        else
+          $(this).prop('checked', false);
+      });
+
+    }
+
+
+
   });
-} 
+
+
+}

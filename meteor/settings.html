@@ -1,6 +1,6 @@
 
 <template name="settings">
-	User settings screen
+	<h2>User settings screen</h2>
 
 	{{>subscriptions}}
 </template>
@@ -9,18 +9,32 @@
 	<form>
 		<input type="submit" class="btn" value="Save"/>
 
-		<label for="push">Receive Push Notifications</label><input name="notification-push" id="notification-push" type="checkbox" />
-		<label for="email">Receive Email Notifications</label><input name="notification-email" id="notification-email" type="checkbox" />
+		<div class="subCatSub wide">
+			<label for="push">Receive Push Notifications</label>
+			<input name="notification-push" id="notification-push" type="checkbox" />
+		</div>
+
+		<div class="subCatSub wide">
+		<label for="email">Receive Email Notifications</label>
+		<input name="notification-email" id="notification-email" type="checkbox" />
+	</div>
 
 		{{#each categories}}
-	      <h2 class="subSettingsHeader">{{name}}</h2>
 
+				<div class="headerBlock">
+					<input class="checkall" type="checkbox" />
+		      <h2 class="subSettingsHeader">{{name}}</h2>
+		    </div>
+
+
+	      <div class="subCatBlock">
 	      {{#each subCategories}}
 	      	<div class="subCatSub">
 	      		<label for="sub-{{subCategory}}">{{subCategory}}</label>
 	      		<input id="sub-{{subCategory}}" value="{{category}}.{{subCategory}}" name="sub-{{subCategory}}" {{isChecked}} type="checkbox" />
 	      	</div>
 	      {{/each}}
+	    	</div>
 	    {{/each}}
 	</form>
 </template>

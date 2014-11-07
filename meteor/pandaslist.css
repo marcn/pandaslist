@@ -96,7 +96,6 @@ textarea {
   cursor: pointer;
   padding: 0.7rem 3rem;
   -webkit-transition: all 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
-  transform: scale(1);
   box-shadow:none;
   border:0;
   outline:none;
@@ -104,11 +103,6 @@ textarea {
 
 .btn:hover {
   background-color: #58c5ee;
-  transform: scale(1.05);
-}
-
-.btn:active {
-  transform: scale(0.9);
 }
 
 .price:before { content: 'Price: '; }
@@ -299,13 +293,17 @@ textarea {
     display: table-cell;
     vertical-align: middle;
     text-align: right;
-    min-width: 18rem;
     padding-right: 4rem;
 
     color: #fff;
     font-size: 1.3rem;
     background-color: #224099;
     position: relative;
+  }
+
+  #headerAdmin a {
+    color: #ababab;
+    display: block;
   }
 
   #headerAdmin:after {
@@ -393,7 +391,6 @@ textarea {
   z-index: 1;
   position: fixed;
   overflow-x: hidden;
-  overflow-y: scroll;
 
   left: 0;
   top: 0;

@@ -8,9 +8,8 @@
         android:id="@+id/profile_view"
         android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTintMode="multiply"
-        android:background="@drawable/drawer_back"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_bamboo"
         android:padding="8dp">
 
 
@@ -33,6 +32,7 @@
             android:textStyle="bold"
             android:layout_above="@+id/profile_email"
             android:text="Rajat D."
+            android:layout_alignParentBottom="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         />
 

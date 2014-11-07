@@ -54,6 +54,13 @@ public abstract class TransferModel {
         return sModels.values().toArray(models);
     }
 
+    public TransferModel(Context context, String absolutePath, String filename, TransferManager manager) {
+        mContext = context;
+        mManager = manager;
+        mFileName = filename;
+        mId = sNextId++;
+        sModels.put(mId, this);
+    }
     public TransferModel(Context context, Uri uri, TransferManager manager) {
         this(context, uri, AWSUtils.getFileName(), manager);
     }

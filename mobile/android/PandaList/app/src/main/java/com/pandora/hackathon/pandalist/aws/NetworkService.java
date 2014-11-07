@@ -36,9 +36,13 @@ public class NetworkService extends IntentService {
             if (intent.getAction().equals(Intent.ACTION_GET_CONTENT) &&
                     intent.getStringArrayExtra(S3_KEYS_EXTRA) != null) {
                 download(intent.getStringArrayExtra(S3_KEYS_EXTRA));
-            } else if (intent.getAction().equals(Intent.ACTION_SEND) &&
-                    intent.getData() != null) {
-                upload(intent.getData(), intent.getStringExtra("filename"));
+            } else if (intent.getAction().equals(Intent.ACTION_SEND)) {
+                String absolutePath = intent.getStringExtra("absolutePath");
+                if (absolutePath != null) {
+                    upload(absolutePath, intent.getStringExtra("filename"));
+                } else {
+                    upload(intent.getData(), intent.getStringExtra("filename"));
+                }
             } else if (intent.getIntExtra(NOTIF_ID_EXTRA, DEFAULT_INT)
                     != DEFAULT_INT) {
                 int notifId = intent.getIntExtra(NOTIF_ID_EXTRA, DEFAULT_INT);
@@ -79,6 +83,11 @@ public class NetworkService extends IntentService {
     /* We use a new thread for upload because we have to copy the file */
     private void upload(Uri uri, String filename) {
         UploadModel model = new UploadModel(this, uri, filename, mTransferManager);
+        new Thread(model.getUploadRunnable()).run();
+    }
+
+    private void upload(String absolutePath, String filename) {
+        UploadModel model = new UploadModel(this, absolutePath, filename, mTransferManager);
         new Thread(model.getUploadRunnable()).run();
     }
 }

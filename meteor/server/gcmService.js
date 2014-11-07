@@ -77,7 +77,7 @@ if (Meteor.isServer) {
     },
 
     'storeRegistrationId': function(userId, registrationId) {
-      Meteor.users.update({_id:userId}, {_id:userId, registrationId:registrationId}, 
+      Meteor.users.update({_id:userId}, {$set: {registrationId:registrationId}}, 
             {upsert:true});
       console.log('userId:' + userId + ' registrationId:'+registrationId);
       return {"method":"storeRegistrationId", "data": {"userId": userId, "registrationId": registrationId}};

@@ -36,8 +36,17 @@
   }
 
 
+  #createPost {
+    text-align: center;
+  }
 
+  #createPost .dropzone {
+    display: none;
+  }
 
+.fileUpload.btn {
+  font-size: 2rem;
+}
 
   #postHero {
     height: 300px;
@@ -47,8 +56,9 @@
     max-height: 300px;
   }
 
-  input, textarea {
-    width: 96%;
+  input, textarea, select {
+    width: 98%;
+    margin: 0.7rem 1%;
   }
 
 
@@ -56,5 +66,13 @@
     width: 46%;
   }
 
+
+  .postThumbs span {
+    width: 32%;
+    padding-bottom: 22%;
+  }
+
+  .postThumbs span:nth-child(4n) {margin: 2% 2% 0 0; }
+  .postThumbs span:nth-child(3n) {margin: 0; }
 
 }

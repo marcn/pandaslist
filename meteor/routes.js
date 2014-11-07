@@ -9,6 +9,7 @@ Router.configure({
 });
 
 Router.route('/', function () {
+	console.log("in listings route");
 	this.render('listings', {
 		data: function() {
 			return this.params.query;
@@ -20,7 +21,7 @@ Router.route('/', function () {
 
 Router.route('/create', function () {
 	Session.set("postCategorySelected", null);
-	Session.get("previewPost", null);
+	Session.set("previewPost", null);
 	this.render('create');
 });
 
@@ -58,6 +59,8 @@ Router.route('/tempForm', function () {
 });
 
 Router.route('/detail/:_id', function () {
+	console.log("in detail route ", this.params._id);
+	Session.set("previewPost", null);
 	this.render('detail', {
 		data: function() {
 			return Posts.findOne({_id: this.params._id});

@@ -12,10 +12,19 @@ if (Meteor.isClient) {
 
 		'click .post': function() {
 			var post = Template.currentData();
+			delete post.isPreview;
 			var id = Posts.insert(post);
 			Meteor.call("notifySubscribers", post);
-			Session.set("previewPost", null);
-			Router.go("/detail/"+id);		// FIXME: for some reason this does not go to detail page
+			Router.go("/detail/"+id);
+		},
+
+		'click .save': function() {
+			var post = Template.currentData();
+			delete post.isPreview;
+			var id = Session.get("previewPost")._id;
+			Posts.update({_id: id}, post);
+			Meteor.call("notifySubscribers", post);
+			Router.go("/detail/"+id);
 		},
 
 		'click .delete': function() {
@@ -51,6 +60,10 @@ if (Meteor.isClient) {
 		},
 		"ownPost": function() {
 			return this.createdBy == Meteor.userId();
+		},
+		"isExistingPost": function() {
+			console.log("isExistingPost: ", Template.currentData());
+			return Template.currentData()._id;
 		}
 	});
 

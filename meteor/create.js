@@ -8,6 +8,23 @@ if (Meteor.isClient) {
 		Session.set("formChanges", 0);
 	};
 
+	Template.create.rendered = function() {
+		var data = Session.get("previewPost");
+		if (data) {
+			Session.set("postCategorySelected", data['category']);
+			var template = this;
+			_.each(['category', 'location', 'title', 'price', 'description', 'delivery_method'], function(name) {
+				template.$("."+name).val(data[name]);
+			});
+			Session.set("postImages", _.pluck(data.photos, "id"));
+			Session.set("postCoverPhoto", data.coverPhoto);
+			setTimeout(_.bind(function() {
+				this.$(".subcategory").val(data['subcategory']);
+				Session.set("formChanges", Session.get("formChanges")+1);
+			}, this), 1);
+		}
+	};
+
 	var handleImageUpload = function(files) {
 		for (var i=0; i < files.length; i++) {
 			if (files.item(i).type.indexOf("image/") != 0) {
@@ -76,7 +93,6 @@ if (Meteor.isClient) {
 		post['createdBy'] = Meteor.userId();
 		post['creationDate'] = new Date().getTime();
 		post['published'] = true;
-		console.log(post);
 		return post;
 	}
 
@@ -112,12 +128,10 @@ if (Meteor.isClient) {
 			evt.preventDefault();
 			var li = $(evt.target).parents('li');
 			var id = li.attr('data-id');
-			console.log("removing ", id);
 			// Remove from post images
 			var images = _.without(Session.get("postImages"), id);
 			// If image was selected for cover photo, select the first remaining image
 			if (Session.get("postCoverPhoto") == id) {
-				console.log("matched post cover photo, setting to ", images[0]);
 				if (images.length > 0) {
 					Session.set("postCoverPhoto", images[0]);
 					// Even though the DOM is updated with "checked" on the element, it doesn't actualy check it
@@ -129,6 +143,14 @@ if (Meteor.isClient) {
 			Session.set("postImages", images);
 		},
 
+		'click .save': function() {
+			var post = getPostData(Template.instance());
+			var id = Session.get("previewPost")._id;
+			Posts.update({_id: id}, post);
+			Meteor.call("notifySubscribers", post);
+			Router.go("/detail/"+id);
+		},
+
 		'click .post': function() {
 			var post = getPostData(Template.instance());
 			var id = Posts.insert(post);
@@ -137,8 +159,16 @@ if (Meteor.isClient) {
 		},
 
 		'click .preview': function() {
-			Session.set("previewPost", getPostData(Template.instance()));
+			var data = getPostData(Template.instance());
+			if (Session.get("previewPost") && Session.get("previewPost")._id) {
+				data._id = Session.get("previewPost")._id;
+			}
+			Session.set("previewPost", data);
 			Router.go("/preview");
+		},
+
+		'click .cancel': function() {
+			Router.go("listings");
 		}
 
 	});
@@ -172,7 +202,8 @@ if (Meteor.isClient) {
 		},
 
 		"files": function(){
-			return Images.find({ _id: {$in: Session.get("postImages")}});
+			var images = Session.get("postImages");
+			return Images.find({ _id: {$in: images}});
 		},
 
 		"coverPhotoChecked": function() {

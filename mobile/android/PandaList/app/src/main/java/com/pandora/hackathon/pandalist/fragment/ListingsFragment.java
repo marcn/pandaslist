@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.PostItemData;
@@ -28,7 +27,6 @@ import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.NewPostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
-import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.pandora.hackathon.pandalist.ui.ListingRecyclerAdapter;
@@ -202,6 +200,23 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         //PandaListApplication.getDDP().subscribe("posts", new Object[]{});
     }
 
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mListItems.clear();
+
+        Map<String, Map<String, Object>> postings = PandaListApplication.getDDP().getCollection("posts");
+        if (postings != null && !postings.isEmpty()) {
+            for (String postId : postings.keySet()) {
+                mListItems.add(createPostItem(postings.get(postId)));
+            }
+        }
+        myRecyclerAdapter.setItems(mListItems);
+    }
+
     /** We need to return an Data object model
      * to populate the adapter
      * @return
@@ -224,23 +239,25 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                 MyDDPState ddp = PandaListApplication.getDDP();
                 Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
 
-                String title = post.get("title") != null ? post.get("title").toString() : "";
-                String category = post.get("category") != null ? post.get("category").toString() : "";
-                String description = post.get("description") != null ? post.get("description").toString() : "";
-
-                item = new PostItemData();
-                item.setTitle(title);
-                item.setDescription(description);
-                item.setPrice(23.56);
-                item.setBitmapResId(R.drawable.sofa);
-
-
-
+                item = createPostItem(post);
             }
             mListItems.add(item);
             myRecyclerAdapter.setItems(mListItems);
         }
+    }
 
+    private PostItemData createPostItem(Map<String, Object> post) {
+        PostItemData item;
+        String title = post.get("title") != null ? post.get("title").toString() : "";
+        String category = post.get("category") != null ? post.get("category").toString() : "";
+        String description = post.get("description") != null ? post.get("description").toString() : "";
+
+        item = new PostItemData();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setPrice(23.56);
+        item.setBitmapResId(R.drawable.sofa);
+        return item;
     }
 
     private float globalScroll;

@@ -58,8 +58,3 @@
       text-overflow: ellipsis;
       overflow: hidden;
     }
-
-    #listings .search-term {
-      background-color: yellow;
-      font-weight: 600;
-    }

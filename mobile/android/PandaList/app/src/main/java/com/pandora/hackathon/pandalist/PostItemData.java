@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 public class PostItemData implements Serializable {
 
-    private String mId;
     private String mCategory;
     private String mSubcategory;
     private String mLocation;
@@ -17,14 +16,6 @@ public class PostItemData implements Serializable {
     private String mCreationDate;
     private boolean mIsPublished;
     private String mPrice;
-
-    public void setId(String id) {
-        this.mId = id;
-    }
-
-    public String getId() {
-        return mId;
-    }
 
     public void setDeliveryMethod(String method) {
         this.mDeliveryMethod = method;

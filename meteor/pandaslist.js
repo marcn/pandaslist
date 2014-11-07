@@ -38,7 +38,38 @@ if (Meteor.isServer) {
     "uploadImage": function(imageName) {
     	var url = "http://pandaslist.s3.amazonaws.com/images/" + imageName;
     	var entry = Images.insert({"url": url});
-    	return {"method":"uploadImage", "data": {"id": entry, "url": url}};
+    	return {"method":"uploadImage", "data": {"imageId": enetry._id}};
+    },
+    "mobileLogin" : function(args) {
+    	var new_user = args[0];
+
+    	var user = db.users.find({ 
+    		"services" : {
+    			"google" : {
+    				"email" : new_user["email"]
+    			}
+    		}
+    	});
+
+    	if ( user == null) {
+    		var user_id = Users.insert({
+    			"profile" : {
+    				"name" : new_user["name"]
+    			}, "services" : {
+    				"google" : {
+    					"accessToken" : new_user[""],
+    					"email" : new_user["email"],
+    					"family_name" : new_user["family_name"],
+    					"given_name" : new_user["given_name"],
+    					"id" : new_user["id"],
+    					"name" : new_user["name"],
+    					"picture" : new_user["picture"]
+    				}
+    			}
+    		});	
+    	}
+
+    	return {"method" : "login", "data" : {"userId" : user_id}};
     }
   });
 }

@@ -34,8 +34,6 @@ public class PostingActivity extends BaseActivity {
     public static final int REQUEST_IMAGE_FROM_GALLERY = 1002;
     private Uri mImageUri;
     private String mCurrentPhotoPath;
-    private String mUploadedImageId;
-    private String mUploadedImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,17 +132,8 @@ public class PostingActivity extends BaseActivity {
     @Subscribe
     public void onDDPMethodResultEvent(DDPMethodResultEvent event) {
         if (event.methodName.equals("uploadImage")) {
-            mUploadedImageId = (String) event.data.get("id");
-            mUploadedImageUrl = (String) event.data.get("url");
+            Log.d("WE GOT UPLOAD-IMAGE", event.data.toString());
         }
-    }
-
-    public String getUploadedImageId() {
-        return mUploadedImageId;
-    }
-
-    public String getUploadedImageUrl() {
-        return mUploadedImageUrl;
     }
 
 }

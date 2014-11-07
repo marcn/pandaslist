@@ -70,6 +70,9 @@ public class UploadModel extends TransferModel {
                     if (mFile != null) {
                         mFile.delete();
                     }
+
+                    String name = getFileName() + "." + mExtension;
+                    PandaListApplication.getDDP().call("uploadImage", new Object[] {name});
                 }
             }
         };
@@ -166,9 +169,6 @@ public class UploadModel extends TransferModel {
                                 + mExtension,
                         mFile);
                 mUpload.addProgressListener(mListener);
-
-                String name = super.getFileName() + "." + mExtension;
-                PandaListApplication.getDDP().call("uploadImage", new Object[] {name});
             } catch (Exception e) {
                 Log.e(TAG, "", e);
             }

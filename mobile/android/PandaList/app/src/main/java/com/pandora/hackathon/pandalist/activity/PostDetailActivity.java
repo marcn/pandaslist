@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.aws.Constants;
 import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
@@ -145,6 +147,9 @@ public class PostDetailActivity extends ActionBarActivity {
                         }
                     });
                 }
+
+                // Add comments
+                addComments();
             } else {
                 setContentView(R.layout.error);
             }
@@ -163,6 +168,32 @@ public class PostDetailActivity extends ActionBarActivity {
         }
     }
 
+    private void addComments() {
+        Map<String, Map<String, Object>> comments = PandaListApplication.getDDP().getCollection("comments");
+        if (comments != null && !comments.isEmpty()) {
+
+            for (String commentId : comments.keySet()) {
+
+                Map<String, Object> comment = comments.get(commentId);
+                String postId = comment.get("post") != null ? comment.get("post").toString() : "";
+
+                if(postId.equals(postData.getId())) {
+                    String text = comment.get("text") != null ? comment.get("text").toString() : "";
+                    String creationDate = comment.get("creationDate") != null ? comment.get("creationDate").toString() : "";
+                    updateUI(text, parseDate(creationDate));
+                }
+            }
+        }
+    }
+
+    private long parseDate(String date) {
+        try {
+            return Long.parseLong(date);
+        } catch(Exception ex) {
+            return 0l;
+        }
+    }
+
     private void submitResponse() {
 
         String text = commentsEditText.getText().toString();
@@ -171,7 +202,7 @@ public class PostDetailActivity extends ActionBarActivity {
         Map<String,Object> options = new HashMap<String,Object>();
         params[0] = options;
         options.put("text", text);
-        options.put("sender", "1");
+        options.put("sender", Constants.getPandalistUserId());
         options.put("post", postData.getId());
         options.put("creationDate", System.currentTimeMillis());
         options.put("isInterested", false);

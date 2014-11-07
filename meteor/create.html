@@ -81,10 +81,14 @@
       <option value="goto_buyer">Seller goes to buyer's location</option>
     </select>
 
-    <div class="submit_buttons" style="text-align:center; padding:10px; height:60px;">
+    <div class="submit_buttons">
         {{#if formHasEnoughInfo}}
-            <button class="btn preview" style="margin-right:25px;">Preview</button>
-            <button class="btn post" style="margin-right:25px;">Post</button>
+            <button class="btn preview">Preview</button>
+            {{#if previewPost}}
+            <button class="btn save">Save</button>
+            {{else}}
+            <button class="btn post">Post</button>
+            {{/if}}
             <button class="btn cancel">Cancel</button>
         {{/if}}
     </div>

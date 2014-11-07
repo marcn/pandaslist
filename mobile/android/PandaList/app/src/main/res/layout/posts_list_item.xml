@@ -19,8 +19,8 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:src="@drawable/sofa"
             android:id="@+id/post_image"
+            android:background="@color/pandora_indigo_transparent"
             android:scaleType="centerCrop"
             android:contentDescription="@string/cd_post_image" />
 

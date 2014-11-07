@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.keysolutions.ddpclient.DDPListener;
@@ -124,6 +123,7 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
                 options.put("price", mPrice.getText().toString());
                 options.put("description", mDescription.getText().toString());
                 options.put("delivery_method", mDeliverySpinner.getSelectedItem().toString());
+                options.put("user_id", "dfsdf");
 
                 PandaListApplication.getDDP().call("/posts/insert", params, new DDPListener() {
                     @Override

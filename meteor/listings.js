@@ -6,14 +6,14 @@ if (Meteor.isClient) {
 				filter.category = this.category;
 			if(this.subcategory && this.subcategory !== "All")
 				filter.subcategory = this.subcategory;
+			if(this.type === "me")
+				filter.createdBy = Meteor.userId();
 
-			return Posts.find(filter);
+			return Posts.find(filter, {sort: {creationDate: -1}});
 		}
 	});
 
 	Template.row.helpers({
-		coverPhotoUrl: function() {
-			return (this.coverPhotoUrl) ? this.coverPhotoUrl : '/img/fpo.png';
-		}
+
 	});
 }	

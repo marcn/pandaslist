@@ -53,32 +53,35 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDescription());
         Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
-        Picasso.with(holder.image.getContext()).load((int)item.getBitmapResId()).into(new Target() {
+        String url = item.getImageUrl();
+        if (url != null && url != "") {
+            Picasso.with(holder.image.getContext()).load(url).into(new Target() {
 
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-                    @Override
-                    public void onGenerated(Palette palette) {
+                @Override
+                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                    Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                        @Override
+                        public void onGenerated(Palette palette) {
 
-                        int color = palette.getLightMutedColor(Color.parseColor("#22224099"));
-                        int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
+                            int color = palette.getLightMutedColor(Color.parseColor("#22915a7a"));
+                            int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
+                            holder.image.setImageBitmap(bitmap);
+                            holder.detailContainer.setBackgroundColor(colorAlpha);
+                        }
+                    });
+                }
 
-                        holder.detailContainer.setBackgroundColor(colorAlpha);
-                    }
-                });
-            }
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
 
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+                }
 
-            }
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
+                }
+            });
+        }
         holder.itemView.setTag(item);
     }
 

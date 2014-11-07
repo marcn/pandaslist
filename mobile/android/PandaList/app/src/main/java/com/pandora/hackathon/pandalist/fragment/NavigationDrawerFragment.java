@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -19,11 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +45,9 @@ public class NavigationDrawerFragment extends BaseFragment {
      * Remember the position of the selected item.
      */
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+    private static final String STATE_SELECTED_GROUP_POSITION = "selected_navigation_drawer_position";
+    private static final String STATE_SELECED_CATEGORY = "selected_navigation_drawer_category";
+    private static final String STATE_SELECED_SUBCATEGORY = "selected_navigation_drawer_subcategory";
 
     /**
      * Per the design guidelines, you should show the drawer on launch until the user manually
@@ -71,6 +70,9 @@ public class NavigationDrawerFragment extends BaseFragment {
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedGroupPosition = 0;
+
+
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -90,11 +92,13 @@ public class NavigationDrawerFragment extends BaseFragment {
 
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+            mCurrentSelectedGroupPosition = savedInstanceState.getInt(STATE_SELECTED_GROUP_POSITION);
+
             mFromSavedInstanceState = true;
         }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        selectItem(mCurrentSelectedGroupPosition, mCurrentSelectedPosition);
 
         prepareListData();
     }
@@ -105,6 +109,8 @@ public class NavigationDrawerFragment extends BaseFragment {
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
     }
+
+    private View selectedChildListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,7 +130,16 @@ public class NavigationDrawerFragment extends BaseFragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                selectItem(childPosition);
+                selectItem(groupPosition, childPosition);
+
+                //selected state
+                v.setSelected(true);
+                if (selectedChildListView != null) {
+                    selectedChildListView.setBackground(v.getBackground());
+                }
+                selectedChildListView = v;
+                selectedChildListView.setBackgroundColor(getActivity().getResources().getColor(R.color.violet_light));
+
                 return false;
             }
         });
@@ -214,7 +229,7 @@ public class NavigationDrawerFragment extends BaseFragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
+    private void selectItem(int groupPosition, int position) {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
@@ -223,7 +238,20 @@ public class NavigationDrawerFragment extends BaseFragment {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+
+
+            String category = "";
+            String sub = "";
+
+            if (listCategories != null && !listCategories.isEmpty() && listSubCategories != null && !listCategories.isEmpty()) {
+                if (groupPosition < listCategories.size()) {
+                    category = listCategories.get(groupPosition);
+                }
+
+                sub = listSubCategories.get(category).get(position);
+            }
+
+            mCallbacks.onNavigationDrawerItemSelected(category, sub, position);
         }
     }
 
@@ -308,7 +336,7 @@ public class NavigationDrawerFragment extends BaseFragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(String category, String subcategory, int position);
     }
 
 
@@ -348,6 +376,9 @@ public class NavigationDrawerFragment extends BaseFragment {
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.category_sub_list_item, null);
             }
+
+            View childContainer = convertView.findViewById(R.id.subcategory_container);
+
 
             TextView txtListChild = (TextView) convertView.findViewById(R.id.subcategory_item);
 

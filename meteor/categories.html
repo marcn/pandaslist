@@ -5,7 +5,11 @@
 
       <a class="btn" href="/create">Create A Post</a>
 
-      <!-- <h2>Most Recent</h2> -->
+      <h2 class="topLevel"><a href="{{pathFor route='listings'}}?type=me">My Posts</a></h2>
+      <hr class="topLevel">
+      <h2 class="topLevel"><a href="/">All Posts</a></h2>
+      <hr class="topLevel">
+
       {{#each categoryGroups}}
         {{> category}}
       {{/each}}

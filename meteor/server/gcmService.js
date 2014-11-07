@@ -20,12 +20,13 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.methods({
     'sendPushNotification': function(post, registrationId){
+      this.unblock();
       var gcm = Meteor.npmRequire('node-gcm');
       var message = new gcm.Message();
       message.addDataWithKeyValue("post",post);
       var sender = new gcm.Sender(GCM_API);
       var registrationIds =[];
-      registrationIds.push(registrationId)
+      registrationIds.push(registrationId);
       sender.sendNoRetry(message, registrationIds, function (err, result) {
         if(err){
           console.log('Error:'+err);
@@ -67,11 +68,11 @@ if (Meteor.isServer) {
           {fields: {registrationId:1, _id:0}}).registrationId;
         console.log(userId+":"+registrationId);
         
-        var user = users.findOne({_id: userId}).fetch();
+        var user = Meteor.users.findOne({_id: userId});
         if(user.sendEmails)
           Meteor.call('sendEmail', user, post);
         if(user.sendPushNotification)
-          Meteor.call('sendPushNotification', registrationId);
+          Meteor.call('sendPushNotification', post, registrationId);
       }
     },
 

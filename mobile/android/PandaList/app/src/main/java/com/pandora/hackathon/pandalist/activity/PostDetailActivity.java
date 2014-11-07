@@ -3,15 +3,18 @@ package com.pandora.hackathon.pandalist.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -30,7 +33,7 @@ public class PostDetailActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_post_details);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         setSupportActionBar(toolbar);
 
         setTitle(null);
@@ -45,6 +48,56 @@ public class PostDetailActivity extends ActionBarActivity {
                 setContentView(R.layout.activity_post_details);
 
                 final ImageView imageView = (ImageView) findViewById(R.id.post_imageview);
+                final RelativeLayout highlights = (RelativeLayout) findViewById(R.id.highlights);
+
+                Picasso.with(this).cancelRequest(imageView);
+                String url = item.getImageUrl();
+                if (url != null && url != "") {
+
+                    try {
+                        Picasso.with(this).load(url).into(new Target() {
+                            @Override
+                            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+
+                                        int color = palette.getLightMutedColor(Color.parseColor("#22915a7a"));
+                                        int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
+                                        imageView.setImageBitmap(bitmap);
+                                        highlights.setBackgroundColor(colorAlpha);
+                                        toolbar.setBackgroundColor(colorAlpha);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
+
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                            }
+                        });
+                    } catch (Exception ane) {
+                        Drawable d = getResources().getDrawable(R.drawable.default_albumart);
+                        final Bitmap bitmap = Bitmap.createBitmap(d.getIntrinsicWidth(), d.getIntrinsicHeight(), Bitmap.Config.RGB_565);
+
+                        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                            @Override
+                            public void onGenerated(Palette palette) {
+
+                                int color = palette.getLightMutedColor(Color.parseColor("#22e0e0e0"));
+                                int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
+                                highlights.setBackgroundColor(colorAlpha);
+                            }
+                        });
+
+                    }
+                }
+
                 TextView title = (TextView) findViewById(R.id.post_title);
                 title.setText(item.getTitle());
 
@@ -66,6 +119,13 @@ public class PostDetailActivity extends ActionBarActivity {
                         button.setText("I am Interested");
                         //TODO allow price
                     }
+
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //TODO
+                        }
+                    });
                 }
            } else {
                 setContentView(R.layout.error);

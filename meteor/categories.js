@@ -126,6 +126,16 @@ if (Meteor.isClient) {
   });
 
 
+  Template.layout.events({
+    "click #burger": function(evt) {
+
+      $(evt.currentTarget).toggleClass('active');
+      $('#nav').toggleClass('active');
+
+    }
+  });
+
+
 }
 
 if (Meteor.isServer) {

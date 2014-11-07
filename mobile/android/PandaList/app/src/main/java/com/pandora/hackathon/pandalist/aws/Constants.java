@@ -12,8 +12,6 @@ public class Constants {
     }
 
     public static void setPandaListUserId(String _userId) {
-        userId = userId;
+        userId = _userId;
     }
-
-
 }

@@ -37,11 +37,11 @@ public class BaseActivity  extends ActionBarActivity implements ListingsFragment
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(String subcategory, int position) {
+    public void onNavigationDrawerItemSelected(String category, String subcategory, int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, getFragmentBySection(position + 1))
+                .replace(R.id.container, getFragmentBySection(subcategory))
                 .commit();
     }
 
@@ -67,19 +67,17 @@ public class BaseActivity  extends ActionBarActivity implements ListingsFragment
                 item = new PostItemData();
                 item.setTitle(title);
                 item.setDescription(description);
-                item.setPrice(23.56);
-                item.setBitmapResId(R.drawable.sofa);
             }
         }
     }
 
 
-    private Fragment getFragmentBySection(int section) {
+    private Fragment getFragmentBySection(String subcategory) {
 
-        if (section == 1) {
-            return ListingsFragment.newInstance(section);
+        if (subcategory != null) {
+            return ListingsFragment.newInstance(subcategory);
         }
-        return PlaceholderFragment.newInstance(section);
+        return PlaceholderFragment.newInstance(1);
     }
 
     /**

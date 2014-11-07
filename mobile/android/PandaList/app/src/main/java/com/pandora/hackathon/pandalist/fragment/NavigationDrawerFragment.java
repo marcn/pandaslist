@@ -232,11 +232,13 @@ public class NavigationDrawerFragment extends BaseFragment {
             String category = "";
             String sub = "";
 
-            if (groupPosition < listCategories.size()) {
-                category = listCategories.get(groupPosition);
-            }
+            if (listCategories != null && !listCategories.isEmpty() && listSubCategories != null && !listCategories.isEmpty()) {
+                if (groupPosition < listCategories.size()) {
+                    category = listCategories.get(groupPosition);
+                }
 
-            sub = listSubCategories.get(category).get(position);
+                sub = listSubCategories.get(category).get(position);
+            }
 
             mCallbacks.onNavigationDrawerItemSelected(category, sub, position);
         }

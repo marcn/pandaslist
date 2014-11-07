@@ -5,12 +5,10 @@ import android.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-
 import android.util.Log;
+
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.activity.PandaListActivity;
-import com.pandora.hackathon.pandalist.data.Category;
-import com.pandora.hackathon.pandalist.data.DataManager;
 import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
 import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
@@ -27,6 +25,7 @@ public class BaseFragment extends Fragment {
      * fragment.
      */
     protected static final String ARG_SECTION_NUMBER = "section_number";
+    protected static final String ARG_POST_SUBCATEGORY = "post_subcategory";
     private DDPBroadcastReceiver mReceiver;
 
     public BaseFragment() {

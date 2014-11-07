@@ -1,6 +1,7 @@
 #listings a {
   color: #333;
   text-decoration: none;
+  display: inline-block;
 }
 
   #listings li {
@@ -8,7 +9,7 @@
     table-layout: fixed;
     width: 100%;
     overflow: hidden;
-    height: 10rem;
+    /*height: 10rem;*/
     margin-bottom: 2rem;
     background-color: #fff;
     font-size: 0;

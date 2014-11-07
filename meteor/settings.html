@@ -1,14 +1,12 @@
 
 <template name="settings">
-	<h2>User settings screen</h2>
+	<h2 class="pageTitle">Account Settings</h2>
 
 	{{>subscriptions}}
 </template>
 
 <template name="subscriptions">
 	<form>
-		<input type="submit" class="btn" value="Save"/>
-
 		<div class="subCatSub wide">
 			<label for="push">Receive Push Notifications</label>
 			<input name="notification-push" id="notification-push" type="checkbox" />
@@ -36,5 +34,9 @@
 	      {{/each}}
 	    	</div>
 	    {{/each}}
+
+		<div class="centerBtn" style="margin-top:3rem">
+			<input type="submit" class="btn" value="Save"/>
+		</div>
 	</form>
 </template>

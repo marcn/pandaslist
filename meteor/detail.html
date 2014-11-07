@@ -32,7 +32,7 @@
 
 		<p class="description">{{description}}</p>
 
-    <div class="submit_buttons">
+    <div class="centerBtn">
 			{{#if ownPost}}
 				<button class="btn edit">Edit</button>
 				{{#if isPreview}}
@@ -63,7 +63,9 @@
 
 		<div class="newComment">
 			<textarea class="comment" style="width:100%">{{defaultCommentText}}</textarea>
-			<button class="btn addComment" style="float:right">Post Comment</button>
+			<div class="centerBtn">
+				<button class="btn addComment">Post Comment</button>
+			</div>
 		</div>
 
 	</div>

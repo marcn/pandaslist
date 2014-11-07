@@ -33,6 +33,12 @@ h1, h2, h3, h4 {
   font-weight: normal;
 }
 
+.pageTitle {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
 a {
   text-decoration: none;
   color: #00adee;
@@ -84,7 +90,9 @@ textarea {
   height: 20rem;
 }
 
-
+button {
+  margin: 0.7rem;
+}
 
 .btn {
   background-color: #00adee;
@@ -99,10 +107,17 @@ textarea {
   box-shadow:none;
   border:0;
   outline:none;
+  height: auto;
 }
 
 .btn:hover {
   background-color: #58c5ee;
+}
+
+.centerBtn {
+  display: block;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 .price:before { content: 'Price: '; }

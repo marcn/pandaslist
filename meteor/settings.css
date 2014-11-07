@@ -1,6 +1,10 @@
 .subCatSub.wide {
   width: 49%;
-  text-align: right;
+  text-align: center;
+}
+
+.subCatSub.wide label {
+  font-size: 1.7rem;
 }
 
 .subCatSub {

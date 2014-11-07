@@ -89,17 +89,26 @@ textarea {
 .btn {
   background-color: #00adee;
   border-radius: 1rem;
-  border: 1px solid #00adee;
+  border: none;
   font-size: 2rem;
   color: #fff;
   display: inline-block;
-  padding: 0.5rem 3rem;
+  cursor: pointer;
+  padding: 0.7rem 3rem;
   -webkit-transition: all 200ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  transform: scale(1);
+  box-shadow:none;
+  border:0;
+  outline:none;
 }
 
 .btn:hover {
-  background-color: #00adee;
-  color: #fff;
+  background-color: #58c5ee;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.9);
 }
 
 .price:before { content: 'Price: '; }
@@ -120,7 +129,7 @@ textarea {
 
 #main {
   margin: 12rem 2rem 6rem 28rem;
-  background-color: rgba(255,0,0,0.1);
+  /*background-color: rgba(255,0,0,0.1);*/
 }
 
 

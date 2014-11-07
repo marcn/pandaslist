@@ -32,12 +32,14 @@
 
     <p class="description">{{description}}</p>
 
-    {{#if isPreview}}
-      <button class="btn edit">Edit</button>
-      <button class="btn post">Post</button>
-    {{else}}
-      <button class="btn purchse">Purchase</button>
-    {{/if}}
+    <div style="text-align:center">
+      {{#if isPreview}}
+        <button class="btn edit">Edit</button>
+        <button class="btn post">Post</button>
+      {{else}}
+        <button class="btn purchse">Contact</button>
+      {{/if}}
+    </div>
 
 
     <div class="postComments">
@@ -46,9 +48,6 @@
         <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike?</li>
         <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
       </ul>
-
-
-
     </div>
 
 

@@ -1,16 +1,29 @@
 if (Meteor.isClient) {
-  notifySubscribers = function(callback){
-    Meteor.call('notifySubscribers', callback);
-  }
-  notifySubscribers('WANTED');
+  // Meteor.call('notifySubscribers','WANTED');
+  // Meteor.call('storeRegistrationId','1', 'monkey');
+  var post = {category: 'For Sale',
+              subcategory: 'antiques',
+              location: 'Oakland',
+              title: 'afd',
+              price: 'asdf',
+              description: 'asdf',
+              delivery_method: 'office_pickup',
+              coverPhoto: null,
+              coverPhotoUrl: null,
+              photos: [],
+              createdBy: '6htbgkcXhQmzpDi8k',
+              creationDate: 1415322308257,
+              published: true };
+  Meteor.call('sendPushNotification', post, 'APA91bHI_awkvZqUDE1ahTQ79LasxMqvcBGnu6AFTSkY81bJYYIIMjHB-3h0J6wN1Y8g97wT4j5R6P0xlqVZyHyvHtoGNU73z0GBdELDAVwuvFsivU6b6qa4AGsKqqaJGQ6T6Pft1OkIStm_nZbyQTnv3n2oLFDDFFWAP3JOiiSXIfpnMJEIrdg');
 }
 
 if (Meteor.isServer) {
   Meteor.methods({
-    'sendPushNotification': function(registrationId){
+    'sendPushNotification': function(post, registrationId){
       var gcm = Meteor.npmRequire('node-gcm');
       var message = new gcm.Message();
-      var sender = new gcm.Sender('APIKEY');
+      message.addDataWithKeyValue("post",post);
+      var sender = new gcm.Sender(GCM_API);
       var registrationIds =[];
       registrationIds.push(registrationId)
       sender.sendNoRetry(message, registrationIds, function (err, result) {

@@ -52,4 +52,11 @@
   }
 
 
+
+  #createPost h3 {
+    display: block;
+    text-align: left;
+  }
+
+
 }

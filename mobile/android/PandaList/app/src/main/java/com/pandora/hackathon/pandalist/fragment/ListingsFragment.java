@@ -234,6 +234,12 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                 }
             }
         }
+
+        if (mListItems.isEmpty()) {
+            getView().findViewById(R.id.error_view).setVisibility(View.VISIBLE);
+        } else {
+            getView().findViewById(R.id.error_view).setVisibility(View.GONE);
+        }
         myRecyclerAdapter.setItems(mListItems);
         myRecyclerAdapter.notifyDataSetChanged();
         getActionBar().setSubtitle(mPostSubCategoryName);
@@ -284,6 +290,13 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             mListItems.add(item);
             myRecyclerAdapter.setItems(mListItems);
             myRecyclerAdapter.notifyDataSetChanged();
+        }
+
+
+        if (mListItems.isEmpty()) {
+            getView().findViewById(R.id.error_view).setVisibility(View.VISIBLE);
+        } else {
+            getView().findViewById(R.id.error_view).setVisibility(View.GONE);
         }
     }
 

@@ -1,19 +1,27 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#ffffff"
+    android:background="@color/lite_grey"
     android:scrollbars="none"
+    android:id="@+id/error_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center_vertical">
 
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/panda_logo"/>
     <TextView
         android:padding="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        android:textSize="28sp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textColor="#FF4444"
+
         android:text="Error loading content. Please try again later."/>
 
 </LinearLayout>

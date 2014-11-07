@@ -69,6 +69,7 @@
         <style name="PandasNoActionBar.TranslucentActionBar.ActionBar" />
 
         <style name="PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay">
+            <item name="colorPrimaryDark">#224099</item>
 
             <item name="android:windowActionBar">false</item>
             <item name="windowActionBarOverlay">true</item>

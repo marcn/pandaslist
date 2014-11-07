@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 				var reg = new RegExp(this.search,"gi");
 				filter = { $or: [{ title: reg }, { description: reg }, { location: reg } ] };
 			}
-			var posts = Posts.find(filter).fetch();
+			var posts = Posts.find(filter, {sort: {creationDate: -1}}).fetch();
 			var search = this.search;
 
 			// inject search term to post objects

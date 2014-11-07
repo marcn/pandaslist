@@ -14,8 +14,6 @@ if (Meteor.isClient) {
 	});
 
 	Template.row.helpers({
-		coverPhotoUrl: function() {
-			return (this.coverPhotoUrl) ? this.coverPhotoUrl : '/img/fpo.png';
-		}
+
 	});
 }	

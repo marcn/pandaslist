@@ -14,13 +14,15 @@
     <li>
 
         <div class="imgFrame">
+          {{#if coverPhotoUrl}}
           <img src="{{coverPhotoUrl}}">
+          {{/if}}
         </div>
         <div class="info">
           <h3>{{title}}</h3>
 
-          <p class="price">$100</p>
-          <p class="location">3</p>
+          <p class="price">{{price}}</p>
+          <p class="location">{{location}}</p>
         </div>
 
     </li>

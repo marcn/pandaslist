@@ -28,11 +28,13 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
     private int ItemLayout;
     private Context mCtx;
     private RecyclerViewOnItemClickListener mListener;
+    private Context mContext;
 
-    public ListingRecyclerAdapter(List<PostItemData> items, int itemLayout, RecyclerViewOnItemClickListener listener) {
+    public ListingRecyclerAdapter(Context ctx, List<PostItemData> items, int itemLayout, RecyclerViewOnItemClickListener listener) {
         this.mItems = items;
         this.ItemLayout = itemLayout;
         this.mListener = listener;
+        this.mContext = ctx;
     }
 
     public void setItems(List<PostItemData> items) {
@@ -52,6 +54,12 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
 
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDescription());
+
+        if (item.getPrice() == null || item.getPrice().isEmpty()) {
+            holder.price.setText("");
+        } else {
+            holder.price.setText(mContext.getString(R.string.price, item.getPrice()));
+        }
         Picasso.with(holder.image.getContext()).cancelRequest(holder.image);
         String url = item.getImageUrl();
         if (url != null && url != "") {
@@ -81,6 +89,8 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
 
                 }
             });
+        } else {
+            holder.image.setBackground(mContext.getResources().getDrawable(R.drawable.default_albumart));
         }
         holder.itemView.setTag(item);
     }

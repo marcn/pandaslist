@@ -32,5 +32,6 @@
     <string name="error_field_required">This field is required</string>
 
     <string name="cd_post_image">Post image</string>
+    <string name="price">Price $%s</string>
 
 </resources>

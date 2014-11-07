@@ -30,6 +30,7 @@ import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.pandora.hackathon.pandalist.ui.ListingRecyclerAdapter;
 import com.squareup.otto.Subscribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -95,12 +96,31 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         Bundle b = getArguments();
 
         mPostSubCategoryName = b.getString(ARG_POST_SUBCATEGORY);
-        getActionBar().setSubtitle(mPostSubCategoryName);
+        if (getActionBar() != null) {
+            getActionBar().setSubtitle(mPostSubCategoryName);
+        }
 
         final TypedArray styledAttributes = getActivity().getTheme().obtainStyledAttributes(
                 new int[] { android.R.attr.actionBarSize });
         mActionBarHeight = styledAttributes.getDimension(0, 0);
+    }
 
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("subcategoryName", (Serializable) mPostSubCategoryName);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            //probably orientation change
+            mPostSubCategoryName = (String) savedInstanceState.getSerializable("list");
+        } else {
+            mPostSubCategoryName = "";
+        }
     }
 
     @Override
@@ -114,7 +134,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
         mPostingsRecyclerView = (RecyclerView) mainView.findViewById(R.id.postings_listView);
         mPostingsRecyclerView.setHasFixedSize(true);
-        mPostingsRecyclerView.setAdapter(myRecyclerAdapter = new ListingRecyclerAdapter(createMockList(), R.layout.posts_list_item, this));
+        mPostingsRecyclerView.setAdapter(myRecyclerAdapter = new ListingRecyclerAdapter(getActivity().getApplicationContext(), createMockList(), R.layout.posts_list_item, this));
         mPostingsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
         mPostingsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mPostingsRecyclerView.setOnScrollListener(mRecycleListViewScrollListener);
@@ -276,14 +296,20 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         String category = post.get("category") != null ? post.get("category").toString() : "";
         String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
 
+        String location = post.get("location") != null ? post.get("location").toString() : "";
         String description = post.get("description") != null ? post.get("description").toString() : "";
         String coverPhotoUrl  = post.get("coverPhotoUrl") != null ? post.get("coverPhotoUrl").toString() : "";
         String createdBy  = post.get("createdBy") != null ? post.get("createdBy").toString() : "";
         String published  = post.get("published") != null ? post.get("published").toString() : "";
+        String price  = post.get("price") != null ? post.get("price").toString() : "";
         item = new PostItemData();
         item.setTitle(title);
         item.setDescription(description);
         item.setImageUrl(coverPhotoUrl);
+        item.setLocation(location);
+        item.setSubcategory(subcategory);
+        item.setCategory(category);
+        item.setPrice(price);
         return item;
     }
 

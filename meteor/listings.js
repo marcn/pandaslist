@@ -6,6 +6,8 @@ if (Meteor.isClient) {
 				filter.category = this.category;
 			if(this.subcategory && this.subcategory !== "All")
 				filter.subcategory = this.subcategory;
+			if(this.type === "me")
+				filter.createdBy = Meteor.user()._id;
 
 			return Posts.find(filter);
 		}

@@ -77,34 +77,6 @@ if (Meteor.isClient) {
     }
   });
 
-
-/* begin JS for details page (help me move this later) */
-
-  Template.detail.events({
-    "click .postThumbs span": function(evt) {
-
-      if ( $(evt.currentTarget).hasClass('active') ) return false;
-
-      $('.postThumbs span').removeClass('active');
-
-      var src = $(evt.currentTarget).children('img').attr('src');
-
-      $(evt.currentTarget).addClass('active');
-
-      $('#postHero img.active').removeClass('active');
-
-      var x ='<img src="'+src+'">';
-
-      $('#postHero').append(x);
-
-      setTimeout(function(){
-        $('#postHero img').eq(0).remove();
-        $('#postHero img').addClass('active');
-      },300);
-
-    }
-  });
-
 }
 
 if (Meteor.isServer) {

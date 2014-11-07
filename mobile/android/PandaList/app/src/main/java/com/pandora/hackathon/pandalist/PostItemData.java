@@ -5,15 +5,57 @@ import java.io.Serializable;
 
 public class PostItemData implements Serializable {
 
-    private String mTitle;
-    private String mDescription;
-    private String mLocation;
-    private double mPrice;
-    private String mBitmapId;
-    private long mBitmapResId;
     private String mCategory;
     private String mSubcategory;
+    private String mLocation;
+    private String mTitle;
+    private String mDescription;
+    private String mDeliveryMethod;
+    private String mImageUrl;
+    private String mCreatedBy;
+    private String mCreationDate;
+    private boolean mIsPublished;
+    private String mPrice;
 
+    public void setDeliveryMethod(String method) {
+        this.mDeliveryMethod = method;
+    }
+
+    public String getDeliveryMethod() {
+        return mDeliveryMethod;
+    }
+
+    public void setImageUrl(String url) {
+        mImageUrl = url;
+    }
+
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.mCreatedBy = createdBy;
+    }
+
+    public String getCreatedBy() {
+        return mCreatedBy;
+    }
+
+    public void setCreationDate(String date) {
+        this.mCreationDate = date;
+    }
+
+    public String getCreationDate() {
+        return mCreationDate;
+    }
+
+    public void setIsPublished(boolean published) {
+        this.mIsPublished = published;
+    }
+
+    public boolean getIsPublished() {
+        return mIsPublished;
+    }
 
     public String getTitle() {
         return mTitle;
@@ -39,28 +81,12 @@ public class PostItemData implements Serializable {
         this.mLocation = mLocation;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return mPrice;
     }
 
-    public void setPrice(double mPrice) {
+    public void setPrice(String mPrice) {
         this.mPrice = mPrice;
-    }
-
-    public String getBitmapUrl() {
-        return mBitmapId;
-    }
-
-    public void setBitmapUrl(String mBitmapUrl) {
-        this.mBitmapId = mBitmapUrl;
-    }
-
-    public long getBitmapResId() {
-        return mBitmapResId;
-    }
-
-    public void setBitmapResId(long mBitmapResId) {
-        this.mBitmapResId = mBitmapResId;
     }
 
     public String getCategory() {

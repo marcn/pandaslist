@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -35,6 +36,7 @@ import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -558,7 +560,28 @@ public class DDPStateSingleton extends MeteorAuthCommands
         return email;
     }
 
+    public void sendRegistrationId(String regId) {
+        if (mUserId == null || TextUtils.isEmpty(regId)) {
+            Log.e(TAG, "Invalid user id or reg id.");
+            return;
+        }
+        Object[] methodArgs = new Object[1];
+        Map<String,Object> options = new HashMap<String,Object>();
+        methodArgs[0] = options;
+        options.put("userId", mUserId);
+        options.put("registrationId", regId);
+        mDDP.call("storeRegistrationId", methodArgs);
+    }
+
     public void call(String method) {
-        mDDP.call(method, new Object[]{});
+        call(method, new Object[]{});
+    }
+
+    public void call(String method, Object[] params) {
+        getDDP().call(method, params, null);
+    }
+
+    public void call(String method, Object[] params, DDPListener listener) {
+        getDDP().call(method, params, listener);
     }
 }

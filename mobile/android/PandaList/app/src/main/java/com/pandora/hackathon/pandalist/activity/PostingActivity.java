@@ -1,5 +1,6 @@
 package com.pandora.hackathon.pandalist.activity;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.aws.AWSUtils;
+import com.pandora.hackathon.pandalist.aws.TransferController;
 import com.pandora.hackathon.pandalist.fragment.PostingFragment;
 
 /**
@@ -60,6 +63,8 @@ public class PostingActivity extends BaseActivity {
                     //BitmapFactory.decodeFile(picturePath);
                     cursor.close();
 
+                    String filename = AWSUtils.getFileName();
+                    TransferController.upload(this, selectedImage, filename);
                 }
                 break;
             default:

@@ -4,12 +4,12 @@
    <div id="nav">
 
       <a class="btn" href="/create">Create A Post</a>
-    
 
-      <h2><a href="{{pathFor route='listings'}}?type=me">My Posts</a></h2>
-      <hr>
+      <h2 class="topLevel"><a href="{{pathFor route='listings'}}?type=me">My Posts</a></h2>
+      <hr class="topLevel">
+      <h2 class="topLevel"><a href="/">All Posts</a></h2>
+      <hr class="topLevel">
 
-      <!-- <h2>Most Recent</h2> -->
       {{#each categoryGroups}}
         {{> category}}
       {{/each}}

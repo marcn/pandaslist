@@ -24,15 +24,30 @@ if (Meteor.isServer) {
 
     'notifySubscribers': function(post){
       var category = post.category + "." + post.subcategory;
+      var currentUserId = post.createdBy;
       var usersToNotify=Subscriptions.findOne({category: category}, {fields: {userIds:1, _id:0}});
       console.log(usersToNotify);
+      if(usersToNotify==null){
+        return
+      }
       console.log("sending push notification to: "+usersToNotify.userIds);
       for(var i=0; i<usersToNotify.userIds.length; i++){
         var userId=usersToNotify.userIds[i];
-        var registrationId = Meteor.users.findOne({_id: userId},{fields: {pushToken:1, _id:0}}).pushToken;
+        if(currentUserId==userId){
+          continue;
+        }
+        var registrationId = Meteor.users.findOne({_id: userId},
+          {fields: {registrationId:1, _id:0}}).registrationId;
         console.log(userId+":"+registrationId);
         Meteor.call('sendPushNotification', registrationId);
       }
+    },
+
+    'storeRegistrationId': function(userId, registrationId) {
+      Meteor.users.update({_id:userId}, {_id:userId, registrationId:registrationId}, 
+            {upsert:true});
+      console.log('userId:' + userId + ' registrationId:'+registrationId);
+      return {"method":"storeRegistrationId", "data": {"userId": userId, "registrationId": registrationId}};
     }
   });
 }

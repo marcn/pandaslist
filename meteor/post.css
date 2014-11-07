@@ -105,20 +105,3 @@
   font-weight: bold;
 
 }
-
-
-/*============================================================
-  RESPONSIVE CSS
-============================================================*/
-
-@media screen and (max-width: 940px) {
-
-  .postThumbs span {
-    width: 32%;
-    padding-bottom: 22%;
-  }
-
-  .postThumbs span:nth-child(4n) {margin: 2% 2% 0 0; }
-  .postThumbs span:nth-child(3n) {margin: 0; }
-
-}

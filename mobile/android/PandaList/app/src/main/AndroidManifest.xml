@@ -50,7 +50,7 @@
             android:theme="@style/PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay"/>
 
         <activity android:name=".activity.PandaListActivity"
-            android:label="Login" >
+            android:label="PandaList" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

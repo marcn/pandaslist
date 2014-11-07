@@ -3,15 +3,12 @@ package com.pandora.hackathon.pandalist.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
@@ -32,9 +30,14 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostDetailActivity extends ActionBarActivity {
     ViewGroup rootView = null;
     EditText commentsEditText;
+    PostItemData postData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +55,16 @@ public class PostDetailActivity extends ActionBarActivity {
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
-            PostItemData item = (PostItemData) extras.get(PandasConstants.INTENT_DATA_POST_ITEM);
+            postData = (PostItemData) extras.get(PandasConstants.INTENT_DATA_POST_ITEM);
 
-            if (item != null) {
+            if (postData != null) {
                 setContentView(R.layout.activity_post_details);
 
                 final ImageView imageView = (ImageView) findViewById(R.id.post_imageview);
                 final RelativeLayout highlights = (RelativeLayout) findViewById(R.id.highlights);
 
                 Picasso.with(this).cancelRequest(imageView);
-                String url = item.getImageUrl();
+                String url = postData.getImageUrl();
                 if (url != null && url != "") {
 
                     try {
@@ -109,20 +112,20 @@ public class PostDetailActivity extends ActionBarActivity {
                 }
 
                 TextView title = (TextView) findViewById(R.id.post_title);
-                title.setText(item.getTitle());
+                title.setText(postData.getTitle());
 
                 TextView price = (TextView) findViewById(R.id.post_price);
-                price.setText(item.getPrice());
+                price.setText(postData.getPrice());
 
                 TextView location = (TextView) findViewById(R.id.post_location);
-                location.setText(item.getLocation());
+                location.setText(postData.getLocation());
 
                 TextView desc = (TextView) findViewById(R.id.post_description);
-                desc.setText(item.getDescription());
+                desc.setText(postData.getDescription());
 
                 commentsEditText = (EditText) findViewById(R.id.post_comments_edittext);
 
-                String category = item.getCategory();
+                String category = postData.getCategory();
                 if (category != null) {
                     final Button button = (Button) findViewById(R.id.post_button);
                     if (category.equals("Bid")) {
@@ -132,12 +135,14 @@ public class PostDetailActivity extends ActionBarActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            submitResponse();
+                            if(commentsEditText.getText().length() > 0) {
+                                submitResponse();
 
-                            Toast.makeText(PostDetailActivity.this, "Your response has been submitted!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(PostDetailActivity.this, "Your response has been submitted!", Toast.LENGTH_LONG).show();
 
-                            button.setVisibility(View.GONE);
-                            commentsEditText.setVisibility(View.GONE);
+                                button.setVisibility(View.GONE);
+                                commentsEditText.setVisibility(View.GONE);
+                            }
                         }
                     });
                 }
@@ -160,10 +165,18 @@ public class PostDetailActivity extends ActionBarActivity {
     }
 
     private void submitResponse() {
-        //TODO use real data and post to backend
+        Object[] params = new Object[1];
+        Map<String,Object> options = new HashMap<String,Object>();
+        params[0] = options;
+        options.put("text", commentsEditText.getText().toString());
+        options.put("sender", "1");
+        options.put("post", postData.getId());
+        options.put("creationDate", System.currentTimeMillis());
+        options.put("isInterested", false);
+
+        PandaListApplication.getDDP().call("/comments/insert", params);
 
         updateUI(null);
-
     }
 
     private void updateUI(String commentFromEvent) {

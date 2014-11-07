@@ -151,18 +151,22 @@ public class PostDetailActivity extends ActionBarActivity {
     public void onDataChangeEvent(DataChangeEvent event) {
         if (event != null) {
             if (event.subscriptionName.equals("comments")) {
-                //TODO
+                //TODO pass real comment
 
+                updateUI(null);
                 //handle comments and add comment
             }
         }
     }
 
     private void submitResponse() {
-        submitResponse(null);
+        //TODO use real data and post to backend
+
+        updateUI(null);
+
     }
 
-    private void submitResponse(String commentFromEvent) {
+    private void updateUI(String commentFromEvent) {
         String actualComment = null;
         if (commentFromEvent != null && !commentFromEvent.equals("")) {
             actualComment = commentFromEvent;
@@ -172,7 +176,6 @@ public class PostDetailActivity extends ActionBarActivity {
             LayoutInflater inflater = getLayoutInflater();
             LinearLayout commentLayout = (LinearLayout) inflater.inflate(R.layout.activity_post_comment_layout, null);
 
-            //TODO use real data
             TextView timeStampView = (TextView) commentLayout.findViewById(R.id.post_comment_timestamp);
             timeStampView.setText("2 hours ago");
 
@@ -186,6 +189,7 @@ public class PostDetailActivity extends ActionBarActivity {
 
             ViewGroup commentContainer = (ViewGroup) rootView.findViewById(R.id.post_detail_comments_container);
             commentContainer.addView(commentLayout);
+            rootView.invalidate();
         }
     }
 }

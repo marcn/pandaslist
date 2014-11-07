@@ -87,7 +87,7 @@ if (Meteor.isClient) {
 		},
 		"posterName": function() {
 			if (this.createdBy) {
-				return Meteor.users.findOne(this.createdBy).profile.name;
+				return getDisplayName(Meteor.users.findOne(this.createdBy));
 			}
 		},
 		"ownPost": function() {
@@ -103,7 +103,7 @@ if (Meteor.isClient) {
 			return Comments.find({ post: Template.currentData()._id }, { sort: {creationDate: 1}});
 		},
 		"commenter": function() {
-			return Meteor.users.findOne(this.sender).profile.name;
+			return getDisplayName(Meteor.users.findOne(this.sender));
 		},
 		"commentDate": function() {
 			//return moment(this.creationDate).fromNow();

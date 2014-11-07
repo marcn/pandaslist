@@ -58,14 +58,14 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
             Picasso.with(holder.image.getContext()).load(url).into(new Target() {
 
                 @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                     Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
                         @Override
                         public void onGenerated(Palette palette) {
 
-                            int color = palette.getLightMutedColor(Color.parseColor("#22224099"));
+                            int color = palette.getLightMutedColor(Color.parseColor("#22915a7a"));
                             int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
-
+                            holder.image.setImageBitmap(bitmap);
                             holder.detailContainer.setBackgroundColor(colorAlpha);
                         }
                     });

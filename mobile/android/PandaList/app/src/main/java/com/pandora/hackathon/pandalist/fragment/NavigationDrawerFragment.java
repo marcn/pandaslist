@@ -110,6 +110,8 @@ public class NavigationDrawerFragment extends BaseFragment {
         setHasOptionsMenu(true);
     }
 
+    private View selectedChildListView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -129,6 +131,15 @@ public class NavigationDrawerFragment extends BaseFragment {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 selectItem(groupPosition, childPosition);
+
+                //selected state
+                v.setSelected(true);
+                if (selectedChildListView != null) {
+                    selectedChildListView.setBackground(v.getBackground());
+                }
+                selectedChildListView = v;
+                selectedChildListView.setBackgroundColor(getActivity().getResources().getColor(R.color.violet_light));
+
                 return false;
             }
         });
@@ -365,6 +376,9 @@ public class NavigationDrawerFragment extends BaseFragment {
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = infalInflater.inflate(R.layout.category_sub_list_item, null);
             }
+
+            View childContainer = convertView.findViewById(R.id.subcategory_container);
+
 
             TextView txtListChild = (TextView) convertView.findViewById(R.id.subcategory_item);
 

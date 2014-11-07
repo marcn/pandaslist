@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -35,6 +36,7 @@ import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -78,12 +80,12 @@ public class DDPStateSingleton extends MeteorAuthCommands
      * connection info for your Meteor server
      * Override to point to your server
      */
-    protected static final String sMeteorServer = "10.0.3.2";
+    protected static final String sMeteorServer = "pandaslist.meteor.com";
     /**
      * connection info for your Meteor server
      * Override to point to your server's port
      */
-    protected static final Integer sMeteorPort = 3000;   
+    protected static final Integer sMeteorPort = 80;
     private final Handler mHandler;
     /** reference to lower level DDP websocket client */
     protected DDPClient mDDP;
@@ -556,6 +558,19 @@ public class DDPStateSingleton extends MeteorAuthCommands
             }
         }
         return email;
+    }
+
+    public void sendRegistrationId(String regId) {
+        if (mUserId == null || TextUtils.isEmpty(regId)) {
+            Log.e(TAG, "Invalid user id or reg id.");
+            return;
+        }
+        Object[] methodArgs = new Object[1];
+        Map<String,Object> options = new HashMap<String,Object>();
+        methodArgs[0] = options;
+        options.put("userId", mUserId);
+        options.put("registrationId", regId);
+        mDDP.call("storeRegistrationId", methodArgs);
     }
 
     public void call(String method) {

@@ -2,17 +2,18 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
-    android:background="#e0e0e0"
+    android:background="#000"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent"
     android:padding="16dp">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/default_albumart"/>
+        android:src="@drawable/login"/>
 
     <EditText
         android:id="@+id/email"
@@ -22,6 +23,8 @@
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:singleLine="true" />
 
     <EditText
@@ -33,8 +36,11 @@
         android:imeActionId="@+id/login"
         android:imeActionLabel="@string/text_sign_in"
         android:imeOptions="actionUnspecified"
+        android:textColorHint="@color/white"
         android:inputType="textPassword"
         android:maxLines="1"
+        android:textColor="@color/white"
+
         android:singleLine="true" />
 
     <LinearLayout
@@ -52,7 +58,7 @@
             android:layout_gravity="center_horizontal"
             style="?android:attr/selectableItemBackground"
             android:textColor="@color/white"
-            android:background="#00adee"
+            android:background="@drawable/hollow_button"
 
             android:text="@string/text_sign_in" />
 
@@ -63,7 +69,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/sign_in_button"
-            android:background="#00adee"
+            android:background="@drawable/hollow_button"
             android:padding="8dip"
             style="?android:attr/selectableItemBackground"
             android:textColor="@color/white"

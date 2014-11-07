@@ -260,7 +260,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             }
         }
 
-        Handler h = new Handler();
+    /*    Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -272,7 +272,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                     }
                 }
             }
-        }, 7000);
+        }, 7000);*/
 
         myRecyclerAdapter.setItems(mListItems);
         myRecyclerAdapter.notifyDataSetChanged();
@@ -291,7 +291,6 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     List<PostItemData> mListItems = new ArrayList<PostItemData>();
 
 
-        didGetDataEvent = true;
 
     private PostItemData createPostItem(Map<String, Object> post) {
         PostItemData item = null;

@@ -7,16 +7,11 @@
   height: 6rem;
 }
 
-  #header > * {
-    display: table-cell;
-    vertical-align: middle;
-    height: 100%;
-  }
-
-
   #headerLogo {
     width: 26rem;
     text-align: center;
+    display: table-cell;
+    vertical-align: middle;
   }
 
   #headerLogo img {
@@ -25,17 +20,46 @@
 
   }
 
-  #headerSearch input {
-    border-radius: 5px;
+  #headerSearch {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
   }
+
+  #headerSearch input {
+    border-radius: 1rem;
+    width: 40%;
+    max-width: 50rem;
+    padding-left: 3rem;
+    background-image: url(../img/search.png);
+    background-size: auto 80%;
+    background-position: center left;
+    background-repeat: no-repeat;
+  }
+
 
   #headerAdmin {
     text-align: right;
     padding-right: 4rem;
+
+    width: 200px;
     color: #fff;
     font-size: 1.3rem;
     background-color: #224099;
-    position: relative;
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
+  }
+
+  #headerAdmin .name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 6rem;
   }
 
     #headerAdmin a {
@@ -79,7 +103,7 @@
     padding: 1rem 2rem;
     font-size: 1.5rem;
     text-align: right;
-    min-width: 15rem;
+    width: 160px;
     cursor: pointer;
     display: block;
     position: relative;

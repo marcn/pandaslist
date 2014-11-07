@@ -7,7 +7,7 @@ if (Meteor.isClient) {
 			if(this.subcategory && this.subcategory !== "All")
 				filter.subcategory = this.subcategory;
 			if(this.type === "me")
-				filter.createdBy = Meteor.user()._id;
+				filter.createdBy = Meteor.userId;
 			if(this.search) {
 				var reg = new RegExp(this.search,"gi");
 				filter = { $or: [{ title: reg }, { description: reg }, { location: reg } ] };
@@ -38,9 +38,14 @@ if (Meteor.isClient) {
 		}
 	});
 
-	var highlight = function(text, searchTerm) {
+	var highlight = function(text, searchTerm, alwaysReturn) {
     	var reg = new RegExp(searchTerm,"i");
-		var index = reg.exec(text).index;
+		var res = reg.exec(text);
+
+		if(!res)
+			return text.substring(0, 200);
+
+		var index = res.index;
 		var startIndex = index - 100;
 		if(startIndex < 0) {
 			startIndex = 0;

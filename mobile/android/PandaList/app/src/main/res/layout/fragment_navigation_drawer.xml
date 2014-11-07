@@ -6,16 +6,16 @@
 
     <RelativeLayout
         android:id="@+id/profile_view"
-        android:backgroundTint="@color/abc_background_cache_hint_selector_material_light"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/bg_bamboo"
+        android:layout_height="wrap_content"
+
+        android:backgroundTintMode="multiply"
+        android:background="@color/violet_light"
         android:padding="8dp">
 
 
         <com.pandora.hackathon.pandalist.ui.BezelImageView
             android:id="@+id/profile_image"
-            android:layout_marginLeft="2dp"
             android:layout_width="@dimen/navdrawer_profile_image_size"
             android:layout_height="@dimen/navdrawer_profile_image_size"
             android:scaleType="centerCrop"
@@ -24,17 +24,12 @@
 
         <TextView
             android:id="@+id/profile_name"
-            android:layout_marginTop="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:layout_above="@+id/profile_email"
-            android:text="Rajat D."
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/profile_image"
+            android:text="Jennifer Dough"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        />
 
 
         <TextView
@@ -42,11 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/profile_image"
-            android:text="rdxit@pandora.com"
-            android:textColor="#ffffff"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-        />
+            android:layout_below="@+id/profile_name"
+            android:text="jmendez@pandora.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </RelativeLayout>
 
@@ -59,7 +52,6 @@
         android:choiceMode="singleChoice"
         android:divider="@color/violet"
         android:dividerHeight="0dp"
-        android:layout_above="@+id/settings"
         tools:context=".NavigationDrawerFragment" />
 
 
@@ -75,6 +67,5 @@
         android:gravity="center_vertical"
         android:drawableLeft="@drawable/ic_settings"
         android:drawablePadding="10dp"
-        android:id="@id/settings"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView"/>
 </RelativeLayout>

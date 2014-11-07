@@ -9,7 +9,9 @@
       <img src="/img/logo.png">
     </a>
 
-    {{> search}}
+    <div id="headerSearch">
+      <input type="text">
+    </div>
 
     <div id="headerAdmin">
       <div class="name">{{ currentUser.profile.name }}</div>
@@ -20,6 +22,7 @@
     </div>
   </div>
 
+  <!--nav bar-->
   {{> categories}}
 
   <div class="wrapper">

@@ -17,7 +17,6 @@ import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,20 +125,6 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
                 options.put("delivery_method", mDeliverySpinner.getSelectedItem().toString());
                 options.put("user_id", "dfsdf");
 
-                PostingActivity activity = (PostingActivity) getActivity();
-                String imgId = activity.getUploadedImageId();
-                String url = activity.getUploadedImageUrl();
-
-                ArrayList<Map<String, Object>> photos = new ArrayList<Map<String, Object>>();
-                Map<String, Object> photo = new HashMap<String, Object>();
-                photo.put("id", imgId);
-                photo.put("url", url);
-                photos.add(photo);
-                options.put("photos", photos);
-
-                options.put("coverPhoto", imgId);
-                options.put("coverPhotoUrl", url);
-
                 PandaListApplication.getDDP().call("/posts/insert", params, new DDPListener() {
                     @Override
                     public void onResult(Map<String, Object> jsonFields) {
@@ -151,8 +136,6 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
                     }
 
                 });
-
-                getActivity().finish();
             }
         }
     }

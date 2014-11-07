@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,16 +33,6 @@ public class BaseActivity  extends ActionBarActivity implements ListingsFragment
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
-
-    protected void onCreate(android.os.Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setIcon(R.drawable.ic_launcher);
-
-        }
     }
 
     @Override

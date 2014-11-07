@@ -85,15 +85,11 @@ if (Meteor.isClient) {
 		"moreThanOnePhoto": function() {
 			return this.photos.length > 1;
 		},
-		"posterName": function() {
-			if (this.createdBy) {
-				return Meteor.users.findOne(this.createdBy).profile.name;
-			}
-		},
 		"ownPost": function() {
 			return this.createdBy == Meteor.userId();
 		},
 		"isExistingPost": function() {
+			console.log("isExistingPost: ", Template.currentData());
 			return Template.currentData()._id;
 		},
 		"defaultCommentText": function() {

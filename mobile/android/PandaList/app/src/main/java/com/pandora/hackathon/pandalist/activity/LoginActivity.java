@@ -33,9 +33,12 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.model.people.Person;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.aws.Constants;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Activity which displays a login screen to the user
@@ -58,19 +61,22 @@ public class LoginActivity extends BaseActivity implements
     private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
     private static  final String PREF_USERNAME = "pref.username";
+    private static  final String PREF_ID = "pref.id";
+    private static  final String PREF_PANDA_ID = "pref.pandauser.id";
     private static  final String PREF_DISPLAY_NAME = "pref.displayname";
     private static  final String PREF_FIRST_NAME = "pref.displayname";
     private static  final String PREF_LAST_NAME = "pref.displayname";
     private static  final String PREF_IMAGE_URL = "pref.imageurl";
     private static  final String PREF_AUTH_TOKEN = "pref.token";
+    private static  final String PREF_USER_ID = "pref.user.id";
 
     /**
      * broadcast receiver for DDP events
      */
     private BroadcastReceiver mReceiver;
 
-    private String mEmail;
-    private String mDisplayName;
+    private String mEmail = "jmendez@pandora.com";
+    private String mDisplayName = "Jennifer Mendez";
     private String mImageUrl;
     private String mPassword;
 
@@ -90,10 +96,8 @@ public class LoginActivity extends BaseActivity implements
 
         setContentView(R.layout.activity_login);
 
-        getSupportActionBar().hide();
-
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        mEmail = prefs.getString(PREF_USERNAME, "");
+//        mEmail = prefs.getString(PREF_USERNAME, "");
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
@@ -231,6 +235,7 @@ public class LoginActivity extends BaseActivity implements
             getUsername();
         } else if (requestCode == REQUEST_CODE_SIGN_IN
                 || requestCode == REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES) {
+
             if (resultCode == RESULT_OK && !mPlusClient.isConnected()
                     && !mPlusClient.isConnecting()) {
                 // This time, connect should succeed.
@@ -245,8 +250,8 @@ public class LoginActivity extends BaseActivity implements
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        mEmail = mEmailView.getText().toString();
-        mPassword = mPasswordView.getText().toString();
+//        mEmail = mEmailView.getText().toString();
+//        mPassword = mPasswordView.getText().toString();
 
         View focusView = null;
         // Check for a valid password.
@@ -279,21 +284,44 @@ public class LoginActivity extends BaseActivity implements
         if (mEmail != null && mEmail.length() > 0) {
             SharedPreferences prefs = getPreferences(MODE_PRIVATE);
             String token = prefs.getString(PREF_AUTH_TOKEN, "");
-            if(token != null && token.length() > 0) {
-                // We have a saved token, try to login
+            String userId = prefs.getString(PREF_PANDA_ID, "");
 
-//                Object[] params = new Object[1];
-//                Map<String,Object> options = new HashMap<String, Object>();
-//                params[0] = options;
-//                options.put("email", mEmail);
-//                options.put("accessToken", token);
+//            if(token != null && token.length() > 0) {
+//                // We have a saved token, try to login
 //
-//                MyDDPState.getInstance().call("login", params);
-                loginSuccessNavigateToMainActivity();
-            } else {
-                // Fetch new token and login
-                new GetTokenTask(mEmail, SCOPE).execute();
-            }
+////                Object[] params = new Object[1];
+////
+////                Map<String,Object> options = new HashMap<String, Object>();
+////                options.put("email", mEmail);
+////                options.put("accessToken", token);
+////                options.put("id", prefs.getString(PREF_ID, ""));
+////                options.put("family_name", prefs.getString(PREF_LAST_NAME, ""));
+////                options.put("given_name", prefs.getString(PREF_FIRST_NAME, ""));
+////                options.put("name", prefs.getString(PREF_DISPLAY_NAME, ""));
+////                options.put("picture", prefs.getString(PREF_IMAGE_URL, ""));
+////                options.put("verified_email", true);
+//
+//
+//                mDisplayName = prefs.getString(PREF_DISPLAY_NAME, "");
+//                mImageUrl = prefs.getString(PREF_IMAGE_URL, "");
+//
+////                params[0] = options;
+//
+////                MyDDPState.getInstance().call("uploadImage", params);
+//
+//                SharedPreferences.Editor editor = prefs.edit();
+//                //Enter Panda Id here
+//                editor.putString(PREF_PANDA_ID, "");
+//
+//                loginSuccessNavigateToMainActivity();
+//            } else {
+//                // Fetch new token and login
+//                new GetTokenTask(mEmail, SCOPE).execute();
+//            }
+
+            Constants.setPandaListUserId("cMufLYoHK4TxRoQZN");
+
+            loginSuccessNavigateToMainActivity();
         } else {
             int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
             if (available != ConnectionResult.SUCCESS) {
@@ -312,8 +340,8 @@ public class LoginActivity extends BaseActivity implements
 
     private void loginSuccessNavigateToMainActivity() {
         Intent intent = new Intent(LoginActivity.this, PandaListActivity.class);
-        intent.putExtra("name", mDisplayName);
-        intent.putExtra("email", mEmail);
+        intent.putExtra("name", "Jennifer Mendez");
+        intent.putExtra("email", "jmendez@pandora.com");
         intent.putExtra("image", mImageUrl);
         startActivity(intent);
         finish();
@@ -379,26 +407,28 @@ public class LoginActivity extends BaseActivity implements
     public void onConnected(Bundle bundle) {
         Person currentPerson = mPlusClient.getCurrentPerson();
 
-        if(currentPerson != null) {
-            Log.d(TAG, "Logged in as : " + currentPerson.getDisplayName());
-
-            mEmail = mPlusClient.getAccountName();
-            mDisplayName = currentPerson.getDisplayName();
-
-            Person.Image image = currentPerson.getImage();
-            mImageUrl = (image == null) ? "" : image.getUrl();
-
-            // Save email to preferences
-            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-            editor.putString(PREF_USERNAME, mEmail);
-            editor.putString(PREF_DISPLAY_NAME, currentPerson.getDisplayName());
-            editor.putString(PREF_FIRST_NAME, currentPerson.getName().getGivenName());
-            editor.putString(PREF_LAST_NAME, currentPerson.getName().getFamilyName());
-            editor.putString(PREF_IMAGE_URL, mImageUrl);
-            editor.commit();
-            // With the account name acquired, go get the auth token
-            getUsername();
-        }
+//        if(currentPerson != null) {
+//            Log.d(TAG, "Logged in as : " + currentPerson.getDisplayName());
+//
+//            mEmail = mPlusClient.getAccountName();
+//            mDisplayName = currentPerson.getDisplayName();
+//
+//
+//            Person.Image image = currentPerson.getImage();
+//            mImageUrl = (image == null) ? "" : image.getUrl();
+//
+//            // Save email to preferences
+//            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+//            editor.putString(PREF_ID, currentPerson.getId());
+//            editor.putString(PREF_USERNAME, mEmail);
+//            editor.putString(PREF_DISPLAY_NAME, currentPerson.getDisplayName());
+//            editor.putString(PREF_FIRST_NAME, currentPerson.getName().getGivenName());
+//            editor.putString(PREF_LAST_NAME, currentPerson.getName().getFamilyName());
+//            editor.putString(PREF_IMAGE_URL, mImageUrl);
+//            editor.commit();
+//            // With the account name acquired, go get the auth token
+//            getUsername();
+//        }
     }
 
     @Override
@@ -460,7 +490,7 @@ public class LoginActivity extends BaseActivity implements
          */
         protected String fetchToken() throws IOException {
             try {
-                return GoogleAuthUtil.getToken(LoginActivity.this, mEmail, mScope);
+                return GoogleAuthUtil.getToken(LoginActivity.this, "pinheadhr@gmail.com", mScope);
             } catch (UserRecoverableAuthException userRecoverableException) {
                 // GooglePlayServices.apk is either old, disabled, or not present
                 // so we need to show the user some UI in the activity to recover.
@@ -473,4 +503,7 @@ public class LoginActivity extends BaseActivity implements
             return null;
         }
     }
+
+
+
 }

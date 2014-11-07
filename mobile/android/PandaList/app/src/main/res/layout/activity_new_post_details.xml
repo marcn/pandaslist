@@ -22,22 +22,69 @@
                 android:id="@+id/session_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/ic_launcher"
                 android:scaleType="centerCrop" />
+
         </FrameLayout>
 
-
-        <LinearLayout android:id="@+id/details_container"
-            android:orientation="vertical"
+        <LinearLayout
+            android:id="@+id/details_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:paddingTop="16dp"
-            android:paddingRight="4dp"
-            android:paddingBottom="@dimen/session_details_extra_space_bottom"
-            android:clipToPadding="false">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/sofa"
+                android:contentDescription="@string/cd_post_image" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Sample Title Goes Here"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/post_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price: $599"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/post_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location: OAK"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/post_newline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\n"
+                android:ellipsize="end"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here."/>
+
+            <Button
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:text="Purchase" />
 
         </LinearLayout>
+
 
         <!-- Title/subtitle bar (floating; position determined at run time as the content view scrolls) -->
         <LinearLayout
@@ -51,11 +98,13 @@
 
             <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:iosched="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/my_awesome_toolbar"
+                iosched:theme="@style/ActionBarThemeOverlay"
+                iosched:popupTheme="@style/ActionBarPopupThemeOverlay"
+                android:id="@+id/toolbar_actionbar"
                 android:background="@null"
-                iosched:titleTextAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView"
+                iosched:titleTextAppearance="@style/ActionBar.TitleText"
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="?actionBarSize" />
 
             <!-- Session title -->
             <TextView android:layout_height="wrap_content"
@@ -69,26 +118,21 @@
                 android:ellipsize="end"
                 android:textSize="@dimen/text_size_large"
                 android:lineSpacingMultiplier="1.1"
-                />
+                android:textColor="@color/body_text_1_inverse" />
 
             <!-- Session subtitle -->
             <TextView android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="@dimen/keyline_2_session_detail"
                 android:layout_marginRight="@dimen/keyline_1"
-                android:text="Subtitle"
+                android:text="Cateogory"
                 android:id="@+id/session_subtitle"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textSize="16sp"
-                android:textColor="@color/medium_grey"
-                />
+                android:textColor="@color/body_text_2_inverse" />
 
         </LinearLayout>
-
-        <include layout="@layout/activity_post_details" />
-
-        <!-- FAB -->
 
     </FrameLayout>
 

@@ -1,7 +1,12 @@
 package com.pandora.hackathon.pandalist.activity;
 
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,9 +139,21 @@ public class NewPostDetailActivity extends BaseActivity implements ObservableScr
         setContentView(R.layout.activity_new_post_details);
         setTitle(null);
 
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_awesome_toolbar);
-        setSupportActionBar(toolbar);
-
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        toolbar.setNavigationIcon(true
+                ? R.drawable.ic_ab_close : R.drawable.ic_up);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                toolbar.setTitle("");
+            }
+        });
         mFABElevation = getResources().getDimensionPixelSize(R.dimen.fab_elevation);
         mMaxHeaderElevation = getResources().getDimensionPixelSize(
                 R.dimen.post_max_header_elevation);
@@ -170,7 +187,57 @@ public class NewPostDetailActivity extends BaseActivity implements ObservableScr
 
     @Override
     public void onScrollChanged(int deltaX, int deltaY) {
-        //TODO
+        // Reposition the header bar -- it's normally anchored to the top of the content,
+        // but locks to the top of the screen on scroll
+        int scrollY = mScrollView.getScrollY();
+
+        float newTop = Math.max(mPhotoHeightPixels, scrollY);
+        mHeaderBox.setTranslationY(newTop);
+        if (mAddScheduleButton != null) {
+            mAddScheduleButton.setTranslationY(newTop + mHeaderHeightPixels
+                    - mAddScheduleButtonHeightPixels / 2);
+        }
+
+        float gapFillProgress = 1;
+        if (mPhotoHeightPixels != 0) {
+            gapFillProgress = Math.min(Math.max(getProgress(scrollY,
+                    0,
+                    mPhotoHeightPixels), 0), 1);
+        }
+
+        ViewCompat.setElevation(mHeaderBox, gapFillProgress * mMaxHeaderElevation);
+        ViewCompat.setElevation(mAddScheduleButton, gapFillProgress * mMaxHeaderElevation
+                + mFABElevation);
+
+        // Move background photo (parallax effect)
+        mPhotoViewContainer.setTranslationY(scrollY * 0.5f);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updatePlusOneButton();
+        if (mTimeHintUpdaterRunnable != null) {
+            mHandler.postDelayed(mTimeHintUpdaterRunnable, TIME_HINT_UPDATE_INTERVAL);
+        }
+    }
+
+    private void updatePlusOneButton() {
+        if (mPlusOneButton == null) {
+            return;
+        }
+
+        if (!TextUtils.isEmpty(mUrl) && !mIsKeynote) {
+            mPlusOneButton.initialize(mUrl, 0);
+            mPlusOneButton.setVisibility(View.VISIBLE);
+        } else {
+            mPlusOneButton.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     private void recomputePhotoAndScrollingMetrics() {
@@ -197,5 +264,26 @@ public class NewPostDetailActivity extends BaseActivity implements ObservableScr
         }
 
         onScrollChanged(0, 0); // trigger scroll handling
+    }
+
+    public static float getProgress(int value, int min, int max) {
+        if (min == max) {
+            throw new IllegalArgumentException("Max (" + max + ") cannot equal min (" + min + ")");
+        }
+
+        return (value - min) / (float) (max - min);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mScrollView == null) {
+            return;
+        }
+
+        ViewTreeObserver vto = mScrollView.getViewTreeObserver();
+        if (vto.isAlive()) {
+            vto.removeGlobalOnLayoutListener(mGlobalLayoutListener);
+        }
     }
 }

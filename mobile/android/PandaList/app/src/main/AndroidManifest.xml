@@ -19,6 +19,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:debuggable="true"
         android:theme="@style/PandasAppTheme"
         android:name=".PandaListApplication">
         <receiver
@@ -51,7 +52,7 @@
 
         <activity android:name=".activity.PostDetailActivity"
             android:label="@string/post_detail"
-            android:theme="@style/PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay"/>
+            android:theme="@style/Theme.IOSched.SessionDetails"/>
 
         <activity android:name=".activity.LoginActivity"
             android:label="Login" >

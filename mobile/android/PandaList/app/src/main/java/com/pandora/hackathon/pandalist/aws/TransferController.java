@@ -22,6 +22,14 @@ public class TransferController {
         context.startService(intent);
     }
 
+    public static void upload(Context context, String absolutePath, String filename) {
+        Intent intent = new Intent(context, NetworkService.class);
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra("absolutePath", absolutePath);
+        intent.putExtra("filename", filename);
+        context.startService(intent);
+    }
+
     public static void download(Context context, String[] keys) {
         Intent intent = new Intent(context, NetworkService.class);
         intent.setAction(Intent.ACTION_GET_CONTENT);

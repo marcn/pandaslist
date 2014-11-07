@@ -28,6 +28,7 @@ import com.amazonaws.mobileconnectors.s3.transfermanager.Transfer;
 import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
 import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
 import com.amazonaws.mobileconnectors.s3.transfermanager.exception.PauseException;
+import com.pandora.hackathon.pandalist.PandaListApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,6 +55,28 @@ public class UploadModel extends TransferModel {
     private Status mStatus;
     private File mFile;
     private String mExtension;
+
+    public UploadModel(Context context, String absolutePath, String filename, TransferManager manager) {
+        super(context, absolutePath, filename, manager);
+        mStatus = Status.IN_PROGRESS;
+        mExtension = "jpeg";
+        mFile = new File(absolutePath);
+
+        mListener = new ProgressListener() {
+            @Override
+            public void progressChanged(ProgressEvent event) {
+                if (event.getEventCode() == ProgressEvent.COMPLETED_EVENT_CODE) {
+                    mStatus = Status.COMPLETED;
+                    if (mFile != null) {
+                        mFile.delete();
+                    }
+
+                    String name = getFileName() + "." + mExtension;
+                    PandaListApplication.getDDP().call("uploadImage", new Object[] {name});
+                }
+            }
+        };
+    }
 
     public UploadModel(Context context, Uri uri, String filename, TransferManager manager) {
         super(context, uri, filename, manager);

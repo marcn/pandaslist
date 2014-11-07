@@ -73,7 +73,7 @@ if (Meteor.isClient) {
 			});
 		});
 		post['photos'] = photos;
-		post['createdBy'] = Meteor.user()._id;
+		post['createdBy'] = Meteor.userId();
 		post['creationDate'] = new Date().getTime();
 		post['published'] = true;
 		console.log(post);

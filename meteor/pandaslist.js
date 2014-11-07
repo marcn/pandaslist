@@ -35,12 +35,10 @@ Images = new Mongo.Collection('images');
 
 if (Meteor.isServer) {
   Meteor.methods({
-    "uploadImage": function(image_url) {
-      var image_id = Images.insert({
-					url: image_url
-				});
-      
-      return {"method":"uploadImage", "data": {"image_id": image_id}};
+    "uploadImage": function(imageName) {
+    	var url = "http://pandaslist.s3.amazonaws.com/images/" + imageName;
+    	var entry = Images.insert({"url": url});
+    	return {"method":"uploadImage", "data": {"imageId": enetry._id}};
     }
   });
 }

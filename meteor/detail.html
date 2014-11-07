@@ -1,56 +1,60 @@
 <template name="detail">
 
-  <a href="{{pathFor route='listings'}}">Back to Listings</a>
-  <div id="post">
+	<a href="{{pathFor route='listings'}}">Back to Listings</a>
+	<div id="post">
 
-    {{#if isPreview}}
-    <div>PREVIEW</div>
-    {{/if}}
+		{{#if isPreview}}
+		<div>PREVIEW</div>
+		{{/if}}
 
-    <h2>{{title}}</h2>
+		<h2>{{title}}</h2>
 
-    {{#if price}}
-      <p class="price">{{price}}</p>
-    {{/if}}
-    <p class="location">{{location}}</p>
-
-
-    {{#if photos}}
-    <div id="postGallery">
-      <div id="postHero">
-        <img class="active" src="{{coverPhotoUrl}}">
-      </div>
-      {{#if moreThanOnePhoto}}
-      <div class="postThumbs">
-        {{#each photos}}
-        <span><img src="{{url}}"></span>
-        {{/each}}
-      </div>
-      {{/if}}
-    </div>
-    {{/if}}
-
-    <p class="description">{{description}}</p>
-
-    <div style="text-align:center">
-      {{#if isPreview}}
-        <button class="btn edit">Edit</button>
-        <button class="btn post">Post</button>
-      {{else}}
-        <button class="btn purchse">Contact</button>
-      {{/if}}
-    </div>
+		{{#if price}}
+			<p class="price">{{price}}</p>
+		{{/if}}
+		<p class="location">{{location}}</p>
 
 
-    <div class="postComments">
-      <ul>
-        <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
-        <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike?</li>
-        <li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
-      </ul>
-    </div>
+		{{#if photos}}
+		<div id="postGallery">
+			<div id="postHero">
+				<img class="active" src="{{coverPhotoUrl}}">
+			</div>
+			{{#if moreThanOnePhoto}}
+			<div class="postThumbs">
+				{{#each photos}}
+				<span><img src="{{url}}"></span>
+				{{/each}}
+			</div>
+			{{/if}}
+		</div>
+		{{/if}}
+
+		<p class="description">{{description}}</p>
+
+		<div style="text-align:center">
+			{{#if ownPost}}
+				<button class="btn edit">Edit</button>
+				{{#if isPreview}}
+					<button class="btn post">Post</button>
+				{{else}}
+					<button class="btn delete">Delete</button>
+				{{/if}}
+			{{else}}
+				<button class="btn contact">Contact</button>
+			{{/if}}
+		</div>
 
 
-  </div>
+		<div class="postComments">
+			<ul>
+				<li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
+				<li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike? Would it be possible to ship the bike?</li>
+				<li><span>Mike Dorsey</span> said, 10/31/14 : Would it be possible to ship the bike?</li>
+			</ul>
+		</div>
+
+
+	</div>
 
 </template>

@@ -8,6 +8,10 @@
 <template name="subscriptions">
 	<form>
 		<input type="submit" class="btn" value="Save"/>
+
+		<label for="push">Receive Push Notifications</label><input name="notification-push" id="notification-push" type="checkbox" />
+		<label for="email">Receive Email Notifications</label><input name="notification-email" id="notification-email" type="checkbox" />
+
 		{{#each categories}}
 	      <h2 class="subSettingsHeader">{{name}}</h2>
 

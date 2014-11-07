@@ -73,3 +73,13 @@ if (Meteor.isServer) {
     }
   });
 }
+
+getDisplayName = function(user) {
+  if (user) {
+    if (user.profile) {
+      return user.profile.name;
+    } else if (user.emails && user.emails.length > 0) {
+      return user.emails[0].address;
+    }
+  }
+}

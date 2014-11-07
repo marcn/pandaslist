@@ -85,11 +85,15 @@ if (Meteor.isClient) {
 		"moreThanOnePhoto": function() {
 			return this.photos.length > 1;
 		},
+		"posterName": function() {
+			if (this.createdBy) {
+				return getDisplayName(Meteor.users.findOne(this.createdBy));
+			}
+		},
 		"ownPost": function() {
 			return this.createdBy == Meteor.userId();
 		},
 		"isExistingPost": function() {
-			console.log("isExistingPost: ", Template.currentData());
 			return Template.currentData()._id;
 		},
 		"defaultCommentText": function() {
@@ -99,7 +103,7 @@ if (Meteor.isClient) {
 			return Comments.find({ post: Template.currentData()._id }, { sort: {creationDate: 1}});
 		},
 		"commenter": function() {
-			return Meteor.users.findOne(this.sender).profile.name;
+			return getDisplayName(Meteor.users.findOne(this.sender));
 		},
 		"commentDate": function() {
 			//return moment(this.creationDate).fromNow();

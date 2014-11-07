@@ -82,7 +82,8 @@ Router.map(function() {
            var requestMethod = this.request.method;
            var userId = this.request.query.userId;
            var registrationId = this.request.query.registrationId;
-           Meteor.users.update({_id:userId}, {_id:userId, registrationId:registrationId}, {upsert:true});
+           Meteor.users.update({_id:userId}, {_id:userId, registrationId:registrationId}, 
+           	{upsert:true});
            this.response.writeHead(200, {'Content-Type': 'text/html'});
            this.response.end('<html><body>Your userId:' + userId + ' and registrationId:'
            	+registrationId+'</body></html>');

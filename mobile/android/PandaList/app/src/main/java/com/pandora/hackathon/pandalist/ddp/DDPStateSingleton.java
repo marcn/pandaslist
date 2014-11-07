@@ -574,6 +574,14 @@ public class DDPStateSingleton extends MeteorAuthCommands
     }
 
     public void call(String method) {
-        mDDP.call(method, new Object[]{});
+        call(method, new Object[]{});
+    }
+
+    public void call(String method, Object[] params) {
+        getDDP().call(method, params, null);
+    }
+
+    public void call(String method, Object[] params, DDPListener listener) {
+        getDDP().call(method, params, listener);
     }
 }

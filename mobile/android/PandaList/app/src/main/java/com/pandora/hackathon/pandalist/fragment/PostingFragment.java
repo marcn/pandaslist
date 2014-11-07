@@ -13,8 +13,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.keysolutions.ddpclient.DDPListener;
+import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by jmendez on 11/5/14.
@@ -109,7 +114,28 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
 
         } else if (id == R.id.send_post) {
             if(validateFields()) {
-                Toast.makeText(getActivity(), "Create Post yay!!", Toast.LENGTH_SHORT).show();
+                Object[] params = new Object[1];
+                Map<String,Object> options = new HashMap<String,Object>();
+                params[0] = options;
+                options.put("category", mCategorySpinner.getSelectedItem().toString());
+                options.put("subcategory", mSubCategorySpinner.getSelectedItem().toString());
+                options.put("location", mLocationName.getSelectedItem().toString());
+                options.put("title", mTitle.getText().toString());
+                options.put("price", mPrice.getText().toString());
+                options.put("description", mDescription.getText().toString());
+                options.put("delivery_method", mDeliverySpinner.getSelectedItem().toString());
+
+                PandaListApplication.getDDP().call("/posts/insert", params, new DDPListener() {
+                    @Override
+                    public void onResult(Map<String, Object> jsonFields) {
+                        handlePostCreate(jsonFields);
+                    }
+                    @Override
+                    public void onNoSub(String callId, Map<String, Object> errorFields) {
+                        Toast.makeText(getActivity(), "Unable to create post :(", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
             }
         }
     }
@@ -144,6 +170,10 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
         }
 
         return valid;
+    }
+
+    private void handlePostCreate(Map<String, Object> jsonFields) {
+        Toast.makeText(getActivity(), "Create Post yay!!", Toast.LENGTH_SHORT).show();
     }
 
     private void dispatchTakePictureIntent() {

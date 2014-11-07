@@ -38,9 +38,14 @@ if (Meteor.isClient) {
 		}
 	});
 
-	var highlight = function(text, searchTerm) {
+	var highlight = function(text, searchTerm, alwaysReturn) {
     	var reg = new RegExp(searchTerm,"i");
-		var index = reg.exec(text).index;
+		var res = reg.exec(text);
+
+		if(!res)
+			return text.substring(0, 200);
+
+		var index = res.index;
 		var startIndex = index - 100;
 		if(startIndex < 0) {
 			startIndex = 0;

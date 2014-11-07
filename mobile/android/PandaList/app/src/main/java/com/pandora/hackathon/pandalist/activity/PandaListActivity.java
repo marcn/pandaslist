@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
+import com.pandora.hackathon.pandalist.gcm.GcmService;
 
 
 public class PandaListActivity extends BaseActivity {
@@ -38,6 +39,7 @@ public class PandaListActivity extends BaseActivity {
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         MyDDPState.setupInstance(getApplicationContext(), new Handler());
+        GcmService.getInstance().register(this);
     }
 
     public void onSectionAttached(int number) {

@@ -10,6 +10,7 @@ if (Meteor.isClient) {
 		'click .post': function() {
 			var post = Session.get("previewPost");
 			var id = Posts.insert(post);
+			Meteor.call("notifySubscribers", post);
 			Session.set("previewPost", null);
 			Router.go("/detail/"+id);		// FIXME: for some reason this does not go to detail page
 		},

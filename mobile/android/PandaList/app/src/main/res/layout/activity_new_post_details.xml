@@ -1,7 +1,5 @@
 <com.pandora.hackathon.pandalist.ui.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:iosched="http://schemas.android.com/apk/res-auto"
-    xmlns:plus="http://schemas.android.com/apk/lib/com.google.android.gms.plus"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,15 +37,11 @@
             android:paddingBottom="@dimen/session_details_extra_space_bottom"
             android:clipToPadding="false">
 
-
-
-
         </LinearLayout>
 
         <!-- Title/subtitle bar (floating; position determined at run time as the content view scrolls) -->
         <LinearLayout
             android:id="@+id/header_session"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
@@ -55,17 +49,13 @@
             android:orientation="vertical"
             android:paddingBottom="16dp">
 
-
-
             <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:iosched="http://schemas.android.com/apk/res-auto"
-                iosched:theme="@style/ActionBarThemeOverlay"
-                iosched:popupTheme="@style/ActionBarPopupThemeOverlay"
                 android:id="@+id/my_awesome_toolbar"
                 android:background="@null"
                 iosched:titleTextAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize" />
+                android:layout_height="60dp" />
 
             <!-- Session title -->
             <TextView android:layout_height="wrap_content"
@@ -96,7 +86,7 @@
 
         </LinearLayout>
 
-
+        <include layout="@layout/activity_post_details" />
 
         <!-- FAB -->
 

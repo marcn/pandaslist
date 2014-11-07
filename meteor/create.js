@@ -132,6 +132,7 @@ if (Meteor.isClient) {
 		'click .post': function() {
 			var post = getPostData(Template.instance());
 			var id = Posts.insert(post);
+			Meteor.call("notifySubscribers", post);
 			Router.go("/detail/"+id);
 		},
 

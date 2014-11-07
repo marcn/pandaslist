@@ -11,6 +11,7 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 
 import java.io.IOException;
 
@@ -27,13 +28,21 @@ public class GcmService {
 
     private static String SENDER_ID;
 
+    private static GcmService gcmService;
     private static GoogleCloudMessaging gcm;
 
     private static String regid;
 
     private static Context context;
 
-    public static final void init(Context _context, String _sender_id) {
+    public static synchronized GcmService getInstance() {
+        if (gcmService == null) {
+            gcmService = new GcmService();
+        }
+        return gcmService;
+    }
+
+    public final void init(Context _context, String _sender_id) {
         context = _context;
         SENDER_ID = _sender_id;
     }
@@ -135,8 +144,8 @@ public class GcmService {
      * device sends upstream messages to a server that echoes back the message
      * using the 'from' address in the message.
      */
-    private static void sendRegistrationIdToBackend() {
-        //TODO Send registeration id to server
+    private static void sendRegistrationIdToBackend(String regId) {
+        DDPStateSingleton.getInstance().sendRegistrationId(regId);
     }
 
     /**
@@ -170,7 +179,7 @@ public class GcmService {
                 // so it can use GCM/HTTP or CCS to send messages to your app.
                 // The request to your server should be authenticated if your app
                 // is using accounts.
-                sendRegistrationIdToBackend();
+                sendRegistrationIdToBackend(regid);
 
                 // For this demo: we don't need to send it because the device
                 // will send upstream messages to a server that echo back the

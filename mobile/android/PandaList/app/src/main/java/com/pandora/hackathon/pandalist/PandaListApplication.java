@@ -37,7 +37,7 @@ public class PandaListApplication extends Application {
 
     private void doInit() {
         //Setup GCMSservice
-        GcmService.init(getApplicationContext(), getString(R.string.gcm_sender_id));
+        GcmService.getInstance().init(getApplicationContext(), getString(R.string.gcm_sender_id));
     }
 
     public static Context getAppContext() {

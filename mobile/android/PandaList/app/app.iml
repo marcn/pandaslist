@@ -88,6 +88,7 @@
     <orderEntry type="library" exported="" name="srp6a-1.4.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="java-ddp-client-0.5.7.6" level="project" />
+    <orderEntry type="library" exported="" name="library-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="palette-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="commons-collections-3.2.1" level="project" />
     <orderEntry type="library" exported="" name="slf4j-simple-1.7.7" level="project" />

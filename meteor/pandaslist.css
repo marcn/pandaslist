@@ -268,6 +268,7 @@ textarea {
 
   z-index: 1;
   position: fixed;
+  overflow: hidden;
 
   left: 0;
   top: 0;
@@ -307,6 +308,38 @@ textarea {
     -webkit-transition: all 500ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
   }
 
+
+  #nav h2.topLevel a {
+    color: #ababab;
+    -webkit-transition: all 500ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  }
+
+  #nav h2.topLevel.active a {
+    color: #fff;
+  }
+
+  #nav h2.topLevel {
+    -webkit-transition: all 500ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    padding: 0.3rem 0;
+  }
+
+  hr.topLevel {
+    margin: 1.7rem 0;
+  }
+
+  #nav h2.topLevel:before {
+    background-image: url(../img/topLevel.png);
+  }
+
+  #nav h2.topLevel.active {
+    background-color: #915a7a;
+    padding-left: 2rem;
+  }
+
+
+
+  #nav h2.topLevel.active:before { -webkit-transform: rotate(0deg); }
+
   #nav ul {
     display: none;
     margin-top: 1rem;
@@ -330,7 +363,7 @@ textarea {
   }
 
   #nav li:hover {
-    -webkit-transform: scale(1.1) translate3d(-0.3rem,0,0);
+    /*-webkit-transform: scale(1.1) translate3d(-0.3rem,0,0);*/
   }
 
   #nav li .num {
@@ -348,14 +381,15 @@ textarea {
     overflow: hidden;
     font-size: 1.4rem;
     height: 100%;
-    -webkit-flex: 4;
-            flex: 4;
+    -webkit-flex: 6;
+            flex: 6;
   }
 
   #nav li.active {
     position: relative;
     background-color: #915a7a;
     color: #fff;
+    padding-left: 2rem;
   }
 
   #nav li.inactive { opacity: 0.3; cursor: default;}

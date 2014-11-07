@@ -1,5 +1,5 @@
 #createPost {
-  background-color: rgba(0,0,0,0.1);
+
 }
 
 #createPost h2 {
@@ -137,7 +137,19 @@
 
 
 .subSettingsHeader {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 3rem 0;
   border-bottom: 1px solid #adadad;
+}
+
+/*============================================================
+  SETTINGS RESPONSIVE CSS
+============================================================*/
+
+@media screen and (max-width: 940px) {
+
+  .subCatSub {
+    width: 46%;
+  }
+
 }

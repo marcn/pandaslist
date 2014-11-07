@@ -1,6 +1,8 @@
 package com.pandora.hackathon.pandalist.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import com.keysolutions.ddpclient.DDPListener;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
+import com.pandora.hackathon.pandalist.aws.TransferController;
 
 import java.util.HashMap;
 import java.util.Map;

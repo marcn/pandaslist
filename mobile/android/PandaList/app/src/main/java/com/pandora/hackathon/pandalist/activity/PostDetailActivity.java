@@ -10,27 +10,37 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pandora.hackathon.pandalist.PandasConstants;
 import com.pandora.hackathon.pandalist.PostItemData;
 import com.pandora.hackathon.pandalist.R;
+import com.pandora.hackathon.pandalist.events.DataChangeEvent;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 public class PostDetailActivity extends ActionBarActivity {
-
+    ViewGroup rootView = null;
+    EditText commentsEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        rootView = (ViewGroup) findViewById(R.id.post_details_rootview);
         setContentView(R.layout.activity_post_details);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
@@ -110,27 +120,72 @@ public class PostDetailActivity extends ActionBarActivity {
                 TextView desc = (TextView) findViewById(R.id.post_description);
                 desc.setText(item.getDescription());
 
+                commentsEditText = (EditText) findViewById(R.id.post_comments_edittext);
+
                 String category = item.getCategory();
                 if (category != null) {
-                    Button button = (Button) findViewById(R.id.post_button);
-                    if (category.equals("Contest")) {
-                        button.setText("I am Interested");
-                    } else if (category.equals("Bid")) {
-                        button.setText("I am Interested");
+                    final Button button = (Button) findViewById(R.id.post_button);
+                    if (category.equals("Bid")) {
                         //TODO allow price
                     }
 
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //TODO
+                            submitResponse();
+
+                            Toast.makeText(PostDetailActivity.this, "Your response has been submitted!", Toast.LENGTH_LONG).show();
+
+                            button.setVisibility(View.GONE);
+                            commentsEditText.setVisibility(View.GONE);
                         }
                     });
                 }
-           } else {
+            } else {
                 setContentView(R.layout.error);
             }
         }
     }
 
+    @Subscribe
+    public void onDataChangeEvent(DataChangeEvent event) {
+        if (event != null) {
+            if (event.subscriptionName.equals("comments")) {
+                //TODO
+
+                //handle comments and add comment
+            }
+        }
+    }
+
+    private void submitResponse() {
+        submitResponse(null);
+    }
+
+    private void submitResponse(String commentFromEvent) {
+        String actualComment = null;
+        if (commentFromEvent != null && !commentFromEvent.equals("")) {
+            actualComment = commentFromEvent;
+        }
+
+        if (rootView != null) {
+            LayoutInflater inflater = getLayoutInflater();
+            LinearLayout commentLayout = (LinearLayout) inflater.inflate(R.layout.activity_post_comment_layout, null);
+
+            //TODO use real data
+            TextView timeStampView = (TextView) commentLayout.findViewById(R.id.post_comment_timestamp);
+            timeStampView.setText("2 hours ago");
+
+            TextView commentTextView = (TextView) commentLayout.findViewById(R.id.post_comment_holder);
+
+            CharSequence comment = commentsEditText.getText();
+            if (comment != null && !comment.equals("")) {
+                actualComment = comment.toString();
+                commentTextView.setText(actualComment);
+            }
+
+            ViewGroup commentContainer = (ViewGroup) rootView.findViewById(R.id.post_detail_comments_container);
+            commentContainer.addView(commentLayout);
+        }
+    }
 }

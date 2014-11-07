@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -51,6 +52,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static boolean didGetDataEvent = false;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -235,11 +237,20 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             }
         }
 
-        if (mListItems.isEmpty()) {
-            getView().findViewById(R.id.error_view).setVisibility(View.VISIBLE);
-        } else {
-            getView().findViewById(R.id.error_view).setVisibility(View.GONE);
-        }
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!didGetDataEvent && isResumed()) {
+                    if (mListItems.isEmpty()) {
+                        getView().findViewById(R.id.error_view).setVisibility(View.VISIBLE);
+                    } else {
+                        getView().findViewById(R.id.error_view).setVisibility(View.GONE);
+                    }
+                }
+            }
+        }, 7000);
+
         myRecyclerAdapter.setItems(mListItems);
         myRecyclerAdapter.notifyDataSetChanged();
         getActionBar().setSubtitle(mPostSubCategoryName);
@@ -261,6 +272,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     public void onDataChangeEvent(DataChangeEvent event) {
 
         PostItemData item = null;
+        didGetDataEvent = true;
 
         if (event.subscriptionName.equals("posts")) {
             //	[0] = {com.google.gson.internal.LinkedTreeMap$Node@830036917072}"category" -> "For Sale"

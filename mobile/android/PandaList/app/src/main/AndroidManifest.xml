@@ -35,7 +35,7 @@
         </receiver>
         <service android:name=".gcm.GcmIntentService" />
         <activity
-            android:name=".activity.PandaListActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +52,7 @@
             android:label="@string/post_detail"
             android:theme="@style/PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay"/>
 
-        <activity android:name=".activity.LoginActivity"
+        <activity android:name=".activity.PandaListActivity"
             android:label="Login" >
         </activity>
 

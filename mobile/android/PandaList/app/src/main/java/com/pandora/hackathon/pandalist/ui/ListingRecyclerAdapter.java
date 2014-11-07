@@ -67,33 +67,7 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
 
         String url = item.getImageUrl();
         if (url != null && url != "") {
-            Picasso.with(holder.image.getContext()).load(url).into(new Target() {
-
-                @Override
-                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                    holder.image.setImageBitmap(bitmap);
-                    Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-                        @Override
-                        public void onGenerated(Palette palette) {
-
-                            int color = palette.getDarkMutedColor(Color.parseColor("#22dbdbdb"));
-                            int colorAlpha = Color.argb(255, Color.red(color), Color.green(color), Color.blue(color));
-
-                            holder.detailContainer.setBackgroundColor(colorAlpha);
-                        }
-                    });
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-                    Log.e("Jenny", "onBitmapFailed");
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    Log.e("Jenny", "onPrepareLoad");
-                }
-            });
+            Picasso.with(holder.image.getContext()).load(url).into(holder);
         } else {
             holder.image.setBackground(mContext.getResources().getDrawable(R.drawable.default_albumart));
         }
@@ -105,7 +79,7 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
         return mItems.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, Target {
         public View container;
         public View detailContainer;
         public ImageView image;
@@ -132,7 +106,30 @@ public class ListingRecyclerAdapter extends RecyclerView.Adapter<ListingRecycler
         public void onClick(View v) {
             Log.d("JENNY", "onClick " + getPosition() + " ");
             listener.onItemClick(getPosition());
+        }
 
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            image.setImageBitmap(bitmap);
+            Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                @Override
+                public void onGenerated(Palette palette) {
+
+                    int color = palette.getDarkMutedColor(image.getContext().getResources().getColor(R.color.pandora_indigo_transparent));
+                    int colorAlpha = Color.argb(200, Color.red(color), Color.green(color), Color.blue(color));
+
+                    detailContainer.setBackgroundColor(colorAlpha);
+                }
+            });
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
 
         }
     }

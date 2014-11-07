@@ -1,7 +1,6 @@
 #listings a {
   color: #333;
   text-decoration: none;
-  display: inline-block;
 }
 
   #listings li {
@@ -9,7 +8,7 @@
     table-layout: fixed;
     width: 100%;
     overflow: hidden;
-    /*height: 10rem;*/
+    height: 10rem;
     margin-bottom: 2rem;
     background-color: #fff;
     font-size: 0;
@@ -43,7 +42,7 @@
     #listings li .info {
       display: table-cell;
       vertical-align: middle;
-      padding: 1rem 2%;
+      padding: 0 2%;
       overflow: hidden;
     }
 
@@ -58,4 +57,9 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+    }
+
+    #listings .search-term {
+      background-color: yellow;
+      font-weight: 600;
     }

@@ -16,6 +16,7 @@ import com.keysolutions.ddpclient.DDPListener;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
+import com.pandora.hackathon.pandalist.aws.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -124,7 +125,7 @@ public class PostingFragment extends BaseFragment implements View.OnClickListene
                 options.put("price", mPrice.getText().toString());
                 options.put("description", mDescription.getText().toString());
                 options.put("delivery_method", mDeliverySpinner.getSelectedItem().toString());
-                options.put("user_id", "dfsdf");
+                options.put("user_id", Constants.getPandalistUserId());
 
                 PostingActivity activity = (PostingActivity) getActivity();
                 String imgId = activity.getUploadedImageId();

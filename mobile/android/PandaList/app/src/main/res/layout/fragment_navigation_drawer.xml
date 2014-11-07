@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
 
         android:backgroundTintMode="multiply"
-        android:background="@color/violet_light"
+        android:background="@color/lite_grey"
         android:padding="8dp">
 
 
@@ -28,8 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/profile_image"
-            android:text="Jennifer Dough"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:text="Rajat D."
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        />
 
 
         <TextView
@@ -38,8 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/profile_name"
-            android:text="jmendez@pandora.com"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:text="rdxit@pandora.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        />
 
     </RelativeLayout>
 
@@ -52,6 +54,7 @@
         android:choiceMode="singleChoice"
         android:divider="@color/violet"
         android:dividerHeight="0dp"
+        android:layout_above="@+id/settings"
         tools:context=".NavigationDrawerFragment" />
 
 
@@ -67,5 +70,6 @@
         android:gravity="center_vertical"
         android:drawableLeft="@drawable/ic_settings"
         android:drawablePadding="10dp"
+        android:id="@id/settings"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView"/>
 </RelativeLayout>

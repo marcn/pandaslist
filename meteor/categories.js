@@ -54,6 +54,9 @@ if (Meteor.isClient) {
 
   Template.subcategory.events({
   	"click li": function(evt) {
+
+      $('#nav h2.topLevel').removeClass('active');
+
   		var path = $(evt.currentTarget).data('listing-category');
   		Router.go(path);
   	}
@@ -65,8 +68,13 @@ if (Meteor.isClient) {
 
       if ( $(evt.currentTarget).hasClass('active') ) return false;
 
-      $('#nav h2').removeClass('active');
+
+      if ( !$('#nav h2.active').hasClass('topLevel') || $(evt.currentTarget).hasClass('topLevel') ) {
+        $('#nav h2').removeClass('active');
+      }
+
       $(evt.currentTarget).addClass('active');
+
 
       $('#nav ul').slideUp(500);
       $(evt.currentTarget).next('ul').slideDown(500);

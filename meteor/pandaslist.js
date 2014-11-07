@@ -32,3 +32,15 @@ Accounts.config({
 // });
 
 Images = new Mongo.Collection('images');
+
+if (Meteor.isServer) {
+  Meteor.methods({
+    "uploadImage": function(image_url) {
+      var image_id = Images.insert({
+					url: image_url
+				});
+      
+      return {"method":"uploadImage", "data": {"image_id": image_id}};
+    }
+  });
+}

@@ -6,10 +6,10 @@ if (Meteor.isClient) {
 				filter.category = this.category;
 			if(this.subcategory && this.subcategory !== "All")
 				filter.subcategory = this.subcategory;
-			if(this.type === "me")
+			if(this.type === "me" && Meteor.user())
 				filter.createdBy = Meteor.user()._id;
 
-			return Posts.find(filter);
+			return Posts.find(filter, {sort: {creationDate: -1}});
 		}
 	});
 

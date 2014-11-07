@@ -45,11 +45,6 @@
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/PandasNoActionBar"/>
 
-        <activity android:name=".activity.NewPostDetailActivity"
-            android:label="@string/postings"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/PandasNoActionBar"/>
-
         <activity android:name=".activity.PostDetailActivity"
             android:label="@string/post_detail"
             android:theme="@style/PandasNoActionBar.TranslucentActionBar.ActionBar.Overlay"/>

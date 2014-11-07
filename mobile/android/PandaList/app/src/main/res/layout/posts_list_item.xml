@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:id="@+id/detail_container"
-            android:background="@color/lite_grey"
+            android:background="@color/pandora_indigo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -49,6 +49,7 @@
                     android:ellipsize="end"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:singleLine="true" />
 
                 <TextView
@@ -58,6 +59,7 @@
                     android:text="Small description goes here"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:ellipsize="end"
+                    android:textColor="@color/white"
                     android:singleLine="true" />
                 </LinearLayout>
 
@@ -72,9 +74,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price: $599"
+
                 android:layout_gravity="right"
                 android:textAppearance="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
-
+                android:textColor="@color/white"
                 android:ellipsize="end"
                 android:singleLine="true" />
 
@@ -83,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-
+                android:textColor="@color/white"
                 android:text="Location: OAK"
                 android:ellipsize="end"
                 android:singleLine="true" />

@@ -122,6 +122,7 @@ button {
 
 .price:before { content: 'Price: '; font-weight: bold; }
 .location:before { content: 'Location: '; font-weight: bold; }
+.posterName:before { content: 'Posted By: '; font-weight: bold; }
 
 
 /*============================================================

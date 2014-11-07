@@ -7,7 +7,7 @@ if (Meteor.isClient) {
 			if(this.subcategory && this.subcategory !== "All")
 				filter.subcategory = this.subcategory;
 			if(this.type === "me")
-				filter.createdBy = Meteor.user()._id;
+				filter.createdBy = Meteor.userId;
 			if(this.search) {
 				var reg = new RegExp(this.search,"gi");
 				filter = { $or: [{ title: reg }, { description: reg }, { location: reg } ] };

@@ -51,15 +51,13 @@
 
 		<div class="postComments">
 			<ul>
-				{{#each comments}}
-				<li>
-					{{#if isInterested}}
-					<span>{{commenter}}</span> has expressed interest in this item, {{commentDate}}
-					{{else}}
-					<span>{{commenter}}</span> said, {{commentDate}} : {{text}}
-					{{/if}}
-				</li>
-				{{/each}}
+			{{#each comments}}
+				{{#if isInterested}}
+					<li class="interested"><span>{{commenter}}</span> has expressed interest in this item, {{commentDate}}</li>
+				{{else}}
+					<li><span>{{commenter}}</span> said, {{commentDate}} : {{text}}</li>
+				{{/if}}
+			{{/each}}
 			</ul>
 		</div>
 

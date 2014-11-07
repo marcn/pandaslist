@@ -20,6 +20,8 @@
 
 		<h2>{{title}}</h2>
 
+		<p class="posterName">{{posterName}}</p>
+
 		{{#if price}}
 			<p class="price">{{price}}</p>
 		{{/if}}
@@ -73,7 +75,7 @@
 		</div>
 
 		<div class="newComment">
-			<textarea class="comment" style="width:100%">{{defaultCommentText}}</textarea>
+			<textarea class="comment">{{defaultCommentText}}</textarea>
 			<div class="centerBtn">
 				<button class="btn addComment">Post Comment</button>
 			</div>

@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
 
-  var isSelected = function(category, subCategory, queryParams) {
-    return queryParams.subCategory === subCategory && queryParams.category === category;
+  var isSelected = function(category, subcategory, queryParams) {
+    return queryParams.subcategory === subcategory && queryParams.category === category;
   };
 
   Template.categories.helpers({
@@ -20,21 +20,21 @@ if (Meteor.isClient) {
   });
 
   Template.category.helpers({
-    subCategoryGroups: function() {
+    subcategoryGroups: function() {
       var posts = Posts.find({category: this.category}).fetch();
-      var groups = _.groupBy(_.pluck(posts, 'subCategory'));
+      var groups = _.groupBy(_.pluck(posts, 'subcategory'));
 
       // turn obj to arr
       var arr = [];
       // add All subcategory
-      arr.push({category: this.category, subCategory: "All", count: posts.length,
+      arr.push({category: this.category, subcategory: "All", count: posts.length,
         selected: isSelected(this.category, "All", this.params.query)});
 
       // add rest of subcateories
       for (var key in groups) {
         var obj = groups[key];
         if(key !== "undefined")
-          arr.push({category: this.category, subCategory: key, count: groups[key].length,
+          arr.push({category: this.category, subcategory: key, count: groups[key].length,
             selected: isSelected(this.category, key, this.params.query)});
       }
 
@@ -42,7 +42,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.subCategory.helpers({
+  Template.subcategory.helpers({
     cssClass: function() {
       if(this.selected)
         return "active";
@@ -52,7 +52,7 @@ if (Meteor.isClient) {
   });
 
 
-  Template.subCategory.events({
+  Template.subcategory.events({
   	"click li": function(evt) {
   		var path = $(evt.currentTarget).data('listing-category');
   		Router.go(path);

@@ -4,10 +4,16 @@ if (Meteor.isClient) {
 			var filter = {};
 			if(this.category)
 				filter.category = this.category;
-			if(this.subCategory && this.subCategory !== "All")
-				filter.subCategory = this.subCategory;
+			if(this.subcategory && this.subcategory !== "All")
+				filter.subcategory = this.subcategory;
 
 			return Posts.find(filter);
+		}
+	});
+
+	Template.row.helpers({
+		coverPhotoUrl: function() {
+			return (this.coverPhotoUrl) ? this.coverPhotoUrl : '/img/fpo.png';
 		}
 	});
 }	

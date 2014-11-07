@@ -7,16 +7,16 @@
 
 <template name="subscriptions">
 	<form>
-		<input type="submit" value="Save"/>	
+		<input type="submit" class="btn" value="Save"/>
 		{{#each categories}}
-	      <h2>{{name}}</h2>
+	      <h2 class="subSettingsHeader">{{name}}</h2>
 
 	      {{#each subCategories}}
-	      	<div>
+	      	<div class="subCatSub">
 	      		<label for="sub-{{subCategory}}">{{subCategory}}</label>
 	      		<input id="sub-{{subCategory}}" value="{{category}}.{{subCategory}}" name="sub-{{subCategory}}" {{isChecked}} type="checkbox" />
 	      	</div>
 	      {{/each}}
 	    {{/each}}
-	</form>	    
+	</form>
 </template>

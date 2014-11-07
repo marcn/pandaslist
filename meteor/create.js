@@ -8,9 +8,14 @@ if (Meteor.isClient) {
 		Session.set("formChanges", 0);
 	};
 
-	var handleImageUpload = function(event, template) {
-		event.preventDefault();
-		var files = event.target.files;
+	var handleImageUpload = function(files) {
+		for (var i=0; i < files.length; i++) {
+			if (files.item(i).type.indexOf("image/") != 0) {
+				alert("Only image files are allowed");
+				// Only allow image uploads
+				return;
+			}
+		}
 		S3.upload(files, "/images", function(err,result) {
 			if (err) {
 				console.log(err);
@@ -88,8 +93,13 @@ if (Meteor.isClient) {
 			Session.set("formChanges", Session.get("formChanges")+1);
 		},
 
-		'change .file_bag': _.bind(handleImageUpload, this),
-		'dropped .dropzone': _.bind(handleImageUpload, this),
+		'change .file_bag': function(event) {
+			handleImageUpload(event.target.files);
+		},
+
+		'dropped .dropzone': function(event) {
+			handleImageUpload(event.originalEvent.dataTransfer.files);
+		},
 
 		'change .photoPreview .options': function(evt) {
 			evt.preventDefault();
@@ -122,6 +132,7 @@ if (Meteor.isClient) {
 		'click .post': function() {
 			var post = getPostData(Template.instance());
 			var id = Posts.insert(post);
+			Meteor.call("notifySubscribers", post);
 			Router.go("/detail/"+id);
 		},
 

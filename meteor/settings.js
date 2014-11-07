@@ -15,11 +15,9 @@ if (Meteor.isClient) {
     },
     isChecked: function() {
       if (Subscriptions.find({'userIds': Meteor.user()._id, category: this.category+'.'+this.subCategory}).fetch().length > 0) {
-        //console.log("checked");
         return "checked";
       }
       else {
-        //console.log("NOT checked");
         return "";
       } 
     }
@@ -33,8 +31,9 @@ if (Meteor.isClient) {
       // remove all subs for user
       var currentSubs = Subscriptions.find({'userIds': userId}).fetch();
       for(var i = 0; i < currentSubs.length; i++) {
-        currentSubs[i].userIds = currentSubs[i].userIds.splice(currentSubs[i].userIds.indexOf(userId, 1));
-        Subscriptions.update(currentSubs[i]._id, {$set: {userIds: currentSubs.userIds}});
+        currentSubs[i].userIds.splice(currentSubs[i].userIds.indexOf(userId), 1);
+        console.log(currentSubs[i].userIds);
+        Subscriptions.update(currentSubs[i]._id, {$set: {userIds: currentSubs[i].userIds}});
         console.log('deleting ' + currentSubs[i].category);
       }
 

@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
     android:id="@+id/main_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_gravity="top"
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_margin="16dp"
         card_view:cardBackgroundColor="@android:color/white"
         card_view:cardCornerRadius="0dp">
 
-        <RelativeLayout android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <RelativeLayout
                 android:id="@+id/create_post_header"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="right"
+                android:layout_alignParentTop="true"
                 android:background="@color/pandora_indigo"
-                android:layout_alignParentTop="true">
+                android:gravity="right">
 
                 <ImageView
                     android:id="@+id/photo_gallery"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_photo_album"
                     android:layout_centerVertical="true"
-                    />
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_photo_album" />
 
 
                 <ImageView
                     android:id="@+id/photo_camera"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/photo_gallery"
                     android:background="?android:attr/selectableItemBackground"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_photo_camera"/>
+                    android:padding="8dp"
+                    android:src="@drawable/ic_photo_camera" />
 
 
                 <ImageView
@@ -55,213 +55,230 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/photo_camera"
-                    android:padding="8dp"
                     android:background="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_location_on_white"/>
+                    android:padding="8dp"
+                    android:src="@drawable/ic_location_on_white" />
 
 
                 <ImageView
-                    android:layout_marginLeft="8dip"
                     android:id="@+id/send_post"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:layout_toRightOf="@+id/location_office"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dip"
+                    android:layout_toRightOf="@+id/location_office"
                     android:background="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_send_white"/>
+                    android:padding="8dp"
+                    android:src="@drawable/ic_send_white" />
             </RelativeLayout>
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:layout_below="@+id/create_post_header">
+                android:layout_below="@+id/create_post_header"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/category_container"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
 
-                    <TextView
+                        <TextView
                             android:id="@+id/category_title"
                             android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Post Type:"
-                            android:textColor="@color/dark_grey"
-                            android:textAppearance="@style/titleText"
+                            android:layout_alignParentTop="true"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_alignParentTop="true"
-                            />
+                            android:text="Post Type"
+                            android:textAppearance="@style/titleText"
+                            android:textColor="@color/dark_grey" />
 
                         <Spinner
                             android:id="@+id/post_type"
-                            android:gravity="right"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/dark_grey"
-                            android:entries="@array/postTypes"
                             android:layout_marginRight="8dp"
-                            android:prompt="@string/type" />
+                            android:entries="@array/postTypes"
+                            android:gravity="right"
+                            android:prompt="@string/type"
+                            android:textColor="@color/dark_grey" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:id="@+id/title_container"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/main_title"
                             android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Office:"
-                            android:textColor="@color/dark_grey"
-                            android:textAppearance="@style/titleText"
+                            android:layout_alignParentTop="true"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_alignParentTop="true"
-                            />
+                            android:text="Office"
+                            android:textAppearance="@style/titleText"
+                            android:textColor="@color/dark_grey" />
 
                         <Spinner
                             android:id="@+id/location_name"
-                            android:gravity="right"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/dark_grey"
-                            android:entries="@array/offices"
                             android:layout_marginRight="8dp"
-                            android:prompt="@string/type" />
+                            android:entries="@array/offices"
+                            android:gravity="right"
+                            android:prompt="@string/type"
+                            android:textColor="@color/dark_grey" />
                     </LinearLayout>
 
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:id="@+id/title_label_container"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
 
-                    <TextView
+                        <TextView
                             android:id="@+id/title_label"
                             android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Category"
-                            android:textColor="@color/dark_grey"
-                            android:textAppearance="@style/titleText"
+                            android:layout_alignParentTop="true"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_alignParentTop="true"
-                            />
+                            android:text="Category"
+                            android:textAppearance="@style/titleText"
+                            android:textColor="@color/dark_grey" />
+
                         <Spinner
                             android:id="@+id/category"
-                            android:gravity="right"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:entries="@array/postCategories"
-                            android:textColor="@color/dark_grey"
-                            android:prompt="@string/category"
                             android:layout_marginRight="8dp"
-                            />
+                            android:entries="@array/postCategories"
+                            android:gravity="right"
+                            android:prompt="@string/category"
+                            android:textColor="@color/dark_grey" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/subcategory_container"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/subcategory_container"
-                        android:orientation="horizontal"
                         android:layout_marginTop="10dp"
-                        >
+                        android:orientation="horizontal">
 
 
-                    <TextView
+                        <TextView
                             android:id="@+id/listing_type"
                             android:layout_width="95dp"
                             android:layout_height="wrap_content"
-                            android:text="Subcategory"
-                            android:textColor="@color/dark_grey"
-                            android:textAppearance="@style/titleText"
+                            android:layout_alignParentTop="true"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_alignParentTop="true"
-                            />
+                            android:text="Subcategory"
+                            android:textAppearance="@style/titleText"
+                            android:textColor="@color/dark_grey" />
 
                         <Spinner
-                        android:id="@+id/subcategory"
-                        android:gravity="right"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/subCategories"
-                        android:prompt="@string/sub_category"
-                        android:textColor="@color/dark_grey"
-                        android:layout_marginRight="8dp"
-                        />
+                            android:id="@+id/subcategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:entries="@array/subCategories"
+                            android:gravity="right"
+                            android:prompt="@string/sub_category"
+                            android:textColor="@color/dark_grey" />
                     </LinearLayout>
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:id="@+id/title"
-                    android:layout_marginTop="10dip"
-                    android:hint="Type your title here"
-                    android:background="@drawable/bottom_line"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:textColor="@color/dark_grey"
-                    android:textColorHint="@color/medium_grey"
-                    android:textAppearance="@style/titleText"
-                    android:singleLine="true"
-                    />
+                    <EditText
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="10dip"
+                        android:background="@drawable/bottom_line"
+                        android:hint="Type your title here"
+                        android:singleLine="true"
+                        android:textAppearance="@style/titleText"
+                        android:textColor="@color/dark_grey"
+                        android:textColorHint="@color/medium_grey" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:id="@+id/price"
-                    android:layout_marginTop="10dp"
-                    android:hint="Set Price"
-                    android:background="@drawable/bottom_line"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:textAppearance="@style/titleText"
-                    android:inputType="numberDecimal"
-                    android:singleLine="true"
-                    android:textColor="@color/dark_grey"
-                    android:textColorHint="@color/medium_grey"
-                    android:drawableLeft="@drawable/dollar"
-                    />
+                    <EditText
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bottom_line"
+                        android:drawableLeft="@drawable/dollar"
+                        android:hint="Set Price"
+                        android:inputType="numberDecimal"
+                        android:singleLine="true"
+                        android:textAppearance="@style/titleText"
+                        android:textColor="@color/dark_grey"
+                        android:textColorHint="@color/medium_grey" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:id="@+id/description"
-                    android:hint="Describe your item(s) here"
-                    android:textAppearance="@style/titleText"
-                    android:inputType="textMultiLine"
-                    android:maxLines="6"
-                    android:lines="6"
-                    android:gravity="top"
-                    android:background="@android:color/transparent"
-                    android:layout_marginLeft="8dp"
-                    android:textColorHint="@color/medium_grey"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="10dp"
-                    />
+                    <EditText
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bottom_line"
+                        android:gravity="top"
+                        android:hint="Describe your item(s) here"
+                        android:inputType="textMultiLine"
+                        android:lines="6"
+                        android:maxLines="6"
+                        android:textAppearance="@style/titleText"
+                        android:textColorHint="@color/medium_grey" />
 
+                    <LinearLayout
+                        android:id="@+id/delivery_container"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/delivery_title"
+                            android:layout_width="95dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="Delivery Method"
+                            android:textAppearance="@style/titleText"
+                            android:textColor="@color/dark_grey" />
+
+                        <Spinner
+                            android:id="@+id/delivery_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:entries="@array/deliveryMethod"
+                            android:gravity="right"
+                            android:prompt="@string/deliveryMethod"
+                            android:textColor="@color/dark_grey" />
+
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
 

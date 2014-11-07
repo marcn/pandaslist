@@ -160,7 +160,7 @@ if (Meteor.isClient) {
 
 		'click .preview': function() {
 			var data = getPostData(Template.instance());
-			if (Session.get("previewPost")._id) {
+			if (Session.get("previewPost") && Session.get("previewPost")._id) {
 				data._id = Session.get("previewPost")._id;
 			}
 			Session.set("previewPost", data);

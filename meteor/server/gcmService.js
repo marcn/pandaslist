@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-  notifySubscribers = function notifySubscribers(callback){
+  notifySubscribers = function(callback){
     Meteor.call('notifySubscribers', callback);
   }
   notifySubscribers('WANTED');
@@ -7,7 +7,7 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.methods({
-    'sendPushNotification': function sendPushNotification(registrationId){
+    'sendPushNotification': function(registrationId){
       var gcm = Meteor.npmRequire('node-gcm');
       var message = new gcm.Message();
       var sender = new gcm.Sender('APIKEY');
@@ -22,7 +22,8 @@ if (Meteor.isServer) {
       });
     },
 
-    'notifySubscribers': function notifySubscribers(category){
+    'notifySubscribers': function(post){
+      var category = post.category + "." + post.subcategory;
       var usersToNotify=Subscriptions.findOne({category: category}, {fields: {userIds:1, _id:0}});
       console.log(usersToNotify);
       console.log("sending push notification to: "+usersToNotify.userIds);

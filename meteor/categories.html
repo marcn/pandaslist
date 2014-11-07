@@ -15,16 +15,16 @@
 <template name="category">
   <h2>{{category}}</h2>
   <ul>
-    {{#each subCategoryGroups}}
-      {{> subCategory}}
+    {{#each subcategoryGroups}}
+      {{> subcategory}}
     {{/each}}
   </ul>
   <hr>
 </template>
 
-<template name="subCategory">
-  <li class="{{cssClass}}" data-listing-category="{{pathFor route='listings'}}?category={{category}}&subCategory={{subCategory}}">
+<template name="subcategory">
+  <li class="{{cssClass}}" data-listing-category="{{pathFor route='listings'}}?category={{category}}&subcategory={{subcategory}}">
     <span class="num">{{count}}</span>
-    <span class="name">{{subCategory}}</span>
+    <span class="name">{{subcategory}}</span>
   </li>
 </template>

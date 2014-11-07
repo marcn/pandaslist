@@ -78,12 +78,12 @@ public class DDPStateSingleton extends MeteorAuthCommands
      * connection info for your Meteor server
      * Override to point to your server
      */
-    protected static final String sMeteorServer = "10.0.3.2";
+    protected static final String sMeteorServer = "pandaslist.meteor.com";
     /**
      * connection info for your Meteor server
      * Override to point to your server's port
      */
-    protected static final Integer sMeteorPort = 3000;   
+    protected static final Integer sMeteorPort = 80;
     private final Handler mHandler;
     /** reference to lower level DDP websocket client */
     protected DDPClient mDDP;

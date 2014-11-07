@@ -243,6 +243,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
             }
             mListItems.add(item);
             myRecyclerAdapter.setItems(mListItems);
+            myRecyclerAdapter.notifyDataSetChanged();
         }
     }
 

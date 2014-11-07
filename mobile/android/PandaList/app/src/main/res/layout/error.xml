@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:visibility="gone"
     android:gravity="center_vertical">
 
     
@@ -21,7 +22,6 @@
         android:gravity="center_horizontal"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
         android:textColor="#FF4444"
-
         android:text="Error loading content. Please try again later."/>
 
 </LinearLayout>

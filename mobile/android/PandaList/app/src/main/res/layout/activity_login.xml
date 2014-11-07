@@ -2,15 +2,23 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
+    android:background="#e0e0e0"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/default_albumart"/>
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/logo"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
@@ -30,19 +38,20 @@
         android:singleLine="true" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center" >
 
         <Button
             android:id="@+id/btnSignIn"
             style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:background="@drawable/btn_blue"
+            android:layout_gravity="center_horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="@string/text_sign_in" />
@@ -52,7 +61,7 @@
             style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/sign_in_button"
             android:background="@drawable/btn_blue"

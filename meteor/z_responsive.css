@@ -1,0 +1,62 @@
+@media screen and (max-width: 940px) {
+
+  html {
+    font-size: 8px;
+  }
+
+  #nav {
+    -webkit-transform: translate3d(-100%,0,0);
+    border-right: 1px solid #dbdbdb;
+  }
+
+  #nav.active {
+    -webkit-transform: translate3d(0,0,0);
+  }
+
+
+  #main {
+    margin: 12rem 1rem 6rem 1rem;
+  }
+
+
+  #headerLogo {
+    width: auto;
+    padding-right: 44px;
+  }
+
+
+
+  #burger {
+    display: table-cell;
+    width: 6rem;
+  }
+
+  #headerSearch, #headerAdmin {
+    display: none;
+  }
+
+
+
+
+
+  #postHero {
+    height: 300px;
+  }
+
+  #postHero img {
+    max-height: 300px;
+  }
+
+  input, textarea {
+    width: 96%;
+  }
+
+
+
+  #createPost h3 {
+    display: block;
+    text-align: left;
+  }
+
+
+}

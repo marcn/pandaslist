@@ -23,8 +23,10 @@
 
           <p class="price">{{price}}</p>
           <p class="location">{{location}}</p>
+          {{#if isSearch}}
+            <p class="description">{{description}}</p>
+          {{/if}}  
         </div>
-
     </li>
     </a>
 

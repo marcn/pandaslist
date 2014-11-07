@@ -19,9 +19,10 @@
 }
 
 #postHero {
-  /*text-align: center;*/
   position: relative;
-  height: 500px;
+  height: 540px;
+  padding: 20px;
+  background-color: #fff;
 }
 
 #postHero img {

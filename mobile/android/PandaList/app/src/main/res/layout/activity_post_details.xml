@@ -77,31 +77,59 @@
             android:textSize="16sp"
             android:text="Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here. Item description goes here. The description can be really long. Description can contain details entered by user, details like the price of the item, condition of the item, things like that. Item description goes here."/>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <!-- DO postDetailCommentsContainer.addView(activityPostCommentLayout); to add comments -->
+        <LinearLayout
+            android:id="@+id/post_detail_comments_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
             android:gravity="center" >
 
             <EditText
-                android:layout_width="140dp"
+                android:id="@+id/post_comments_edittext"
+                android:layout_marginTop="10dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="$"
-                android:visibility="gone" />
+                android:hint="Comments"
+                />
 
-
-            <Button
-                android:id="@+id/post_button"
-                android:layout_marginTop="5dp"
-                android:background="#00adee"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="140dp"
-                android:layout_height="60dp"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:text="Purchase" />
+                android:gravity="center" >
+
+                <EditText
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:hint="$"
+                    android:visibility="gone" />
+
+
+                <Button
+                    android:id="@+id/post_button"
+                    android:layout_marginTop="15dp"
+                    android:background="#00adee"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="140dp"
+                    android:layout_height="60dp"
+                    style="?android:attr/selectableItemBackground"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    android:text="I'm Interested" />
+            </LinearLayout>
 
         </LinearLayout>
 

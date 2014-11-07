@@ -1,0 +1,31 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/post_comment_timestamp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:text="2 hours ago"/>
+
+    <TextView
+        android:id="@+id/post_comment_holder"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:paddingBottom="12dp"
+        android:textSize="16sp"
+        android:text="Rajat Dixit has expressed interest in this item."/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+</LinearLayout>
+

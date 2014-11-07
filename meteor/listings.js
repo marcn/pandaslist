@@ -7,13 +7,21 @@ if (Meteor.isClient) {
 			if(this.subcategory && this.subcategory !== "All")
 				filter.subcategory = this.subcategory;
 			if(this.type === "me")
-				filter.createdBy = Meteor.userId();
-
-			return Posts.find(filter, {sort: {creationDate: -1}});
+				filter.createdBy = Meteor.user()._id;
+			if(this.search) {
+				var reg = new RegExp(this.search,"gi");
+				filter = { $or: [{ title: reg }, { description: reg }, { location: reg } ] };
+			}
+			return Posts.find(filter).fetch();
 		}
 	});
 
 	Template.row.helpers({
-
+		coverPhotoUrl: function() {
+			return (this.coverPhotoUrl) ? this.coverPhotoUrl : '/img/fpo.png';
+		},
+		isSearch: function() {
+			var asdf = "asdfa";
+		}
 	});
 }	

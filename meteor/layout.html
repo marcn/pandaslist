@@ -2,19 +2,21 @@
 <template name="layout">
 
   <div id="header">
-    <a id="headerLogo" href="/">
-    </a>
-    <div id="headerSearch">
-      <input type="text">
-    </div>
-    <div id="headerAdmin">
 
-      <div>{{ currentUser.profile.name }}</div>
+    <div id="burger"></div>
+
+    <a id="headerLogo" href="/">
+      <img src="/img/logo.png">
+    </a>
+    
+    {{> search}}
+
+    <div id="headerAdmin">
+      <div class="name">{{ currentUser.profile.name }}</div>
       <ul>
         <li><a href="/settings">Settings</a></li>
         <li>{{> loginButtons}}</li>
       </ul>
-
     </div>
   </div>
 

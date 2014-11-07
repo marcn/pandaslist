@@ -220,22 +220,48 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         PostItemData item = null;
 
         if (event.subscriptionName.equals("posts")) {
+            //	[0] = {com.google.gson.internal.LinkedTreeMap$Node@830036917072}"category" -> "For Sale"
+            //	[1] = {com.google.gson.internal.LinkedTreeMap$Node@830036917344}"subcategory" -> "tickets"
+            //	[2] = {com.google.gson.internal.LinkedTreeMap$Node@830036917616}"location" -> "Oakland"
+            //	[3] = {com.google.gson.internal.LinkedTreeMap$Node@830036918088}"title" -> "Children's Hospital Oakland Fundraiser Raffle - Win 4 Roundtrip Southwest Airline Tickets"
+            //	[4] = {com.google.gson.internal.LinkedTreeMap$Node@830036927000}"description" -> "Hello,\n \nIn my free time, I am the president of Blossom Garden Alameda, a non-profit organization that raises money for Childrenâ€™s Hospital Oakland. This year we are having a really great event on October 18th, Moonlight Circus Soiree...
+            //	[5] = {com.google.gson.internal.LinkedTreeMap$Node@830036927272}"delivery_method" -> "office_pickup"
+            //	[6] = {com.google.gson.internal.LinkedTreeMap$Node@830036927616}"coverPhoto" -> "FmeFCtg55HuPK5ngy"
+            //	[7] = {com.google.gson.internal.LinkedTreeMap$Node@830036928040}"coverPhotoUrl" -> "http://pandaslist.s3.amazonaws.com/images/frjHchAkHgnNRSm2v.jpg"
+            //	[8] = {com.google.gson.internal.LinkedTreeMap$Node@830036929160}"photos" -> size = 1
+            //	[9] = {com.google.gson.internal.LinkedTreeMap$Node@830036929504}"createdBy" -> "bDmQDa5kof62GFBmp"
+            //	[10] = {com.google.gson.internal.LinkedTreeMap$Node@830036929688}"creationDate" -> "1.415311744469E12"
+            //	[11] = {com.google.gson.internal.LinkedTreeMap$Node@830036929976}"published" -> "true"
+
             if (event.changeType.equals("added")) {
                 MyDDPState ddp = PandaListApplication.getDDP();
                 Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
 
-                String title = post.get("title") != null ? post.get("title").toString() : "";
-                String category = post.get("category") != null ? post.get("category").toString() : "";
-                String description = post.get("description") != null ? post.get("description").toString() : "";
-
                 item = new PostItemData();
+
+                String category = post.get("category") != null ? post.get("category").toString() : "";
+                item.setCategory(category);
+
+                String subCategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
+                item.setSubcategory(subCategory);
+
+                String location = post.get("location") != null ? post.get("location").toString() : "";
+                item.setLocation(location);
+
+                String title = post.get("title") != null ? post.get("title").toString() : "";
                 item.setTitle(title);
+
+                String description = post.get("description") != null ? post.get("description").toString() : "";
                 item.setDescription(description);
-                item.setPrice(23.56);
-                item.setBitmapResId(R.drawable.sofa);
 
+                String delivery_method = post.get("delivery_method") != null ? post.get("delivery_method").toString() : "";
+                item.setDeliveryMethod(delivery_method);
 
+                String coverPhotoUrl = post.get("coverPhotoUrl") != null ? post.get("coverPhotoUrl").toString() : "";
+                item.setImageUrl(coverPhotoUrl);
 
+                String price = post.get("price") != null ? post.get("price").toString() : "";
+                item.setPrice(price);
             }
             mListItems.add(item);
             myRecyclerAdapter.setItems(mListItems);

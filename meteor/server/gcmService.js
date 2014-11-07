@@ -22,6 +22,20 @@ if (Meteor.isServer) {
       });
     },
 
+    'sendEmail': function(user, post){
+      // Let other method calls from the same client start running,
+      // without waiting for the email sending to complete.
+      this.unblock();
+      
+      console.log('send email');
+      console.log(Email.send({
+        to: 'rmordoff@gmail.com',
+        from: 'rmordoff@gmail.com',
+        subject: 'Pandalist - ' + post.category + ' - ' + post.title,
+        html: '<h2>'+post.title+'</h2><p>'+post.description+'</p><img src="'+post.coverPhotoUrl+'/>'
+      }));
+    },
+
     'notifySubscribers': function(post){
       var category = post.category + "." + post.subcategory;
       var currentUserId = post.createdBy;
@@ -39,7 +53,12 @@ if (Meteor.isServer) {
         var registrationId = Meteor.users.findOne({_id: userId},
           {fields: {registrationId:1, _id:0}}).registrationId;
         console.log(userId+":"+registrationId);
-        Meteor.call('sendPushNotification', registrationId);
+        
+        var user = users.findOne({_id: userId}).fetch();
+        if(user.sendEmails)
+          Meteor.call('sendEmail', user, post);
+        if(user.sendPushNotification)
+          Meteor.call('sendPushNotification', registrationId);
       }
     },
 

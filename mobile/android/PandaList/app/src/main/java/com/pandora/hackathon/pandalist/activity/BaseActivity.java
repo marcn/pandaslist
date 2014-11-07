@@ -5,21 +5,23 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pandora.hackathon.pandalist.PandaListApplication;
+import com.pandora.hackathon.pandalist.PostItemData;
+import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.ddp.DDPBroadcastReceiver;
-import com.pandora.hackathon.pandalist.ddp.DDPStateSingleton;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
+import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.pandora.hackathon.pandalist.fragment.ListingsFragment;
 import com.pandora.hackathon.pandalist.fragment.NavigationDrawerFragment;
-import com.pandora.hackathon.pandalist.R;
+import com.squareup.otto.Subscribe;
+
+import java.util.Map;
 
 /**
  * Common functionality for our activities
@@ -34,22 +36,48 @@ public class BaseActivity  extends ActionBarActivity implements ListingsFragment
 
     }
 
-
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(String category, String subcategory, int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, getFragmentBySection(position + 1))
+                .replace(R.id.container, getFragmentBySection(subcategory))
                 .commit();
     }
 
-    private Fragment getFragmentBySection(int section) {
+    @Subscribe
+    public void onDPPPConnectEvent(DPPConnectEvent event) {
+        PandaListApplication.getDDP().subscribe("posts", new Object[]{});
+    }
 
-        if (section == 1) {
-            return ListingsFragment.newInstance(section);
+    @Subscribe
+    public void onDataChangeEvent(DataChangeEvent event) {
+
+        PostItemData item = null;
+
+        if (event.subscriptionName.equals("posts")) {
+            if (event.changeType.equals("added")) {
+                MyDDPState ddp = PandaListApplication.getDDP();
+                Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
+
+                String title = post.get("title") != null ? post.get("title").toString() : "";
+                String category = post.get("category") != null ? post.get("category").toString() : "";
+                String description = post.get("description") != null ? post.get("description").toString() : "";
+
+                item = new PostItemData();
+                item.setTitle(title);
+                item.setDescription(description);
+            }
         }
-        return PlaceholderFragment.newInstance(section);
+    }
+
+
+    private Fragment getFragmentBySection(String subcategory) {
+
+        if (subcategory != null) {
+            return ListingsFragment.newInstance(subcategory);
+        }
+        return PlaceholderFragment.newInstance(1);
     }
 
     /**

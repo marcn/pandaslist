@@ -7,7 +7,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import com.pandora.hackathon.pandalist.PandaListApplication;
 import com.pandora.hackathon.pandalist.PostItemData;
@@ -28,7 +26,6 @@ import com.pandora.hackathon.pandalist.R;
 import com.pandora.hackathon.pandalist.activity.NewPostDetailActivity;
 import com.pandora.hackathon.pandalist.activity.PostingActivity;
 import com.pandora.hackathon.pandalist.ddp.MyDDPState;
-import com.pandora.hackathon.pandalist.events.DDPMethodResultEvent;
 import com.pandora.hackathon.pandalist.events.DPPConnectEvent;
 import com.pandora.hackathon.pandalist.events.DataChangeEvent;
 import com.pandora.hackathon.pandalist.ui.ListingRecyclerAdapter;
@@ -71,7 +68,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     private int mScreenHeight;
 
     private float mActionBarHeight;
-    private Drawable mActionBarBackgroundDrawable;
+    private String mPostSubCategoryName;
 
     public ListingsFragment() {
         // Required empty public constructor
@@ -81,10 +78,10 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ListingsFragment newInstance(int sectionNumber) {
+    public static ListingsFragment newInstance(String subcategory) {
         ListingsFragment fragment = new ListingsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putString(ARG_POST_SUBCATEGORY, subcategory);
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,6 +95,12 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
         display.getSize(size);
         mScreenWidth = size.x;
         mScreenHeight = size.y;
+
+
+        Bundle b = getArguments();
+
+        mPostSubCategoryName = b.getString(ARG_POST_SUBCATEGORY);
+        getActionBar().setSubtitle(mPostSubCategoryName);
 
         final TypedArray styledAttributes = getActivity().getTheme().obtainStyledAttributes(
                 new int[] { android.R.attr.actionBarSize });
@@ -123,8 +126,6 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
         postingsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
         postingsIdsSet = new HashSet<String>();
-
-
 
         return mainView;
     }
@@ -170,7 +171,7 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onItemClick(int position) {
-        PostItemData itemDataClick = new PostItemData();//myRecyclerAdapter.getItemId(position);
+       // PostItemData itemDataClick = myRecyclerAdapter.getItemId(position);
 
         Intent intent = new Intent(getActivity(), NewPostDetailActivity.class);
 
@@ -200,6 +201,32 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
     @Subscribe
     public void onDPPConnect(DPPConnectEvent event) {
         //PandaListApplication.getDDP().subscribe("posts", new Object[]{});
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mListItems.clear();
+
+        Map<String, Map<String, Object>> postings = PandaListApplication.getDDP().getCollection("posts");
+        if (postings != null && !postings.isEmpty()) {
+            for (String postId : postings.keySet()) {
+
+                Map<String, Object> post = postings.get(postId);
+                String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
+
+                if (mPostSubCategoryName.equals(subcategory)) {
+                    mListItems.add(createPostItem(post));
+                }
+            }
+        }
+        myRecyclerAdapter.setItems(mListItems);
+        myRecyclerAdapter.notifyDataSetChanged();
+        getActionBar().setSubtitle(mPostSubCategoryName);
+
     }
 
     /** We need to return an Data object model
@@ -237,37 +264,35 @@ public class ListingsFragment extends BaseFragment implements View.OnClickListen
                 MyDDPState ddp = PandaListApplication.getDDP();
                 Map<String, Object> post = ddp.getCollection(event.subscriptionName).get(event.docId);
 
-                item = new PostItemData();
+                String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
+                if (!mPostSubCategoryName.equals(subcategory)) {
+                    return;
+                }
+                item = createPostItem(post);
 
-                String category = post.get("category") != null ? post.get("category").toString() : "";
-                item.setCategory(category);
-
-                String subCategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
-                item.setSubcategory(subCategory);
-
-                String location = post.get("location") != null ? post.get("location").toString() : "";
-                item.setLocation(location);
-
-                String title = post.get("title") != null ? post.get("title").toString() : "";
-                item.setTitle(title);
-
-                String description = post.get("description") != null ? post.get("description").toString() : "";
-                item.setDescription(description);
-
-                String delivery_method = post.get("delivery_method") != null ? post.get("delivery_method").toString() : "";
-                item.setDeliveryMethod(delivery_method);
-
-                String coverPhotoUrl = post.get("coverPhotoUrl") != null ? post.get("coverPhotoUrl").toString() : "";
-                item.setImageUrl(coverPhotoUrl);
-
-                String price = post.get("price") != null ? post.get("price").toString() : "";
-                item.setPrice(price);
             }
             mListItems.add(item);
             myRecyclerAdapter.setItems(mListItems);
             myRecyclerAdapter.notifyDataSetChanged();
         }
+    }
 
+    private PostItemData createPostItem(Map<String, Object> post) {
+        PostItemData item = null;
+
+        String title = post.get("title") != null ? post.get("title").toString() : "";
+        String category = post.get("category") != null ? post.get("category").toString() : "";
+        String subcategory = post.get("subcategory") != null ? post.get("subcategory").toString() : "";
+
+        String description = post.get("description") != null ? post.get("description").toString() : "";
+        String coverPhotoUrl  = post.get("coverPhotoUrl") != null ? post.get("coverPhotoUrl").toString() : "";
+        String createdBy  = post.get("createdBy") != null ? post.get("createdBy").toString() : "";
+        String published  = post.get("published") != null ? post.get("published").toString() : "";
+        item = new PostItemData();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setImageUrl(coverPhotoUrl);
+        return item;
     }
 
     private float globalScroll;

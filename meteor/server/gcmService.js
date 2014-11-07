@@ -41,6 +41,13 @@ if (Meteor.isServer) {
         console.log(userId+":"+registrationId);
         Meteor.call('sendPushNotification', registrationId);
       }
+    },
+
+    'storeRegistrationId': function(userId, registrationId) {
+      Meteor.users.update({_id:userId}, {_id:userId, registrationId:registrationId}, 
+            {upsert:true});
+      console.log('userId:' + userId + ' registrationId:'+registrationId);
+      return {"method":"storeRegistrationId", "data": {"userId": userId, "registrationId": registrationId}};
     }
   });
 }

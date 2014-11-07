@@ -268,7 +268,8 @@ textarea {
 
   z-index: 1;
   position: fixed;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   left: 0;
   top: 0;

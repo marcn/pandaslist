@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 /**
  * This class handles base/common functionality for DDP event handling using
@@ -156,6 +157,8 @@ public class DDPBroadcastReceiver extends BroadcastReceiver {
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.show();
+
+        Log.e("PANDASLIST", "Title " + title + " ErrorMsg " + msg);
+        //dialog.show();
     }
 }

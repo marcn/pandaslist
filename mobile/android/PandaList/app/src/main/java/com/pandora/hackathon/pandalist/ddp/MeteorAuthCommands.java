@@ -54,12 +54,12 @@ public abstract class MeteorAuthCommands {
         Object[] methodArgs = new Object[1];
         EmailAuth emailpass = new EmailAuth(username, password);
         methodArgs[0] = emailpass;
-        getDDP().call("login", methodArgs, new DDPListener() {
-            @Override
-            public void onResult(Map<String, Object> jsonFields) {
-                handleLoginResult(jsonFields);
-            }
-        });
+//        getDDP().call("login", methodArgs, new DDPListener() {
+//            @Override
+//            public void onResult(Map<String, Object> jsonFields) {
+//                handleLoginResult(jsonFields);
+//            }
+//        });
     }
 
     /**
